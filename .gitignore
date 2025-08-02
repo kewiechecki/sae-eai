@@ -12,6 +12,21 @@
 **/*.snm
 **/*.log
 
+# Python-generated files
+**/*.py[oc]
+**/__pycache__/
+**/dist/
+**/wheels/
+**/*.egg-info
+
+# Virtual environments
+**/.venv
+
+# cached environments
+**/environment*
+**/.ghc.environment*
+**/edit
+
 # images
 #**/*.png
 #**/*.jpg
@@ -38,7 +53,6 @@
 **/*.pb
 **/*.pickle
 **/*.pt
-**/*.pyc
 
 **/*.Robj
 **/*.Rdata
@@ -75,7 +89,6 @@
 **/tmp/**
 **/build/**
 **/old*/**
-**/__pycache__/**
 #**/_*/**
 
 # characters that shouldn't be in filename
@@ -106,9 +119,3 @@ interactionExample/**
 **/cabal.project.freeze
 **/.stack-work/
 **/dist-newstyle/
-
-# cached environments
-**/environment*
-**/.ghc.environment*
-**/__pycache__
-**/edit
