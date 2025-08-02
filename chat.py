@@ -9,27 +9,9 @@ model = AutoModelForCausalLM.from_pretrained(model_id).to(device)
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 
-# Tokenize
-inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-
-# Generate
-output = model.generate(
-    **inputs,
-    max_new_tokens=256,      # how many tokens to generate in response
-    do_sample=True,          # use sampling (for more diversity) or set to False for greedy
-    temperature=0.7,         # controls randomness; lower is more deterministic
-    top_p=0.95,              # nucleus sampling
-    eos_token_id=tokenizer.eos_token_id
-)
-
-# Decode
-completion = tokenizer.decode(output[0][inputs['input_ids'].shape[1]:], skip_special_tokens=True)
-print(completion)
-
-
 
 history = [
-    "You are a helpful assistant."
+        "You are an automated diagnostician. When presented with symptoms, pull up the appropriate diagnostic workflows and then ask the user follow up questions about their symptoms until you have enough information to make a reccomendation or diagnosis."
 ]
 
 while True:
