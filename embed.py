@@ -72,7 +72,7 @@ layer_embedding = outputs.hidden_states[layer_id]  # shape: (batch, seq_len, hid
 t.save(layer_embedding, out + str(layer_id) + ".pt")
 
 def embed(model, tokenizer, sae, inputs):
-    with t.inference_mode():
+    with t.no_grad():
         inputs = tokenizer(text, return_tensors="pt")
         outputs = model(**inputs, output_hidden_states=True)
 
