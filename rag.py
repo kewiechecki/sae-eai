@@ -34,7 +34,6 @@ embedding_dim = len(test_embedding)
 print(embedding_dim)
 print(test_embedding[:10])
 
-inputs = [tokenizer(txt, return_tensors="pt") for txt in chunks]
 text_lines = [chunk for chunk in chunks]
 
 from pymilvus import MilvusClient
@@ -69,3 +68,20 @@ search_res = milvus_client.search(
     search_params={"metric_type": "IP", "params": {}},  # Inner product distance
     output_fields=["text"],  # Return the text field
 )
+
+import json
+
+retrieved_lines_with_distances = [(res["entity"]["text"], res["distance"]) for res in search_res[0]]
+print(json.dumps(retrieved_lines_with_distances, indent=4))
+
+context = "\n".join([line_with_distance[0] for line_with_distance in retrieved_lines_with_distances])
+PROMPT = """
+Use the following pieces of information enclosed in <context> tags to provide an answer to the question enclosed in <question> tags.
+<context>
+{context}
+</context>
+<question>
+{question}
+</question>
+"""
+prompt = PROMPT.format(context=context, question=question)

@@ -1,0 +1,3218 @@
+### **1\. Abdominal Distention**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbdominalDistention(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Rectum)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Pain, Guarding, Nausea, Vomiting, Anorexia, Constipation, Diarrhea, Tachycardia, Fever, Chills, AbdominalRigidity}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Irritable Bowel Syndrome (IBS) Pathway:**  
+   * IF Patient.Symptoms MATCH {IntermittentLowerAbdominalPain, Cramping, PainRelievedByDefecation, AlternatingConstipationDiarrhea, Urgency, IncompleteEvacuation, MucusStools}  
+     * SUSPECT IrritableBowelSyndrome  
+     * ORDER DiagnosticTests({Sigmoidoscopy, Colonoscopy, BariumEnema, RectalBiopsy, StoolExam}) to rule out other causes  
+     * RECOMMEND Treatment({SymptomaticRelief, DietAdjustment, StressReduction})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+2. **Peritonitis Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenSeverePainWorsensWithMovement, ProjectileVomiting, HighFever, FluidWave, ShiftingDullness, PositivePsoasObturator, ReboundTenderness, SignsOfShock}  
+     * SUSPECT Peritonitis  
+     * ORDER DiagnosticTests({PeritonealFluidCulture, CBC, AbdominalXray, CTScan, AbdominalSonography})  
+     * RECOMMEND Treatment({BowelDecompression, Antibiotics, Surgery})  
+     * SCHEDULE FollowUp({OneWeekPostDischarge, ThenAsNeeded})  
+   * END IF  
+3. **Large-Bowel Obstruction Pathway:**  
+   * IF Patient.Symptoms MATCH {DramaticAbdominalDistention, Tympany, FecalVomiting, HighPitchedThenAbsentBowelSounds, ColickyLowerAbdominalPain}  
+     * SUSPECT LargeBowelObstruction  
+     * GOTO BowelObstructionProtocol  
+   * END IF  
+4. **Small-Bowel Obstruction Pathway:**  
+   * IF Patient.Symptoms MATCH {HypoactiveOrHyperactiveBowelSounds, ColickyPeriumbilicalPain, TympanyOnPercussion}  
+     * SUSPECT SmallBowelObstruction  
+     * GOTO BowelObstructionProtocol  
+   * END IF
+
+**Shared Protocol for Bowel Obstruction:**
+
+* LABEL BowelObstructionProtocol  
+* ORDER DiagnosticTests({SerumChemistry, BUN, Creatinine, CBC, UA, AbdominalXray, CTScan, ContrastStudies})  
+* RECOMMEND Treatment({BowelDecompression, Surgery, ProphylacticAntibiotics})  
+* SCHEDULE FollowUp({WeeklyVisits for 2-8 weeks})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AbdominalCancer, AbdominalTrauma, AbdominalTumor, Cirrhosis, HeartFailure, MesentericArteryOcclusion, NephroticSyndrome, ParalyticIleus, ToxicMegacolon})  
+* CONSIDER OtherCauses({Ascites, BladderDistention, GastricDilation})  
+* END PROCEDURE
+
+### **2\. Abdominal Mass**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbdominalMass(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Rectum)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {SmoothSausageShapedMassBelowLiver, SevereRUQPain, RecurrentAttacksAfterMeals, MurphySign, Nausea, Vomiting}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Abdominal Aortic Aneurysm (AAA) Pathway:**  
+   * IF Patient.Symptoms MATCH {PulsatingPeriumbilicalMass, SystolicBruitOverAorta, ConstantUpperAbdominalOrLowerBackPain}  
+     * IF Patient.Symptoms MATCH {SevereAbdominalBackPain, MottledSkinBelowWaist, AbsentFemoralPedalPulses, LowerBPLegsVsArms, AbdominalRigidity, SignsOfShock}  
+       * FLAG LifeThreateningRupture  
+     * END IF  
+     * SUSPECT AbdominalAorticAneurysm  
+     * ORDER DiagnosticTests({Ultrasonography, CTScan, MRI, Angiography})  
+     * RECOMMEND Treatment({BPControl, AtherosclerosisRiskReduction, Surgery})  
+     * SCHEDULE FollowUp({BP\_Monitoring, SerialUltrasounds, OneWeekPostOp})  
+   * END IF  
+2. **Colon Cancer Pathway:**  
+   * IF Patient.Symptoms MATCH {PalpableMassInRLQ\_or\_LLQ, OccultBleeding, RectalBleedingWithAnemia, AbdominalAching, Weakness, Fatigue, ExertionalDyspnea, Obstipation, Vomiting, PencilShapedStools}  
+     * SUSPECT ColonCancer  
+     * ORDER DiagnosticTests({CTScan, StoolOccultBlood, Colonoscopy})  
+     * RECOMMEND Treatment({Chemotherapy, Analgesics, Radiation, Surgery})  
+     * SCHEDULE FollowUp({ReferToGastroenterologist, ReferToOncologist})  
+   * END IF  
+3. **Cholecystitis / Cholelithiasis Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {Chills, LowGradeFever}  
+       * SUSPECT Cholecystitis  
+     * ELSE IF Patient.Symptoms MATCH {Anorexia, Diaphoresis, Jaundice, FattyFoodIntolerance, Indigestion}  
+       * SUSPECT Cholelithiasis  
+     * ELSE  
+       * SUSPECT Cholelithiasis\_OR\_Cholecystitis  
+     * END IF  
+     * GOTO GallbladderProtocol  
+   * END IF
+
+**Shared Protocol for Gallbladder Conditions:**
+
+* LABEL GallbladderProtocol  
+* ORDER DiagnosticTests({CBC, LFT, Bilirubin, AlkalinePhosphatase, Ultrasound, CTScan, BiliaryScintigraphy, ERCP})  
+* RECOMMEND Treatment({LowFatDiet, GallstoneSolubilizingAgent, Surgery})  
+* SCHEDULE FollowUp({LiverEnzymeTests, SerumCholesterol, OneWeekPostProcedure})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({CrohnsDisease, Diverticulitis, GallbladderCancer, GastricCancer, HepaticCancer, Hernia, Hydronephrosis, OvarianCyst, PancreaticAbscess, PancreaticPseudocysts, RenalCellCarcinoma, Splenomegaly, UterineLeiomyoma})  
+* CONSIDER OtherCauses({Hepatomegaly})  
+* END PROCEDURE
+
+### **3\. Abdominal Pain (Acute)**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAcuteAbdominalPain(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Rectum)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways (Multiple Concurrent Evaluations):**
+
+1. **Abdominal Aortic Aneurysm (AAA) Pathway:**  
+   * EVALUATE FOR AAA (See Abdominal Mass protocol)  
+2. **Diverticulitis (Acute) Pathway:**  
+   * IF Patient.Symptoms MATCH {LLQ\_Pain, AbdominalRigidity, HighFever, Chills, SignsOfShock}  
+     * SUSPECT AcuteDiverticulitis  
+     * ORDER DiagnosticTests({CBC, UA, ChemistryPanel, AbdominalXray, CTScan, Ultrasonography})  
+     * RECOMMEND Treatment({DietaryFiber, Antibiotics, Surgery})  
+     * SCHEDULE FollowUp({BariumEnemaPostAcuteEpisode, OneWeekPostOp})  
+   * END IF  
+3. **Renal Calculi Pathway:**  
+   * IF Patient.Symptoms MATCH {SevereColickyPainFromCostovertebralAngleToFlank, PainInducedAgitation, NauseaVomiting, AbdominalDistension, FeverChills, UrinaryFrequency, Hematuria, Dysuria}  
+     * SUSPECT RenalCalculi  
+     * ORDER DiagnosticTests({CBC, BUN, Creatinine, UA, AbdominalXray, IVUrography, SpinalCT, Ultrasound})  
+     * RECOMMEND Treatment({PainRelief, IncreasedFluids, Chemolysis, EndourologicExtraction, Lithotripsy})  
+     * SCHEDULE FollowUp({UrologicReferral, WeeklyCreatinine, StrainUrine, CalculiAnalysis})  
+   * END IF  
+4. **Appendicitis Pathway:**  
+   * IF Patient.Symptoms MATCH {DullEpigastricDiscomfort, Anorexia, NauseaVomiting, LocalizedPainMcBurneyPoint, AbdominalRigidity, ReboundTenderness, PositiveRovsingPsoasCoughSigns}  
+     * SUSPECT Appendicitis  
+     * IF Ruptured  
+       * GOTO PeritonitisProtocol (See Abdominal Distention)  
+     * ELSE  
+       * ORDER DiagnosticTests({CBC, UA, Amylase, KUB, CTScan, Ultrasound})  
+       * RECOMMEND Treatment({Surgery, Antibiotics})  
+       * SCHEDULE FollowUp({TwoAndSixWeeksPostDischarge})  
+     * END IF  
+   * END IF  
+5. **Ectopic Pregnancy Pathway:**  
+   * IF Patient.Female AND Patient.Symptoms MATCH {LowerAbdominalPain, VaginalBleeding, NauseaVomiting, UrinaryFrequency, TenderAdnexalMass, HistoryOfAmenorrhea}  
+     * IF Patient.Symptoms MATCH {SharpLowerPainRadiatingToShoulders, ExtremePainOnPalpation, SignsOfShock}  
+       * FLAG LifeThreateningRupture  
+     * END IF  
+     * SUSPECT EctopicPregnancy  
+     * ORDER DiagnosticTests({UrinePregnancyTest, SerumHCG, CBC, VaginalUltrasound, CTScan, MRI, DopplerFlowImaging})  
+     * RECOMMEND Treatment({Surgery})  
+     * SCHEDULE FollowUp({SerialHCG\_Levels, FollowUpImaging})  
+   * END IF  
+6. **Pancreatitis Pathway:**  
+   * IF Patient.Symptoms MATCH {FulminatingUpperAbdominalPainRadiatingToBack, NauseaVomiting, Fever, Pallor, Tachycardia, AbdominalRigidity, ReboundTenderness, HypoactiveBowelSounds, PositiveTurnerCullenSigns, Jaundice}  
+     * SUSPECT Pancreatitis  
+     * ORDER DiagnosticTests({Amylase, Lipase, CBC, Bilirubin, Glucose, Electrolytes, LFT, KUB, CTScan, Ultrasound})  
+     * RECOMMEND Treatment({NPO, IVFluids, BedRest, Analgesics, Antibiotics})  
+     * SCHEDULE FollowUp({MonitorAmylaseLevels, RepeatImagingIfElevated})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AbdominalCancer, Trauma, Cholecystitis, Cholelithiasis, Hepatitis, AdrenalCrisis, Cholangitis, DiabeticKetoacidosis, Gastroenteritis, HeartFailure, HepaticAbscess, Hernia, HerpesZoster, IntestinalObstruction, Perforation, MeckelDiverticulitis, MesentericArteryIschemia, MI, PerforatedUlcer, Pneumonia, Pyelonephritis, RetroperitonealBleed, RupturedOvarianCyst, RupturedSpleen, SickleCellCrisis, SLE})  
+* END PROCEDURE
+
+### **4\. Abdominal Pain (Chronic)**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessChronicAbdominalPain(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Rectum)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Peptic Ulcer Disease Pathway (Duodenal, Gastric) / Gastritis:**  
+   * IF Patient.Symptoms MATCH {LocalizedSteadyGnawingPain, NocturnalPain, PainRelievedByFood, RetrosternalBurning, Dyspepsia}  
+     * SUSPECT DuodenalUlcer  
+     * GOTO UlcerGastritisProtocol  
+   * ELSE IF Patient.Symptoms MATCH {MildToBurningEpigastricPain, Belching, Anorexia, Nausea, BloodyVomitus, Melena, Dyspepsia}  
+     * SUSPECT Gastritis  
+     * GOTO UlcerGastritisProtocol  
+   * ELSE IF Patient.Symptoms MATCH {DiffuseGnawingDullPain, Pyrosis, PainIncreasedByEating, NauseaVomiting, Dyspepsia, Anorexia, GI\_Bleeding}  
+     * SUSPECT GastricUlcer  
+     * GOTO UlcerGastritisProtocol  
+   * END IF  
+2. **Inflammatory Bowel Disease Pathway (IBS, Crohn's, Diverticulitis, Ulcerative Colitis):**  
+   * IF Patient.Symptoms MATCH {LowerAbdominalPainAggravatedByRawFoods, PainRelievedByDefecation, DiurnalDiarrhea, SmallMucusStools, Dyspepsia, Nausea, AbdominalDistention, SymptomsWorsenWithStress}  
+     * SUSPECT IrritableBowelSyndrome  
+     * GOTO InflammatoryBowelProtocol  
+   * ELSE IF Patient.Symptoms MATCH {RLQ\_Pain, LowerAbdominalCramping, TendernessGuarding, NauseaVomiting, Diarrhea, AnorexiaWeightLoss, PerirectalFistulas}  
+     * SUSPECT CrohnsDisease  
+     * GOTO InflammatoryBowelProtocol  
+   * ELSE IF Patient.Symptoms MATCH {IntermittentDiffusePainRelievedByDefecation, Anorexia, Nausea, ConstipationOrDiarrhea, LowGradeFever, PalpableTenderMass, AbdominalDistention}  
+     * SUSPECT Diverticulitis  
+     * GOTO InflammatoryBowelProtocol  
+   * ELSE IF Patient.Symptoms MATCH {VagueDiscomfortToCrampingPain, Tenesmus, SevereBloodyDiarrhea, NauseaVomiting, AnorexiaWeightLoss, MildFever}  
+     * SUSPECT UlcerativeColitis  
+     * GOTO InflammatoryBowelProtocol  
+   * END IF
+
+**Shared Protocols:**
+
+* LABEL UlcerGastritisProtocol  
+* ORDER DiagnosticTests({CBC, H\_Pylori\_Test, UpperGI\_Xray, Endoscopy})  
+* RECOMMEND Treatment({DietaryModifications, AcidSuppression, Antibiotics, Antacids})  
+* SCHEDULE FollowUp({ReturnIn6to12Weeks})  
+* LABEL InflammatoryBowelProtocol  
+* ORDER DiagnosticTests({CBC, ESR, Electrolytes, StoolAnalysis, AbdominalXray, CTScan, BariumEnema, Endoscopy})  
+* RECOMMEND Treatment({LifestyleDietaryModifications, StressManagement, AntiInflammatoryMeds, Antibiotics, Surgery})  
+* SCHEDULE FollowUp({RegularAppointmentsEvery3to6Months})  
+* END PROCEDURE
+
+### **5\. Abdominal Pain (Other Causes)**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessOtherAbdominalPain(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Rectum, Pelvis)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Urinary/Renal Pathway:**  
+   * IF Patient.Symptoms MATCH {SuprapubicPain, FlankPain, LowerBackPain, Malaise, UrinaryFrequency, Nocturia, Dysuria, Fever, Chills}  
+     * SUSPECT Cystitis  
+     * ORDER DiagnosticTests({UA, UrineCulture})  
+     * RECOMMEND Treatment({Antibiotic, IncreasedFluidIntake})  
+     * SCHEDULE FollowUp({RecultureIfSymptomsPersist})  
+   * END IF  
+2. **Hepatic Pathway:**  
+   * IF Patient.Symptoms MATCH {DullRUQ\_Pain, DarkUrine, ClayColoredStools, NauseaVomiting, AnorexiaWeightLoss, Jaundice, Pruritus, Malaise}  
+     * SUSPECT Hepatitis  
+     * IF Patient.Develops {DullAchingRUQ\_PainWorsensWhenLeaningForward, NodularLiver, Fever, Ascites, LegEdema, Hepatomegaly, SeverePruritus, BleedingTendencies, PalmarErythema, SpiderAngiomas, Gynecomastia}  
+       * SUSPECT Cirrhosis  
+       * ORDER DiagnosticTests({LFT, CTScan, Ultrasound, LaparoscopicLiverBiopsy})  
+       * RECOMMEND Treatment({LifestyleAndDietaryModifications})  
+       * SCHEDULE FollowUp({FrequentCheckupsWithLFT})  
+     * ELSE  
+       * ORDER DiagnosticTests({SerologicMarkers, LFT, CoagulationStudies, LiverBiopsy})  
+       * RECOMMEND Treatment({Medication, LiverTransplant, LifestyleModifications})  
+       * SCHEDULE FollowUp({MonitorForComplications})  
+     * END IF  
+   * END IF  
+3. **Male Reproductive Pathway:**  
+   * IF Patient.Male AND Patient.Symptoms MATCH {VagueLowerAbdominalPain, GroinPerineumRectumPain, ScrotalPenilePain, PainOnEjaculation, Dysuria, UrinaryFrequencyUrgency, Nocturia, FeverChills, TenderProstate, LowerBackPain, Myalgia}  
+     * SUSPECT Prostatitis  
+     * ORDER DiagnosticTests({FractionalUrineExam, UrineCulture, CTScan, TransrectalUltrasound})  
+     * RECOMMEND Treatment({Analgesics, Antibiotics, StoolSoftener})  
+     * SCHEDULE FollowUp({UA\_and\_CultureEvery30Days})  
+   * END IF  
+4. **Female Reproductive Pathway (PID, Ovarian Cyst, Endometriosis):**  
+   * IF Patient.Female AND Patient.Symptoms MATCH {RLQ\_or\_LLQ\_Pain, Metrorrhagia, ExtremePainOnCervicalPalpation, PelvicMass, FeverChills, NauseaVomiting, UrinaryDiscomfort, AbnormalVaginalBleeding}  
+     * SUSPECT PelvicInflammatoryDisease  
+     * GOTO FemaleReproductiveProtocol  
+   * ELSE IF Patient.Female AND Patient.Symptoms MATCH {TorsionHemorrhageCausesRLQ\_or\_LLQ\_Pain, SharpPainOnStanding, Fever, Anorexia, Vomiting, PalpableAbdominalMass, PossibleRupture}  
+     * SUSPECT OvarianCyst  
+     * GOTO FemaleReproductiveProtocol  
+   * ELSE IF Patient.Female AND Patient.Symptoms MATCH {ConstantSevereLowerAbdominalPain5to7DaysBeforeMenses, PainAggravatedByDefecation, Dysmenorrhea, Dyspareunia, DeepSacralPain}  
+     * SUSPECT Endometriosis  
+     * GOTO FemaleReproductiveProtocol  
+   * END IF
+
+**Shared Protocol for Female Reproductive Conditions:**
+
+* LABEL FemaleReproductiveProtocol  
+* ORDER DiagnosticTests({PregnancyTest, CBC, ESR, SerumTumorMarkers, TransabdominalOrTransvaginalUltrasound, CTScan, MRI, Laparoscopy})  
+* RECOMMEND Treatment({AntibioticsForPID, ContraceptivePillForOvarianCyst, GnRH\_AgonistForEndometriosis, Laparoscopy, Surgery})  
+* SCHEDULE FollowUp({YearlyUltrasoundToMonitorAdnexalMass})  
+* END PROCEDURE
+
+### **6\. Abdominal Rigidity**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbdominalRigidity(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen)  
+* GATHER HistoryOfPresentIllness  
+* DISTINGUISH VoluntaryRigidity FROM InvoluntaryRigidity
+
+**Differential Diagnosis Pathways:**
+
+1. **Abdominal Aortic Aneurysm (AAA) Pathway:**  
+   * IF Patient.Symptoms MATCH {PulsatingPeriumbilicalMass, SystolicBruitOverAorta, UpperAbdominalOrLowerBackPain}  
+     * IF Patient.Symptoms MATCH {SevereAbdominalBackPain, MottledSkinBelowWaist, AbsentFemoralPedalPulses, AbdominalRigidity, SignsOfShock}  
+       * FLAG LifeThreateningRupture  
+     * END IF  
+     * SUSPECT AbdominalAorticAneurysm  
+     * GOTO AAA\_Protocol (See Abdominal Mass)  
+   * END IF  
+2. **Mesenteric Artery Ischemia Pathway:**  
+   * IF Patient.Age \> 50 AND Patient.History MATCH {ChronicHeartFailure, Arrhythmias, CardiacInfarction} AND Patient.Symptoms MATCH {SevereSuddenAbdominalPain, ColickyPeriumbilicalPain, Diarrhea, PostPrandialPain, Melena, Vomiting, Anorexia, Tachycardia, Tachypnea, CoolClammySkin}  
+     * SUSPECT MesentericArteryIschemia  
+     * ORDER DiagnosticTests({Electrolytes, Amylase, Lipase, SerumPhosphate, RenalFunctionTest, LFT, CBC, KUB, Angiography, AbdominalCTScan})  
+     * RECOMMEND Treatment({Hydration, BowelDecompression, Antibiotics, Surgery})  
+     * SCHEDULE FollowUp({ReturnVisitOneWeekPostDischarge})  
+   * END IF  
+3. **Peritonitis Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenSeverePainWorsensWithMovement, AbdominalRigidityGuarding, ProjectileVomiting, HighFever, PositivePsoasObturator, ReboundTenderness, SignsOfShock}  
+     * SUSPECT Peritonitis  
+     * GOTO PeritonitisProtocol (See Abdominal Distention)  
+   * END IF  
+4. **Insect Toxins Pathway:**  
+   * IF Patient.History MATCH {RecentInsectBite} AND Patient.Symptoms MATCH {GeneralizedCrampingAbdominalPainWithRigidity, LowGradeFever, NauseaVomiting, Tremors, BurningSensations, BiteMarkOrRash, IncreasedSalivation, Hypertension, Paresis, HyperactiveReflexes, Restlessness}  
+     * SUSPECT InsectToxinReaction  
+     * ORDER DiagnosticTests({History, SkinExam})  
+     * RECOMMEND Treatment({SymptomaticTreatment, AntidoteIfAvailable})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+5. **Pneumonia Pathway:**  
+   * IF Patient.Symptoms MATCH {SevereUpperAbdominalPainTendernessRigidity, DryHackingCough, BloodySputum, Dyspnea, Fever, Chills, BodyAches, Headache, DecreasedBreathSounds, Crackles, DullnessOnPercussion}  
+     * SUSPECT Pneumonia (Lower Lobe)  
+     * ORDER DiagnosticTests({CBC, Electrolytes, BloodCultures, SputumCulture, CXR})  
+     * RECOMMEND Treatment({Antibiotics, OxygenTherapy})  
+     * SCHEDULE FollowUp({DailyEvaluation, AdjustTreatmentIn48-72Hours})  
+   * END IF  
+* END PROCEDURE
+
+### **7\. Agitation**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAgitation(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem, GeneralPhysicalAssessment)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Hypoxemia Pathway:**  
+   * IF Patient.Symptoms MATCH {RestlessnessAtOnset, RapidlyWorseningAgitation, Confusion, ImpairedJudgment, Tachycardia, Tachypnea, Dyspnea, Cyanosis}  
+     * SUSPECT Hypoxemia  
+     * ORDER DiagnosticTests({ABG, CXR, PulseOximetry})  
+     * RECOMMEND Treatment({Oxygen, TreatUnderlyingCause})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+2. **Dementia Pathway:**  
+   * IF Patient.Symptoms MATCH {MildToSevereAgitation, DecreasedMemory, WanderingBehavior, Hallucinations, Aphasia, Insomnia}  
+     * SUSPECT Dementia  
+     * ORDER DiagnosticTests({ThyroidFunction, SyphilisSerology, CBC, Electrolytes, CTScan, MRI}) to rule out other causes  
+     * RECOMMEND Treatment({PatientAndFamilySupport, GeropsychologyReferral})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+3. **Increased Intracranial Pressure (ICP) Pathway:**  
+   * IF Patient.Symptoms MATCH {Agitation, Headache, NauseaVomiting, CheyneStokesRespirations, Ataxia, SluggishNonreactivePupils, WidenedPulsePressure, Tachycardia, DecreasedLOC, AbnormalPosturing}  
+     * SUSPECT IncreasedICP  
+     * ORDER DiagnosticTests({IntracranialCTScan, IntracranialMRI})  
+     * RECOMMEND Treatment({TreatUnderlyingCause, OsmoticDiuretics, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+4. **Post-Head-Trauma Syndrome Pathway:**  
+   * IF Patient.History MATCH {HeadTrauma} AND Patient.Symptoms MATCH {Disorientation, LossOfConcentration, EmotionalLability, Fatigue, WanderingBehavior, PoorJudgment}  
+     * SUSPECT PostHeadTraumaSyndrome  
+     * ORDER DiagnosticTests({HistoryOfHeadTrauma})  
+     * RECOMMEND Treatment({SafetyPrecautions})  
+     * SCHEDULE FollowUp({DailyVisitsUntilBehaviorStabilizes})  
+   * END IF  
+5. **Chronic Renal Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {ModerateToSevereAgitation, DecreasedUrineOutput, IncreasedBP, NauseaVomiting, Anorexia, AmmoniaBreathOdor, GI\_Bleeding, Pallor, DrySkin, UremicFrost, Edema}  
+     * SUSPECT ChronicRenalFailure  
+     * ORDER DiagnosticTests({RenalFunctionStudies, Electrolytes, ABG, RenalUltrasound, CTScan, MRI})  
+     * RECOMMEND Treatment({ControlAssociatedCause, DietModification, Dialysis, KidneyTransplant})  
+     * SCHEDULE FollowUp({WeeklyToMonthlyVisits})  
+   * END IF  
+6. **Alcohol Withdrawal Pathway:**  
+   * IF Patient.History MATCH {ETOH\_Use} AND Patient.Symptoms MATCH {MildToSevereAgitation, Hyperactivity, Tremors, Anxiety}  
+     * IF Patient.Symptoms MATCH {SevereAgitation, VisualHallucinations, Insomnia, Diaphoresis, Tachycardia, Depression, Seizures, CardiacArrest, Shock}  
+       * FLAG LifeThreateningDeliriumTremens  
+     * END IF  
+     * SUSPECT AlcoholWithdrawal  
+     * ORDER DiagnosticTests({HistoryOfETOH\_Use, LFT, Electrolytes})  
+     * RECOMMEND Treatment({Benzodiazepines, Barbiturates, BetaBlocker, Anticonvulsant})  
+     * SCHEDULE FollowUp({ReferralToAddictionProgram})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AffectiveDisturbance, Anxiety, DrugWithdrawalSyndrome, EndocrineDisorder, HepaticEncephalopathy, HypersensitivityReaction, IntracranialBleed, OrganicBrainSyndrome, PsychoticDisturbances, VitaminB6\_Deficiency, VitaminB12\_Deficiency})  
+* CONSIDER OtherCauses({Medication, RadiographicContrastMedia})  
+* END PROCEDURE
+
+### **8\. Alopecia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAlopecia(Patient)  
+* PERFORM FocusedPhysicalExam(Scalp, Skin)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Hypothyroidism Pathway:**  
+   * IF Patient.Symptoms MATCH {ThinningDullCoarseHair, LossOfOuterEyebrowHair, Fatigue, Constipation, ColdIntolerance, WeightGain, DryFlakySkin, PuffyFaceHandsFeet, ThickBrittleNails}  
+     * SUSPECT Hypothyroidism  
+     * ORDER DiagnosticTests({ThyroidFunctionStudies})  
+     * RECOMMEND Treatment({ThyroidReplacementTherapy})  
+     * SCHEDULE FollowUp({ReturnVisitsEvery6WeeksUntilStable, ThenEvery6Months})  
+   * END IF  
+2. **Arterial Insufficiency Pathway:**  
+   * IF Patient.Symptoms MATCH {LowerExtremityHairLoss, ThinAtrophicSkin, ThickenedNails, DependentRubor, WeakOrAbsentPeripheralPulses, CoolExtremities, LegUlcers}  
+     * SUSPECT ArterialInsufficiency  
+     * ORDER DiagnosticTests({PhysicalExam, Angiography, Echocardiogram, ABI})  
+     * RECOMMEND Treatment({LifestyleAdjustment, Aspirin, CholesterolLoweringAgents})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+3. **Dermatologic/Infectious Pathway:**  
+   * IF Patient.Symptoms MATCH {IrregularBaldingAreas, ScalingErythematousLesions, BrokenScalp, Pruritus, ThickWhitishNails}  
+     * SUSPECT FungalInfection  
+     * GOTO SkinHairProtocol  
+   * ELSE IF Patient.Symptoms MATCH {OccurrenceInSebaceousGlandAreas, ReddenedDryBranlikeScales, Pruritus}  
+     * SUSPECT SeborrheicDermatitis  
+     * GOTO SkinHairProtocol  
+   * ELSE IF Patient.Symptoms MATCH {WellCircumscribedPatchesOfNonscarringAlopecia, ExclamationPointHairs, NailPitting}  
+     * SUSPECT AlopeciaAreata  
+     * GOTO SkinHairProtocol  
+   * ELSE IF Patient.Symptoms MATCH {GeneralizedScalingErythema, LossOfScalpAndBodyHair, NailLoss, Pruritus, Malaise, Fever, WeightLoss, Lymphadenopathy, Gynecomastia}  
+     * SUSPECT ExfoliativeDermatitis  
+     * GOTO SkinHairProtocol  
+   * END IF
+
+**Shared Protocol for Skin/Hair Conditions:**
+
+* LABEL SkinHairProtocol  
+* ORDER DiagnosticTests({ThyroidFunctionStudies, CBC, Electrolytes, FungalCulture, LightHairPullTest, MicroscopicExamOfHairShaft})  
+* RECOMMEND Treatment({AntifungalForInfection, HighPotencyTopicalSteroidsForAlopeciaAreata, CorticosteroidForExfoliativeDermatitis, WellBalancedDiet, TreatCauseIfKnown})  
+* END PROCEDURE
+
+### **9\. Amenorrhea**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAmenorrhea(Patient)  
+* PERFORM FocusedPhysicalExam(Pelvis)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Polycystic Ovarian Disease (PCOS) Pathway:**  
+   * IF Patient.Symptoms MATCH {IrregularCycles, Oligomenorrhea, SecondaryAmenorrhea, ProfuseBleeding, Obesity, Hirsutism, DeepeningVoice, EnlargedOysterlikeOvaries}  
+     * SUSPECT PCOS  
+     * ORDER DiagnosticTests({PregnancyTest, LH, FSH, EstrogenLevels, DexamethasoneSuppressionTest, PelvicTransvaginalUltrasound})  
+     * RECOMMEND Treatment({OvulationInductionAgents, LowDoseHormonalContraceptive})  
+     * SCHEDULE FollowUp({MonitorThroughoutMenstrualCycle, GynecologistReferral})  
+   * END IF  
+2. **Anorexia Nervosa Pathway:**  
+   * IF Patient.Symptoms MATCH {PrimaryOrSecondaryAmenorrhea, WeightLoss, EmaciatedAppearance, CompulsiveBehavior, Constipation, Alopecia, Lanugo, SkeletalMuscleAtrophy, SleepDisturbances}  
+     * SUSPECT AnorexiaNervosa  
+     * ORDER DiagnosticTests({MalnourishedState, Electrolytes, CBC, TotalProtein, RenalStudies, LFT, UA, ECG})  
+     * RECOMMEND Treatment({ParenteralNutrition, PsychiatricCounseling, NutritionCounseling, SSRI})  
+     * SCHEDULE FollowUp({WeeklyThenMonthlyVisits, InpatientTherapyIfConditionWorsens})  
+   * END IF  
+3. **Tumor Pathway (Adrenal/Pituitary):**  
+   * IF Patient.Symptoms MATCH {Moonface, BuffaloHump, Hirsutism, Hypertension, TruncalObesity, Bruises, PurpleStriae, WidenedPulsePressure}  
+     * IF Patient.Symptoms MATCH {Acne, ThinningHair, AsymmetricalOvarianEnlargement, RapidVirilizingSigns}  
+       * SUSPECT AdrenalTumor  
+       * ORDER DiagnosticTests({Electrolytes, ACTH, CBC, AbdominalXray, CTScan, PelvicUltrasound})  
+       * RECOMMEND Treatment({Surgery, AdrenalHormoneReplacement})  
+       * SCHEDULE FollowUp({OneWeekPostDischarge, ThenMonthly})  
+     * ELSE IF Patient.Symptoms MATCH {Headache, VisionDisturbances, BitemporalHemianopia, Acromegaly}  
+       * SUSPECT PituitaryTumor  
+       * ORDER DiagnosticTests({RadioimmunoassayOfHormones, ProlactinLevels, CTScan})  
+       * RECOMMEND Treatment({HormoneReplacement, Surgery})  
+       * SCHEDULE FollowUp({ReturnVisitsIn3And12Months})  
+     * END IF  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AdrenocorticalHyperplasia, AdrenocorticalHypofunction, AmenorrheaLactationDisorders, ChronicRenalFailure, CongenitalAbsenceOfOvariesOrUterus, CorpusLuteumCysts, HypothalamicTumor, Hypothyroidism, OvarianInsensitivity, PID, PituitaryInfarction, Pregnancy, SertoliLeydigCellTumor})  
+* END PROCEDURE
+
+### **10\. Amnesia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAmnesia(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem, MotorAndCognitiveFunction)  
+* GATHER HistoryOfPresentIllness (from family if necessary)
+
+**Differential Diagnosis Pathways:**
+
+1. **Alzheimer's Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {InitialRetrogradeAmnesia, ProgressiveMemoryLoss, Agitation, InabilityToConcentrate, DisregardForHygiene, Confusion, Irritability, Aphasia, Dementia, Incontinence, MuscleRigidity}  
+     * SUSPECT AlzheimerDisease  
+     * ORDER DiagnosticTests({CBC, Electrolytes, ThyroidStudies, VDRL, Folate, B12, HIV, CTScan, MRI, PETScan, EEG}) to rule out other causes  
+     * RECOMMEND Treatment({Antidepressants, Benzodiazepines, Antipsychotics, MemoryEnhancingAgents, LifestyleModifications, SafetyPrecautions})  
+     * SCHEDULE FollowUp({AsNeededBasedOnProgression})  
+   * END IF  
+2. **Seizures Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenTemporalLobeAmnesia, SensationOfAura, IrritableFocus, VerbalAmnesia, NonverbalGraphicAmnesia, Confusion, Hallucinations}  
+     * SUSPECT Seizures  
+     * ORDER DiagnosticTests({CBC, Electrolytes, DrugToxicityScreen, ETOH\_Screen, CTScan, MRI, EEG})  
+     * RECOMMEND Treatment({Anticonvulsants, SurgeryToRemoveFocus})  
+     * SCHEDULE FollowUp({RegularMonitoringOfAnticonvulsantLevels})  
+   * END IF  
+3. **Cerebral Hypoxia Pathway:**  
+   * IF Patient.History MATCH {CarbonMonoxideExposure, RespiratoryFailure} AND Patient.Symptoms MATCH {TotalAmnesiaAboutEvent, NumbnessTingling}  
+     * SUSPECT CerebralHypoxia  
+     * ORDER DiagnosticTests({History, ABG, PulseOximetry, CTScan, MRI})  
+     * RECOMMEND Treatment({TreatCausativeFactor, OxygenTherapy})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+4. **Head Trauma Pathway:**  
+   * IF Patient.History MATCH {HeadInjury} AND Patient.Symptoms MATCH {AmnesiaForMinutesToHours, BriefRetrogradeAndLongerAnterogradeAmnesia, PersistentAmnesia, AlteredRespirationsAndLOC, Headache, Dizziness, Confusion, BlurredOrDoubleVision}  
+     * SUSPECT HeadTrauma  
+     * ORDER DiagnosticTests({History, CTScan, MRI})  
+     * RECOMMEND Treatment({OsmoticDiuretic, Anticonvulsant, Surgery})  
+     * SCHEDULE FollowUp({AsNeededBasedOnTrauma})  
+   * END IF  
+5. **Wernicke-Korsakoff Syndrome Pathway:**  
+   * IF Patient.History MATCH {MalnourishedState, AlcoholUse} AND Patient.Symptoms MATCH {RetrogradeAndAnterogradeAmnesia, Apathy, Confusion, InabilityToConcentrate, Diplopia, DecreasedLOC, Headache, Ataxia, PeripheralNeuropathy, PetechialHemorrhages}  
+     * SUSPECT WernickeKorsakoffSyndrome  
+     * ORDER DiagnosticTests({History, Electrolytes, CBC, ThiaminePyrophosphateLevels, CTScan, MRI})  
+     * RECOMMEND Treatment({Thiamine})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Anoxia, CerebralLesion, CerebralMass, DissociativeDisorder, HerpesSimplexEncephalitis, Stroke})  
+* CONSIDER OtherCauses({ECT, GeneralAnesthetics, Barbiturates, Benzodiazepines, TemporalLobeSurgery})  
+* END PROCEDURE
+
+### **11\. Analgesia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAnalgesia(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicExamination, GeneralPhysicalAssessment)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {CapelikeAnalgesiaAndThermanesthesia, ProgressiveWeaknessToMuscleSpasms, HyperactiveDTRs, FlaccidWeakness}  
+* EVALUATE Patient.Symptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Anterior Cord Syndrome Pathway:**  
+   * IF Patient.Symptoms MATCH {BilateralAnalgesiaAndThermanesthesiaBelowLesion, FlaccidParalysis, HypoactiveDTRs}  
+     * SUSPECT AnteriorCordSyndrome  
+     * GOTO SpinalCordProtocol  
+   * END IF  
+2. **Spinal Cord Hemisection (Brown-Séquard Syndrome) Pathway:**  
+   * IF Patient.Symptoms MATCH {ContralateralAnalgesiaAndThermanesthesiaBelowLesion, LossOfProprioception, IpsilateralSpasticParalysis, HyperactiveDTRs}  
+     * SUSPECT SpinalCordHemisection  
+     * GOTO SpinalCordProtocol  
+   * END IF  
+3. **Central Cord Syndrome / Brain Stem Involvement Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * SUSPECT CentralCordSyndrome  
+     * IF Patient.Symptoms ALSO MATCH {FacialAnalgesiaAndThermanesthesia, Vertigo, Nystagmus, TongueAtrophy, Dysarthria}  
+       * SUSPECT BrainStemInvolvement  
+     * END IF  
+     * GOTO SpinalCordProtocol  
+   * END IF
+
+**Shared Protocol for Spinal Cord Conditions:**
+
+* LABEL SpinalCordProtocol  
+* ORDER DiagnosticTests({SpinalXray, CTScan, MRI})  
+* RECOMMEND Treatment({SpineStabilization, Corticosteroids})  
+* SCHEDULE FollowUp({TransferToSpinalInjuryCenter})
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({TopicalAndLocalAnesthetics})  
+* END PROCEDURE
+
+### **12\. Anorexia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAnorexia(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT, Dentition, CranialNerves, Skin, Abdomen, Musculoskeletal, Cardiovascular, Neurologic, ReproductiveSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Appendicitis Pathway:**  
+   * EVALUATE FOR Appendicitis (See Abdominal Pain (Acute) protocol)  
+2. **Adrenocortical Hypofunction Pathway:**  
+   * IF Patient.Symptoms MATCH {GradualWeightLoss, NauseaVomiting, AbdominalPain, Diarrhea}  
+     * SUSPECT AdrenocorticalHypofunction  
+     * ORDER DiagnosticTests({CBC, Electrolytes, BUN, Creatinine, CortisolLevel, SerumCalcium, ACTH, CXR, CTScan})  
+     * RECOMMEND Treatment({FluidVolumeReplacement, ElectrolyteCorrection, Glucocorticoids})  
+     * SCHEDULE FollowUp({ReferralToEndocrinologist})  
+   * END IF  
+3. **Alcoholism Pathway:**  
+   * IF Patient.History MATCH {ETOH\_Use} AND Patient.Symptoms MATCH {ChronicLossOfAppetite, LiverDisease, Paresthesia, GI\_Bleeding}  
+     * SUSPECT Alcoholism  
+     * ORDER DiagnosticTests({History, ETOH\_Level, LFT, Electrolytes})  
+     * RECOMMEND Treatment({Detoxification})  
+     * SCHEDULE FollowUp({ReferralToDetoxificationSupportGroup})  
+   * END IF  
+4. **Anorexia Nervosa Pathway:**  
+   * EVALUATE FOR AnorexiaNervosa (See Amenorrhea protocol)  
+5. **Cancer Pathway:**  
+   * IF Patient.Symptoms MATCH {ChronicAnorexia, WeightLoss, Apathy, Cachexia, Fatigue}  
+     * SUSPECT Cancer  
+     * ORDER DiagnosticTests({CEA, CTScan, MRI, BoneScan})  
+     * RECOMMEND Treatment({VariesBasedOnCancerType})  
+     * SCHEDULE FollowUp({ReferralToOncologist})  
+   * END IF  
+6. **AIDS Pathway:**  
+   * IF Patient.Symptoms MATCH {GI\_Infection, PulmonaryInfection, KaposiSarcoma, OralThrush, Gingivitis, ChronicAnorexia, WeightLoss}  
+     * SUSPECT AIDS  
+     * ORDER DiagnosticTests({ELISA, WesternBlot})  
+     * RECOMMEND Treatment({NutritionalCounseling, AntiretroviralTherapy})  
+     * SCHEDULE FollowUp({AsNeededBasedOnStageOfIllness})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({ChronicRenalFailure, Cirrhosis, CrohnsDisease, DepressiveSyndrome, ElectrolyteImbalance, Esophagitis, Gastritis, Hepatitis, Hypopituitarism, Hypothyroidism, Ketoacidosis, Osteoporosis, PerniciousAnemia})  
+* CONSIDER OtherCauses({Cardiomegaly, Constipation, DigoxinToxicity, Medications, RadiationTherapy, TPN})  
+* END PROCEDURE
+
+### **13\. Anosmia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAnosmia(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem, HEENT, CranialNerves, Sinuses, PsychologicalAssessment)  
+* GATHER HistoryOfPresentIllness
+
+**Triage by Underlying Mechanism:**
+
+* IF Cause relates to OlfactoryNerveDamage  
+  * GOTO NerveDamagePathway  
+* ELSE IF Cause relates to NasalMucosaChanges  
+  * GOTO MucosaChangesPathway  
+* END IF
+
+**Pathways:**
+
+* LABEL NerveDamagePathway  
+  * IF Patient.Symptoms MATCH {Epistaxis, SwellingTenderness, VisionDisturbances, DecreasedTearing, ElevatedICP}  
+    * SUSPECT Neoplasm (Brain, Nasal, or Sinus)  
+    * ORDER DiagnosticTests({CTScan, MRI, Biopsy})  
+    * RECOMMEND Treatment({OptimizeNeuroFunction, VitaminA, Corticosteroids})  
+    * SCHEDULE FollowUp({ReferralToNeurosurgeon})  
+  * ELSE IF Patient.Symptoms MATCH {Epistaxis, NauseaVomiting, AlteredLOC, BlurredVision, RaccoonEyes, BattleSign, Otorrhea}  
+    * SUSPECT HeadTrauma  
+    * ORDER DiagnosticTests({SkullRadiograph, CTScan})  
+    * RECOMMEND Treatment({VitaminA, Corticosteroids, LOC\_Monitoring})  
+    * SCHEDULE FollowUp({AsNeeded, TransferToBrainInjuryCenter})  
+  * ELSE IF Patient.Symptoms MATCH {ContralateralWeaknessNumbness, Confusion, ImpairedMotorSensoryFunctions}  
+    * SUSPECT AnteriorCerebralArteryOcclusion  
+    * ORDER DiagnosticTests({CTScan, Angiogram})  
+    * RECOMMEND Treatment({ASA, Surgery})  
+    * SCHEDULE FollowUp({ReferralToVascularSurgeon})  
+  * ELSE IF Patient.Symptoms MATCH {NasalMucosaErosion, AbdominalPain, Weakness, Headache, NauseaVomiting, Constipation, Wristdrop, LeadLineOnGums, MetallicTaste, Seizures, Delirium}  
+    * SUSPECT LeadPoisoning  
+    * ORDER DiagnosticTests({SerumLeadLevel, AbdominalXray})  
+    * RECOMMEND Treatment({ChelatingAgent, VitaminA, EnvironmentalLeadRemoval, LowFatDiet})  
+    * SCHEDULE FollowUp({MonitorLeadLevelUntilDecreased})  
+  * END IF  
+* LABEL MucosaChangesPathway  
+  * INPUT CommonSymptoms \= {NasalCongestion, Sneezing, WateryOrPurulentDischarge, RedSwollenMucosa, DrynessOrTicklingSensation}  
+  * IF Patient.Symptoms MATCH CommonSymptoms  
+    * IF Patient.Symptoms MATCH {SinusPain, SinusTenderness, SevereHeadache, InflamedThroat, PostnasalDrip, Malaise, LowGradeFever, Chills}  
+      * SUSPECT Sinusitis  
+      * GOTO RhinitisSinusitisProtocol  
+    * ELSE  
+      * SUSPECT Rhinitis  
+      * GOTO RhinitisSinusitisProtocol  
+    * END IF  
+  * ELSE IF Patient.Symptoms MATCH {SeptalDeviation, NasalMucosalSwelling, Epistaxis, Hematoma, Ecchymosis}  
+    * SUSPECT SeptalFracture  
+    * ORDER DiagnosticTests({HistoryOfFacialTrauma, FacialXray})  
+    * RECOMMEND Treatment({ReductionAndImmobilization, ColdTherapy, NSAIDs})  
+    * SCHEDULE FollowUp({ReturnVisitIfSwellingContinues})  
+  * ELSE IF Patient.Symptoms MATCH {SmoothPaleGrapelikeClusters, ChronicAllergicRhinitis, MouthBreathing, WateryMucusDischarge}  
+    * SUSPECT NasalPolyps  
+    * ORDER DiagnosticTests({Inspection, SinusXray, CTScan})  
+    * RECOMMEND Treatment({TreatUnderlyingCause, InhaledCorticosteroids, LocalAstringent, Surgery})  
+    * SCHEDULE FollowUp({SymptomMonitoring, OneWeekPostProcedure})  
+  * END IF
+
+**Shared Protocol for Rhinitis/Sinusitis:**
+
+* LABEL RhinitisSinusitisProtocol  
+* ORDER DiagnosticTests({Inspection, SinusTransillumination, SinusXray, CTScan})  
+* RECOMMEND Treatment({Analgesics, Decongestants, Antihistamines, Antibiotics})  
+* SCHEDULE FollowUp({EvaluationIn48-72Hours})  
+* END PROCEDURE
+
+### **14\. Anuria**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAnuria(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Cardiovascular, Pulmonary, GU\_Systems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Urinary Tract Obstruction Pathway:**  
+   * IF Patient.Symptoms MATCH {IncontinenceOrDribbling, BladderDistention, FullnessInLowerAbdomen, UpperAbdominalAndFlankPain, NauseaVomiting}  
+     * SUSPECT UrinaryTractObstruction  
+     * GOTO RenalDisorderCommonSymptoms  
+   * END IF  
+2. **Renal Artery Occlusion Pathway:**  
+   * IF Patient.Symptoms MATCH {SevereContinuousUpperAbdominalAndFlankPain, NauseaVomiting, DecreasedBowelSounds, Fever, DiastolicHypertension}  
+     * SUSPECT RenalArteryOcclusion  
+     * GOTO RenalDisorderProtocol  
+   * END IF  
+3. **Acute Tubular Necrosis Pathway:**  
+   * IF Patient.Symptoms MATCH {Hyperkalemia, Uremia, HeartFailure}  
+     * SUSPECT AcuteTubularNecrosis  
+     * GOTO RenalDisorderProtocol  
+   * END IF
+
+**Nested Renal Disorder Pathways:**
+
+* LABEL RenalDisorderCommonSymptoms  
+* INPUT CommonSymptoms \= {SuddenChangeFromOliguriaToAnuria, GrossHematuria, FlankPain, Fever}  
+* EVALUATE Patient.Symptoms against CommonSymptoms  
+  * IF Patient.Symptoms ALSO MATCH {FacialAndGeneralizedEdema, ElevatedBP, Headache, AbdominalPain}  
+    * SUSPECT CorticalNecrosis  
+    * GOTO RenalDisorderProtocol  
+  * ELSE IF Patient.Symptoms ALSO MATCH {CostovertebralAngleTenderness, RenalColic, AbdominalRigidity, Pyuria}  
+    * SUSPECT PapillaryNecrosis  
+    * GOTO RenalDisorderProtocol  
+  * ELSE  
+    * SUSPECT Glomerulonephritis  
+    * GOTO RenalDisorderProtocol  
+  * END IF
+
+**Shared Protocol for Renal Disorders:**
+
+* LABEL RenalDisorderProtocol  
+* ORDER DiagnosticTests({RenalStudies, Electrolytes, UA, UrinaryCatheterization, RenalUltrasound, Pyelography, RenalScan, AbdominalCTScan, Cystoscopy})  
+* RECOMMEND Treatment({Surgery, NephrostomyTube})  
+* SCHEDULE FollowUp({ReferralToUrologistInternistOrNephrologist})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Burns, CrushInjury, HemolyticUremicSyndrome, HepaticRenalSyndrome, RenalArteryOrVeinOcclusion, Vasculitis})  
+* CONSIDER OtherCauses({ContrastDye, Medications})  
+* END PROCEDURE
+
+### **15\. Anxiety**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAnxiety(Patient)  
+* PERFORM FocusedPhysicalExam(SystemsInvolvedInSymptomComplaints, PsychologicalAssessment)  
+* GATHER HistoryOfPresentIllness
+
+**Triage by Symptom Cluster:**
+
+1. **Cardiovascular Pathway:**  
+   * INPUT CommonSymptoms \= {SharpCrushingSubsternalChestPain, SOB, Tachycardia}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * SUSPECT AnginaPectoris  
+     * IF Patient.Symptoms ALSO MATCH {WorseningChestPain, Diaphoresis, PainRadiatingToArmJawBack, NauseaVomiting}  
+       * SUSPECT MyocardialInfarction  
+       * IF Patient.Symptoms ALSO MATCH {Hypotension, HemodynamicInstability, Bradycardia, CoolClammySkin, HeartFailure, PulmonaryEdema}  
+         * SUSPECT CardiogenicShock  
+       * END IF  
+     * END IF  
+     * GOTO CardiacProtocol  
+   * END IF  
+2. **Respiratory Pathway:**  
+   * INPUT CommonSymptoms \= {SOB, Wheezing, PoorGasExchange}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * SUSPECT Asthma  
+     * IF Patient.Symptoms ALSO MATCH {RespiratoryDistress, Tachycardia, MentalSluggishness, Hypotension}  
+       * SUSPECT ARDS  
+     * ELSE IF Patient.Symptoms ALSO MATCH {Urticaria, Angioedema, Hypotension}  
+       * SUSPECT AnaphylacticShock  
+     * END IF  
+     * GOTO RespiratoryProtocol  
+   * END IF  
+3. **Psychological/Neurological Pathway:**  
+   * IF Patient.Symptoms MATCH {Tachycardia, Dyspnea, Diaphoresis, ChokingSensation, Paresthesia, Flushing}  
+     * SUSPECT PanicDisorder  
+     * GOTO PsychologicalProtocol  
+   * ELSE IF Patient.Symptoms MATCH {Restlessness, Fatigue, Irritability, AutonomicHyperactivity, DifficultySleeping}  
+     * SUSPECT GeneralizedAnxietyDisorder  
+     * GOTO PsychologicalProtocol  
+   * END IF
+
+**Shared Protocols:**
+
+* LABEL CardiacProtocol  
+* ORDER DiagnosticTests({ECG, CardiacEnzymes, Troponin, C-ReactiveProtein})  
+* RECOMMEND Treatment({Aspirin, Vasodilator, Analgesic, Thrombolytic, Anticoagulant, CardiacCatheterization, PCI})  
+* SCHEDULE FollowUp({ReferralToCardiologist, CardiacRehabilitation})  
+* LABEL RespiratoryProtocol  
+* ORDER DiagnosticTests({PhysicalExam, ABG, CXR})  
+* RECOMMEND Treatment({AirwayMaintenance, OxygenTherapy, Epinephrine, Corticosteroids, BetaAgonists})  
+* SCHEDULE FollowUp({AsNeeded})  
+* LABEL PsychologicalProtocol  
+* ORDER DiagnosticTests({History, RuleOutMedicalConditions, CBC, Electrolytes, SerumAndUrineDrugScreens})  
+* RECOMMEND Treatment({Medication, DistractionAndRelaxationTechniques})  
+* SCHEDULE FollowUp({ReferralToPsychiatristOrPsychologist})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AlcoholWithdrawal, AutonomicHyperreflexia, COPD, Depression, Hyperthyroidism, HyperventilationSyndrome, Hypoglycemia, MitralValveProlapse, ObsessiveCompulsiveDisorder, Pheochromocytoma, Phobias, Pneumonia, Pneumothorax, PostconcussionSyndrome, PosttraumaticStressDisorder, PulmonaryEmbolism, Rabies, SomatoformDisorder})  
+* CONSIDER OtherCauses({Antidepressants, CNS\_Stimulants, Sympathomimetics})  
+* END PROCEDURE
+
+### **16\. Aphasia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAphasia(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT, CranialNerves, Neurologic, Cardiovascular, MusculoskeletalSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {InsidiousOnsetOfAphasia, DecreasedLOC, UnilateralHemiparesis, Ataxia, HomonymousHemianopia, FacialDroop, Paresthesia, Diplopia, LossOfSensation}
+
+**Differential Diagnosis Pathways:**
+
+1. **Cerebrovascular Pathway (TIA/Stroke):**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Symptoms are Temporary  
+       * SUSPECT TransientIschemicAttack (TIA)  
+     * ELSE IF Symptoms are PermanentOrProgressive  
+       * SUSPECT Stroke  
+     * END IF  
+     * GOTO CerebrovascularProtocol  
+   * END IF  
+2. **Brain Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH {GradualProgression, BehavioralChanges, MemoryLoss, Vomiting, Headache, MotorWeakness, Ataxia, Seizures, AuditoryHallucinations, VisualFieldDeficits, IncreasedICP}  
+     * SUSPECT BrainTumor  
+     * GOTO CerebrovascularProtocol  
+   * END IF  
+3. **Head Trauma Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenTransientOrPermanentSymptoms, BlurredOrDoubleVision, Headache, Paresis, CerebrospinalOtorhinorrhea, BehavioralChanges, SignsOfIncreasedICP, AlteredRespirations, TachycardiaOrBradycardia}  
+     * SUSPECT HeadTrauma  
+     * GOTO CerebrovascularProtocol  
+   * END IF  
+4. **Encephalitis Pathway:**  
+   * IF Patient.Symptoms MATCH {StiffNeck, Listlessness, Fever, Headache, Vomiting} (EARLY)  
+     * IF Patient.Symptoms PROGRESS to {Seizures, Confusion, Stupor, Hemiparesis, AsymmetricalDTRs, PositiveBabinski, FacialWeakness, Nystagmus, OcularPalsies, Ataxia, Photophobia} (LATE)  
+       * SUSPECT Encephalitis  
+       * GOTO CerebrovascularProtocol  
+     * END IF  
+   * END IF
+
+**Shared Protocol:**
+
+* LABEL CerebrovascularProtocol  
+* ORDER DiagnosticTests({HistoryOfIllness, SkullXray, CTScan, MRA, MRI, Angiography, EEG})  
+* RECOMMEND Treatment({AirwayStabilization, TreatCause, ControlInjuryExtension, ThrombolyticsForStroke, Anticonvulsants, Analgesics, Surgery})  
+* SCHEDULE FollowUp({ReferralToNeurologistOrNeurosurgeon, TransferToBrainInjuryCenter})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AlzheimerDisease, BrainAbscess, CreutzfeldtJakobDisease})  
+* END PROCEDURE
+
+### **17\. Apnea**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessApnea(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT, Neurologic, Pulmonary, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Airway Obstruction Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenOnsetRespiratoryDistressOrStridor, CompleteCessationOfBreathing, AbsentBreathSounds}  
+     * SUSPECT AirwayObstruction  
+     * GOTO ApneaProtocol  
+   * END IF  
+2. **Brain Stem Involvement Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenOrGradualOnset, DecreasedLOC, VariousMotorAndSensoryDeficits}  
+     * SUSPECT BrainStemInvolvement  
+     * GOTO ApneaProtocol  
+   * END IF  
+3. **Neuromuscular Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenOrGradualOnset, DiaphragmaticOrIntercostalMuscleParalysis, RespiratoryWeaknessOrParalysis}  
+     * SUSPECT NeuromuscularFailure  
+     * GOTO ApneaProtocol  
+   * END IF  
+4. **Parenchymal Lung Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {SuddenOrGradualOnset, Crackles, LaboredRespiration, AssociatedMuscleUse}  
+     * SUSPECT ParenchymalLungDisease  
+     * GOTO ApneaProtocol  
+   * END IF
+
+**Shared Protocol:**
+
+* LABEL ApneaProtocol  
+* ORDER DiagnosticTests({PhysicalExam, CXR, CTScan})  
+* RECOMMEND Treatment({EstablishAndMaintainAirway, OxygenTherapy, TreatUnderlyingCause, ProperPositioning})  
+* SCHEDULE FollowUp({HospitalizationUntilRespiratoryStatusIsStable})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({DrugOverdose, HeadInjury, Stroke})  
+* END PROCEDURE
+
+### **18\. Apraxia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessApraxia(Patient)  
+* PERFORM FocusedPhysicalExam(Neurologic, Musculoskeletal, Cardiovascular, PulmonarySystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Aphasia, DecreasedMentalAcuity, Headache, Incontinence, VisualFieldDeficits}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Hepatic Encephalopathy Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {SystemicInfection, Jaundice, Ascites, Asterixis, HyperactiveReflexes}  
+     * SUSPECT HepaticEncephalopathy  
+     * IF Patient.Symptoms ALSO MATCH {Dysarthria, Hyperreflexia, Seizures}  
+       * // Symptoms overlap with other conditions, continue evaluation  
+     * END IF  
+     * ORDER DiagnosticTests({HistoryOfLiverDisease, LFT, AmmoniaLevel, Electrolytes, CoagulationStudies, CBC})  
+     * RECOMMEND Treatment({TreatPrecipitatingCause, LowProteinDiet, Lactulose, Antibiotics, ElectrolyteReplacement})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+2. **Stroke Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {Dysarthria, Dysphagia, NauseaVomiting}  
+     * SUSPECT Stroke  
+     * IF Patient.Symptoms ALSO MATCH {Fever, StiffNeck}  
+       * SUSPECT BrainAbscess  
+       * GOTO BrainLesionProtocol  
+     * ELSE  
+       * SUSPECT BrainTumor  
+       * GOTO BrainLesionProtocol  
+     * END IF  
+     * ORDER DiagnosticTests({CoagulationStudies, CarotidUltrasound, CTScan, Angiography, ECG, EEG})  
+     * RECOMMEND Treatment({ThrombolyticsAsNeeded, TreatCauseAndExtentOfInjury})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+3. **Alzheimer's Disease Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {RetrogradeAmnesia, ProgressiveMemoryLoss, Agitation, InabilityToConcentrate, DisregardForHygiene, Confusion, Irritability, EmotionalLability} (EARLY)  
+     * IF Patient.Symptoms PROGRESS to {Aphasia, Dementia, Incontinence, MuscleRigidity} (LATE)  
+       * SUSPECT AlzheimerDisease  
+       * GOTO AlzheimerProtocol (See Amnesia)  
+     * END IF  
+   * END IF
+
+**Shared Protocol for Brain Lesion (Tumor/Abscess):**
+
+* LABEL BrainLesionProtocol  
+* ORDER DiagnosticTests({CBC, CTScan, MRI, Biopsy})  
+* RECOMMEND Treatment({Anticonvulsants, AntibioticsForAbscess, Surgery})  
+* SCHEDULE FollowUp({AsNeededBasedOnNeurologicStatus})  
+* END PROCEDURE
+
+### **19\. Arm Pain**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessArmPain(Patient, Location)  
+* PERFORM FocusedPhysicalExam(Pain, Musculoskeletal, Neurovascular, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness  
+* SWITCH (Location)  
+  * CASE "Elbow": CALL AssessElbowPain(Patient)  
+  * CASE "Shoulder": CALL AssessShoulderPain(Patient)  
+  * CASE "Wrist": CALL AssessWristPain(Patient)  
+* END SWITCH  
+* END PROCEDURE
+
+**Elbow Pain Sub-procedure:**
+
+* PROCEDURE AssessElbowPain(Patient)  
+* IF Patient.Symptoms MATCH {DecreasedMotion, PainOnMovement, TendernessAtOlecranon}  
+  * SUSPECT Tendinitis  
+  * IF Patient.Symptoms ALSO MATCH {Swelling, Erythema, InflammationSuperficialToOlecranonBursa}  
+    * SUSPECT Bursitis  
+  * ELSE IF Patient.Symptoms ALSO MATCH {MuscleWeakness, PainAtLateralEpicondyle, IncreasedPainWithWristExtension}  
+    * SUSPECT LateralEpicondylitis  
+  * END IF  
+  * ORDER DiagnosticTests({PhysicalExam, ElbowXray})  
+  * RECOMMEND Treatment({RICE, PhysicalTherapy, NSAIDs, Analgesics})  
+  * SCHEDULE FollowUp({ReturnVisitIn48-72Hours})  
+* ELSE IF Patient.Symptoms MATCH {DecreasedMotion, Deformity, Edema, PossibleImpairedCirculation, PossibleParesthesia}  
+  * IF Patient.Symptoms MATCH {WarmthAtSite, BoggySwelling, Tenderness}  
+    * SUSPECT Arthritis  
+  * ELSE IF Patient.Symptoms MATCH {Crepitus, Ecchymosis, ImpairedCirculation, Paresthesia}  
+    * SUSPECT Fracture  
+  * ELSE  
+    * SUSPECT Dislocation  
+  * END IF  
+  * ORDER DiagnosticTests({ArmXray})  
+  * RECOMMEND Treatment({ArmCast, RICE, NSAIDs, Analgesics})  
+  * SCHEDULE FollowUp({ReferralToOrthopedicSurgeon})  
+* END IF  
+* END PROCEDURE
+
+**Shoulder Pain Sub-procedure:**
+
+* PROCEDURE AssessShoulderPain(Patient)  
+* IF Patient.Symptoms MATCH {Edema, Tenderness, Inflammation, IncreasedPainOnElevation, PainAtAcromion, DifficultySleepingOnSide}  
+  * SUSPECT Tendinitis  
+  * IF Patient.Symptoms ALSO MATCH {Weakness, AtrophyOfSupraspinatus, ImpairedAbduction}  
+    * SUSPECT RotatorCuffTear  
+  * END IF  
+* ELSE IF Patient.Symptoms MATCH {DiffuseDullAchingPain, ProgressiveRestrictionOfMovement, NoTendernessOnPalpation}  
+  * SUSPECT AdhesiveCapsulitis  
+* ELSE IF Patient.Symptoms MATCH {PainfulShoulderShrugging, StiffnessOnElevation, Crepitus, NightPain}  
+  * SUSPECT Arthritis  
+* END IF  
+* // All pathways lead to same protocol  
+* ORDER DiagnosticTests({ShoulderXray, MRI})  
+* RECOMMEND Treatment({SlingFor48-72Hours, RICE, NSAIDs, CorticosteroidInjections, PhysicalTherapy})  
+* SCHEDULE FollowUp({ReturnVisitIn48-72Hours, ReferralToOrthopedicSurgeonIfTearOccurs})  
+* END PROCEDURE
+
+**Wrist Pain Sub-procedure:**
+
+* PROCEDURE AssessWristPain(Patient)  
+* IF Patient.Symptoms MATCH {IntermittentParesthesia, PainWorseAtNight, PainOnRepetitiveMovements, PositiveTinelAndPhalenSigns}  
+  * SUSPECT CarpalTunnelSyndrome  
+  * ORDER DiagnosticTests({EMG})  
+  * RECOMMEND Treatment({Rest, Splints, NSAIDs, CorticosteroidOrLidocaineInjections, Surgery})  
+  * SCHEDULE FollowUp({ReferralToNeurosurgeonOrOrthopedicSurgeon})  
+* ELSE IF Patient.Symptoms MATCH {WarmthAtSite, BoggySwelling, Tenderness, LimitedMotion}  
+  * SUSPECT Arthritis  
+  * ORDER DiagnosticTests({WristXray})  
+  * RECOMMEND Treatment({ASA, NSAIDs, Analgesics, PhysicalTherapy})  
+  * SCHEDULE FollowUp({AsNeeded})  
+* ELSE IF Patient.Symptoms MATCH {PainOnMovement, DecreasedPainOnRest}  
+  * SUSPECT SprainOrStrain  
+  * IF Patient.Symptoms ALSO MATCH {PainOnRepetitiveMovement, Paresthesia}  
+    * IF Patient.Symptoms MATCH {Deformity, Swelling, Ecchymosis, Paresthesia}  
+      * SUSPECT Fracture  
+      * ORDER DiagnosticTests({WristXray})  
+      * RECOMMEND Treatment({Cast, NSAIDs, Analgesics, RICE})  
+      * SCHEDULE FollowUp({ReferralToOrthopedicSurgeon, ReevaluationIn1Week})  
+    * ELSE IF Patient.Symptoms MATCH {PainInRadialAspect, PainOnPalpationOfSnuffBox, PainOnPassiveROM\_ofThumb, PositiveFinkelsteinTest}  
+      * SUSPECT Tenosynovitis  
+      * ORDER DiagnosticTests({CBC, ESR, MRI})  
+      * RECOMMEND Treatment({RICE, NSAIDs, CorticosteroidOrLidocaineInjection, ThumbSpicaSplint})  
+      * SCHEDULE FollowUp({ReferralToOrthopedicHandSpecialist})  
+    * ELSE  
+      * SUSPECT Tendinitis  
+      * // Falls under Sprain/Strain protocol  
+    * END IF  
+  * END IF  
+* END IF  
+* END PROCEDURE
+
+### **20\. Asterixis**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAsterixis(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicAndRespiratorySystems, Abdomen)  
+* GATHER HistoryOfPresentIllness
+
+**Triage by Symptom Cluster:**
+
+1. **Hepatic/Renal Pathway:**  
+   * INPUT CommonSymptoms \= {SystemicInfection, Jaundice, Ascites, HyperactiveReflexes}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * SUSPECT HepaticEncephalopathy  
+     * ORDER DiagnosticTests({HistoryOfLiverDisease, LFT, AmmoniaLevel, Electrolytes, CoagulationStudies, CBC})  
+     * RECOMMEND Treatment({TreatPrecipitatingCause, LowProteinDiet, Lactulose, Antibiotics, ElectrolyteReplacement})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * ELSE IF Patient.Symptoms MATCH {AberrantBehavior, Apraxia, Hyperventilation, Coma, PositiveBabinski, FetorHepaticus, Bradycardia, DecreasedRespirations, Seizures}  
+     * SUSPECT Cirrhosis  
+     * ORDER DiagnosticTests({CoagulationStudies, LFT, Transferrin, Ferritin, LipidPanel, Albumin, Bilirubin, PeritonealFluidAnalysis, AbdominalXray, CTScan, LiverBiopsy})  
+     * RECOMMEND Treatment({LowSodiumHighProteinDiet, Diuretics, VitaminK, PeritonealTap})  
+     * SCHEDULE FollowUp({AsNeeded})  
+     * IF Patient.Symptoms ALSO MATCH {Lethargy, Somnolence, Confusion, Weakness, Disorientation, BehaviorChanges}  
+       * SUSPECT UremicSyndrome  
+       * ORDER DiagnosticTests({UA, BUN, Creatinine, PTH, Electrolytes, ABG})  
+       * RECOMMEND Treatment({TreatUnderlyingCause, Dialysis})  
+       * SCHEDULE FollowUp({ReferralToNephrologist})  
+     * END IF  
+   * END IF  
+2. **Respiratory Pathway:**  
+   * INPUT CommonSymptoms \= {Headache, Restlessness, Confusion, Tachypnea, Apprehension, DecreasedReflexes, SOB}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * SUSPECT SevereRespiratoryInsufficiency  
+     * ORDER DiagnosticTests({ABG, CXR, Bronchoscopy, ChestCT, PFTs})  
+     * RECOMMEND Treatment({AirwayMaintenance, Ventilation, OxygenTherapy})  
+     * SCHEDULE FollowUp({ReferralToSmokingCessation, ReferralToPulmonologist})  
+     * IF Patient.Symptoms ALSO MATCH {Somnolence, DifficultyBreathing, RapidShallowRespirations, Wheezing, DiminishedBreathSounds, ChronicCough, Fatigue}  
+       * IF Patient.Symptoms MATCH {Cyanosis, NasalFlaring, Orthopnea, WeightLoss, Insomnia, Clubbing, BarrelChest}  
+         * SUSPECT Emphysema  
+       * ELSE IF Patient.Symptoms MATCH {FrequentRespiratoryInfections, Crackles, Edema, ReddishCheeks, Headache}  
+         * SUSPECT ChronicBronchitis  
+       * END IF  
+       * ORDER DiagnosticTests({ABG, SerumAlphaAntitrypsin, CXR, PFT})  
+       * RECOMMEND Treatment({Bronchodilators, Diuretics, Corticosteroids, Antibiotics, FluAndPneumococcalVaccines})  
+       * SCHEDULE FollowUp({MonthlyToCheckups, ReferralToPulmonologist})  
+     * END IF  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({Phenytoin})  
+* END PROCEDURE
+
+### **21\. Ataxia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAtaxia(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicExamination, VitalSigns)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Cerebellar Hemorrhage Pathway:**  
+   * IF Patient.Symptoms MATCH {UnilateralOrBilateralAtaxia, RepeatedVomiting, OccipitalHeadache, Vertigo, OculomotorPalsy, Dysphagia, VisionChanges, Dysarthria}  
+     * SUSPECT CerebellarHemorrhage  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({Antihypertensives, Mannitol, Surgery, Ventriculostomy})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNeurosurgeon})  
+   * END IF  
+2. **Stroke Pathway:**  
+   * IF Patient.Symptoms MATCH {UnilateralOrBilateralMotorWeakness, PossibleAlteredLOC, SensoryLoss, Vertigo, NauseaVomiting, OculomotorPalsy, Dysphagia}  
+     * SUSPECT Stroke  
+     * ORDER DiagnosticTests({CoagulationStudies, CTScan, MRI, Angiography, EEG})  
+     * RECOMMEND Treatment({Thrombolytics, Anticoagulants, Antihypertensives})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+3. **Head Trauma Pathway:**  
+   * IF Patient.Symptoms MATCH {UsuallyUnilateralAtaxia, Vomiting, Headache, DecreasedLOC, Confusion, Irritability, FocalNeurologicDeficits}  
+     * SUSPECT HeadTrauma  
+     * ORDER DiagnosticTests({CTScan, MRI, EEG})  
+     * RECOMMEND Treatment({Corticosteroids, Analgesics, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({CerebellarAbscess, CreutzfeldtJakobDisease, DiabeticNeuropathy, Diphtheria, Encephalomyelitis, FriedreichAtaxia, GuillainBarreSyndrome, HepatocerebralDegeneration, Hyperthermia, MetastaticCancer, MultipleSclerosis, OlivopontocerebellarAtrophy, Poisoning, PolyarteritisNodosa, Polyneuropathy, Porphyria, PosteriorFossaTumor, SpinocerebellarAtaxia, Syringomyelia, WernickeDisease})  
+* CONSIDER OtherCauses({Aminoglutethimide, Anticholinergics, Anticonvulsants, TricyclicAntidepressants})  
+* END PROCEDURE
+
+### **22\. Athetosis**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAthetosis(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Vomiting, PersonalityChanges, Seizures, VisionChanges, Dysarthria, Ataxia, Hemiplegia}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Brain Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {ContralateralChoreoathetosisAndDystonia, Headache, Malaise}  
+     * SUSPECT BrainTumor  
+     * ORDER DiagnosticTests({CTScan, MRI, Angiography, CT\_GuidedBiopsy})  
+     * RECOMMEND Treatment({Chemotherapy, Corticosteroids, OsmoticDiuretics, Anticonvulsants, Analgesics, Surgery, RadiationTherapy})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralsToOncologistAndNeurosurgeon})  
+   * END IF  
+2. **Cerebral Infarction Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {ContralateralAthetosis, AlteredLOC, ContralateralParalysis, Weakness, LanguageDifficulties, MemoryLoss, Dysphagia}  
+     * SUSPECT CerebralInfarction  
+     * ORDER DiagnosticTests({CTScan, MRI, CarotidUltrasound})  
+     * RECOMMEND Treatment({Anticoagulant, Antihypertensives, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNeurologist})  
+   * END IF  
+3. **Huntington's Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {Chorea, Dystonia, Dysarthria, FacialApraxia, Rigidity, Depression, UnsteadyGait, BehavioralChanges, ProgressiveMentalDeterioration, Dementia}  
+     * SUSPECT HuntingtonDisease  
+     * ORDER DiagnosticTests({DNA\_MarkerStudies, CTScan, MRI})  
+     * RECOMMEND Treatment({Antipsychotics, VariesBasedOnSymptoms})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToPsychologicalCounselor})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({CalcificationOfTheBasalGanglia, HepaticEncephalopathy, WilsonDisease})  
+* CONSIDER OtherCauses({Levodopa, Phenothiazines, Phenytoin})  
+* END PROCEDURE
+
+### **23\. Babinski's Reflex**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBabinskiReflex(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen, Rectum)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Hemiparesis, Hemiplegia, DecreasedPainSensation, UnsteadyGait, Incoordination, Headache, Vomiting, EmotionalLability, Confusion, DecreasedLOC}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Brain Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {HyperactiveDTRs, Spasticity, Seizures, CranialNerveDysfunction}  
+     * SUSPECT BrainTumor  
+     * ORDER DiagnosticTests({CTScan, MRI, Angiography, CT\_GuidedBiopsy})  
+     * RECOMMEND Treatment({Chemotherapy, Corticosteroids, OsmoticDiuretics, Anticonvulsants, Analgesics, Surgery, RadiationTherapy})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralsToOncologistAndNeurosurgeon})  
+   * END IF  
+2. **Stroke Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF LesionInCerebrum AND Patient.Symptoms MATCH {UnilateralBabinski, Hemianopia, Aphasia}  
+       * SUSPECT CerebrumStroke  
+     * ELSE IF LesionInBrainstem AND Patient.Symptoms MATCH {BilateralBabinski, CranialNerveDysfunction}  
+       * SUSPECT BrainstemStroke  
+     * END IF  
+     * ORDER DiagnosticTests({CTScan, MRI, Angiography})  
+     * RECOMMEND Treatment({Thrombolytics, Anticoagulants, Antihypertensives, SurgeryForHemorrhagicStroke})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNeurologist})  
+   * END IF  
+3. **Head Trauma Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {UnilateralOrBilateralBabinski, Ataxia, Irritability, FocalNeurologicDeficits, HyperactiveDTRs, Spasticity, Weakness}  
+     * SUSPECT HeadTrauma  
+     * ORDER DiagnosticTests({CTScan, MRI, EEG})  
+     * RECOMMEND Treatment({Corticosteroids, Analgesics, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({ALS, CervicalLesion, CervicalStenosis, FamilialSpasticParaparesis, FriedreichAtaxia, HepaticEncephalopathy, Meningitis, MultipleSclerosis, PerniciousAnemia, Rabies, SpinalCordInjury, SpinalCordTumor, SpinalParalyticPoliomyelitis, SpinalTuberculosis, Syringomyelia})  
+* END PROCEDURE
+
+### **24\. Back Pain**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBackPain(Patient)  
+* PERFORM FocusedPhysicalExam(NeurovascularAndMusculoskeletalSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {GradualOrSuddenLowerBackPain, PainExacerbatedByActivity, PainRelievedByRest, Stiffness}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Abdominal Aortic Aneurysm (Dissecting) Pathway:**  
+   * IF Patient.Symptoms MATCH {LowerBackPainOrDullAbdominalPain, ConstantUpperAbdominalPain, PulsatingAbdominalMass, MottledSkinBelowWaist, AbsentFemoralAndPedalPulses, LowerBP\_inLegs, MildTendernessWithGuarding, SignsOfShock}  
+     * SUSPECT DissectingAAA  
+     * ORDER DiagnosticTests({CBC, AbdominalXray, CTScan, MRI, Angiography})  
+     * RECOMMEND Treatment({MaintainHemodynamicStatus, Antihypertensives, Analgesics, Surgery})  
+     * SCHEDULE FollowUp({ReferralToVascularSurgeon})  
+   * END IF  
+2. **Ankylosing Spondylitis Pathway:**  
+   * IF Patient.Symptoms MATCH {SacroiliacPainTravelsUpSpine, PainWorseInMorningOrAfterInactivity, PainUnrelievedByRest, LocalTenderness, Fatigue, Fever, Anorexia, WeightLoss, Iritis}  
+     * SUSPECT AnkylosingSpondylitis  
+     * ORDER DiagnosticTests({HLA\_B27, ESR, CBC, SpinalAndPelvicXrays})  
+     * RECOMMEND Treatment({NSAIDs, PhysicalTherapy, Surgery})  
+     * SCHEDULE FollowUp({ReturnVisitIn6to12Months})  
+   * END IF  
+3. **Lumbosacral Sprain / Intervertebral Disk Disorder Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.History MATCH {RecentBackInjury}  
+       * SUSPECT LumbosacralSprain  
+     * ELSE IF Patient.Symptoms MATCH {PositiveSciaticScratchTest, PositiveCrossStraightLegRaisingSign, Paresthesia}  
+       * SUSPECT IntervertebralDiskDisorder  
+     * END IF  
+     * GOTO SpineProtocol  
+   * END IF
+
+**Shared Protocol for Spine Conditions:**
+
+* LABEL SpineProtocol  
+* ORDER DiagnosticTests({SpinalXray, CTScan, MRI, Myelogram, EMG, NerveConductionVelocityTest})  
+* RECOMMEND Treatment({BedRest, Analgesics, NSAIDs, MuscleRelaxants, SurgeryForDiskDisorder, PhysicalTherapy})  
+* SCHEDULE FollowUp({ReevaluationIn10Days, ThenAgainIn2Months, ReferralToNeurosurgeon})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AcuteCaudaEquina, Appendicitis, Cholecystitis, Chordoma, Endometriosis, MetastaticTumors, Myeloma, Pancreatitis, PerforatedUlcer, ProstateCancer, Pyelonephritis, ReiterSyndrome, RenalCalculi, SacroiliacStrain, SpinalNeoplasm, SpinalStenosis, Spondylolisthesis, TransverseProcessFracture, VertebralCompressionFracture, VertebralOsteomyelitis, VertebralOsteoporosis})  
+* END PROCEDURE
+
+### **25\. Barrel Chest**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBarrelChest(Patient)  
+* PERFORM FocusedPhysicalExam(Abdomen)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Wheezing, SOB, AccessoryMuscleUse, ChestTightness, Cough, ExertionalDyspnea, ProlongedExpiratoryPhase, Tachypnea}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Asthma Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {BarrelChestInChronicAsthma, NasalFlaring, Tachycardia, Perspiration, Flushing}  
+     * IF Patient.Symptoms MATCH {SevereDyspnea, ProductiveCough} (ACUTE)  
+       * // Acute exacerbation  
+     * END IF  
+     * SUSPECT Asthma  
+     * GOTO COPD\_Protocol  
+   * END IF  
+2. **Emphysema Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {LateSignBarrelChest, Anorexia, WeightLoss, Malaise, PursedLipBreathing, PeripheralCyanosis, Clubbing}  
+     * SUSPECT Emphysema  
+     * GOTO COPD\_Protocol  
+   * END IF  
+3. **Chronic Bronchitis Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {Cyanosis}  
+     * SUSPECT ChronicBronchitis  
+     * GOTO COPD\_Protocol  
+   * END IF
+
+**Shared Protocol for COPD Conditions:**
+
+* LABEL COPD\_Protocol  
+* ORDER DiagnosticTests({CBC, ABG, SerumAlpha1Antitrypsin, CXR, PFT})  
+* RECOMMEND Treatment({Corticosteroids, Bronchodilators, Antiasthmatics, Antibiotics, Diuretics, FluAndPneumococcalVaccine, SmokingCessation, OxygenTherapy, BreathingExercises})  
+* SCHEDULE FollowUp({MonthlyToBiannualVisits, ReferralToPulmonologist})  
+* END PROCEDURE
+
+### **26\. Bladder Distention**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBladderDistention(Patient)  
+* PERFORM FocusedPhysicalExam(GU\_System, Abdomen)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Nocturia, UrinaryFrequency, Hematuria}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Benign Prostatic Hyperplasia (BPH) Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {GradualBladderDistention, UrinaryHesitancyAndStraining, ReducedForceOfUrineStream, OverflowIncontinence, PostvoidDribbling}  
+     * SUSPECT BPH  
+     * GOTO ProstateProtocol  
+   * END IF  
+2. **Prostate/Bladder Cancer Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {AbnormalProstateExam, SuprapubicFullness, IncompleteBladderEmptying, PerinealPain, Constipation, UrinaryUrgency, Dysuria}  
+     * IF Patient.Symptoms MATCH {Hematuria, Pyuria, PainInBladderRectumPelvisFlankBackOrLegs, Vomiting, Diarrhea, PalpableMassOnBimanualExam}  
+       * SUSPECT BladderCancer  
+       * ORDER DiagnosticTests({UA, UrineCytology, IVP, Cystoscopy, BladderBiopsy})  
+       * RECOMMEND Treatment({Chemotherapy, UrinaryCatheterization, Surgery})  
+       * SCHEDULE FollowUp({ReferralsToOncologistAndUrologist})  
+     * ELSE IF Patient.Symptoms MATCH {Dribbling, WeightLoss, Fatigue}  
+       * SUSPECT ProstateCancer  
+       * ORDER DiagnosticTests({PSA, UA, UrineOrProstaticFluidCytology, IVP, Ultrasound, MRI, BoneScan, Biopsy})  
+       * RECOMMEND Treatment({Chemotherapy, HormonalAgents, UrinaryCatheterization, Surgery, RadiationTherapy})  
+       * SCHEDULE FollowUp({ReferralsToOncologistAndUrologist})  
+     * END IF  
+   * END IF
+
+**Shared Protocol for BPH:**
+
+* LABEL ProstateProtocol  
+* ORDER DiagnosticTests({UA, UrineCulture, PSA, SerumCreatinine, IVP, VoidingCystourethrogram, CTScan, TransrectalUltrasound, PostvoidResidualUrineMeasurement, Cystoscopy})  
+* RECOMMEND Treatment({AlphaAdrenergicAntagonist, HormonalAgents, AntibioticsForChronicProstatitis, UrinaryCatheterization, Surgery})  
+* SCHEDULE FollowUp({ReferralToUrologist})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({BladderCalculi, MultipleSclerosis, Prostatitis, SpinalNeoplasms, UrethralCalculi, UrethralStricture})  
+* CONSIDER OtherCauses({Anesthetics, Anticholinergics, Catheterization, GanglionicBlockers, Opiates, Parasympatholytics, Sedatives})  
+* END PROCEDURE
+
+### **27\. Blood Pressure Decrease**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBloodPressureDecrease(Patient)  
+* PERFORM FocusedPhysicalExam(CardiovascularSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Lethargy, Confusion, Disorientation, Restlessness, Anxiety}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Myocardial Infarction (MI) Pathway:**  
+   * IF Patient.Symptoms MATCH {ChestBackOrAbdominalPain, SOB, Cough, Dizziness, NauseaVomiting, Diaphoresis}  
+     * SUSPECT MI  
+     * ORDER DiagnosticTests({LDH, Isoenzymes, Troponin, Angiography, Echocardiogram, ECG})  
+     * RECOMMEND Treatment({Aspirin, Nitrates, Analgesics, Thrombolytics, Anticoagulants, BetaBlockers, Vasopressors, OxygenTherapy, Angioplasty, CABG})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF  
+2. **Cardiogenic Shock Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {NarrowedPulsePressure, DiminishedPulse, DiminishedKorotkoffSounds, PeripheralCyanosis, PaleCoolClammySkin, Restlessness, Oliguria, Anxiety}  
+     * SUSPECT CardiogenicShock  
+     * ORDER DiagnosticTests({HistoryOfCardiacInjury, ABG, CardiacMarkers, Echocardiogram, Angiography, NuclearScan, PulmonaryArteryCatheterization})  
+     * RECOMMEND Treatment({Vasopressors, Inotropics, OxygenTherapy, IVFluids, IABP})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF  
+3. **Septic Shock Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {PaleSkin, CyanoticExtremities, BoundingPulse, Oliguria, Coma, Tachycardia, Fever, Chills, Tachypnea, NarrowedPulsePressure}  
+     * SUSPECT SepticShock  
+     * ORDER DiagnosticTests({ABG, BloodCultures, PulmonaryArteryCatheterization})  
+     * RECOMMEND Treatment({Vasopressors, Antibiotics, OxygenTherapy, IVFluids})  
+     * SCHEDULE FollowUp({ReturnVisitOneWeekPostDischarge})  
+   * END IF  
+4. **Hypovolemic Shock Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {DiminishedKorotkoffSounds, NarrowedPulsePressure, RapidWeakPulse, PeripheralVasoconstriction, CyanosisOfExtremities, PaleCoolClammySkin, Oliguria}  
+     * SUSPECT HypovolemicShock  
+     * ORDER DiagnosticTests({HistoryOfBloodLossOrInjury, CBC, CTScan, MRI, Xrays})  
+     * RECOMMEND Treatment({IVFluids, BloodProducts, Vasopressors, Inotropics})  
+     * SCHEDULE FollowUp({ReturnVisitOneWeekPostDischarge})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AcuteAdrenalInsufficiency, AlcoholToxicity, AnaphylacticShock, CardiacArrhythmias, CardiacContusion, CardiacTamponade, Cardiomyopathy, DiabeticKetoacidosis, HeartFailure, HyperosmolarHyperglycemicNonketoticComa, Hypoxemia, MI, NeurogenicShock, PulmonaryEmbolism, VasovagalSyncope})  
+* CONSIDER OtherCauses({AlphaAndBetaAdrenergicBlockers, AntianxietyAgents, CalciumChannelBlockers, Diuretics, GastricAcidStimulationTest, Histamine, GeneralAnesthetics, MAO\_Inhibitors, Antiarrhythmics, OpioidAnalgesics, Tranquilizers, Vasodilators, XrayStudiesWithContrastMedia})  
+* END PROCEDURE
+
+### **28\. Blood Pressure Increase**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBloodPressureIncrease(Patient)  
+* PERFORM FocusedPhysicalExam(CardiovascularAndNeurologicSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Hypertension Pathway:**  
+   * IF Patient.BP \>= 140/90 AND Patient.Symptoms MATCH {Headache, Retinopathy, SymptomsOfUnderlyingDisorder}  
+     * SUSPECT Hypertension  
+     * ORDER DiagnosticTests({HistoryOfRiskFactors, SustainedElevatedBP, CBC, Electrolytes, Cholesterol})  
+     * RECOMMEND Treatment({TreatUnderlyingCause, ReduceRiskFactors, LowFatLowSaltDiet, Medication})  
+     * SCHEDULE FollowUp({ReturnVisitsEvery3to6Months})  
+   * END IF  
+2. **Renovascular Stenosis Pathway:**  
+   * IF Patient.Symptoms MATCH {AbruptlyElevatedBP, BruitsOverUpperAbdomen, Hematuria, Headache, AcuteFlankPain}  
+     * SUSPECT RenovascularStenosis  
+     * ORDER DiagnosticTests({RenalScan, Angiography, IVP})  
+     * RECOMMEND Treatment({Medication, BalloonAngioplasty, Surgery})  
+     * SCHEDULE FollowUp({ReferralToNephrologist})  
+   * END IF  
+3. **Atherosclerosis Pathway:**  
+   * IF Patient.Symptoms MATCH {IncreasedSystolicBP, NormalOrSlightlyElevatedDiastolicBP, WeakPulse, FlushedSkin, Tachycardia, AnginalPain, Claudication}  
+     * SUSPECT Atherosclerosis  
+     * ORDER DiagnosticTests({CholesterolLevel, LDL, HDL, Ultrasound, Arteriography})  
+     * RECOMMEND Treatment({TreatAffectedArea, Medication, LowFatLowCholesterolLowSaltDiet, ExerciseProgram})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+4. **Pheochromocytoma Pathway:**  
+   * IF Patient.Symptoms MATCH {ParoxysmalOrSustainedElevatedBP, OrthostaticHypotension, Anxiety, Tremors, Diaphoresis, Palpitations, Paresthesias, Nausea, WeightLoss, Headache, VisionDisturbances}  
+     * SUSPECT Pheochromocytoma  
+     * ORDER DiagnosticTests({UrineMetanephrine, UrineCatecholamines, MRI, MIBG\_Scintiscan, AdrenalBiopsy})  
+     * RECOMMEND Treatment({AlphaAndBetaAdrenergicBlockers, Surgery})  
+     * SCHEDULE FollowUp({DailyBPMonitoringPreOp, UrineCatecholamineLevel2WeeksPostOp})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Aldosteronism, Anemia, AorticAneurysm, CushingSyndrome, Eclampsia, EssentialHypertension, IncreasedICP, MalignantHypertension, MI, PolycysticKidneyDisease, Preeclampsia, Thyrotoxicosis})  
+* CONSIDER OtherCauses({HeavyAlcoholUse, Ephedra, Ginseng, Licorice, Medications, StJohnsWort, KidneyDialysis, Transplantation})  
+* END PROCEDURE
+
+### **29\. Bowel Sounds, Abnormal**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbnormalBowelSounds(Patient)  
+* PERFORM FocusedPhysicalExam(VitalSigns, Abdomen, Rectum, Pelvis)  
+* GATHER HistoryOfPresentIllness  
+* EVALUATE BowelSoundType  
+  * IF BowelSounds \= Absent  
+    * CALL AssessAbsentBowelSounds(Patient)  
+  * ELSE IF BowelSounds \= Hyperactive  
+    * CALL AssessHyperactiveBowelSounds(Patient)  
+  * ELSE IF BowelSounds \= Hypoactive  
+    * CALL AssessHypoactiveBowelSounds(Patient)  
+  * END IF  
+* END PROCEDURE
+
+**Absent Bowel Sounds Sub-procedure:**
+
+* PROCEDURE AssessAbsentBowelSounds(Patient)  
+* INPUT CommonSymptoms \= {AbdominalDistention, Constipation, NauseaVomiting, Fever}  
+* IF Patient.Symptoms MATCH {Dehydration, AcuteColickyPain, ReboundTenderness, AbdominalRigidity, SignsOfShock}  
+  * IF Patient.Symptoms MATCH {AbsentBowelSoundsWithPeriodOfHyperactiveSounds}  
+    * SUSPECT StrangulatedBowel  
+  * ELSE  
+    * SUSPECT CompleteMechanicalObstruction  
+  * END IF  
+* ELSE IF Patient.Symptoms MATCH {AbsentBowelSoundsWithPeriodOfHyperactiveSounds, SuddenSevereEpigastricPain, Bruits, AbdominalRigidity, SignsOfShock}  
+  * SUSPECT MesentericArteryOcclusion  
+* ELSE IF Patient.Symptoms MATCH {GeneralizedDiscomfort, SmallLiquidStools, AbdominalPain}  
+  * SUSPECT ParalyticIleus  
+* END IF  
+* // All pathways lead to same protocol  
+* ORDER DiagnosticTests({CBC\_withDifferential, UA, HCG, Electrolytes, CTScan, AbdominalXray})  
+* RECOMMEND Treatment({NG\_Tube, IVFluids, ElectrolyteReplacement, Analgesics, Surgery})  
+* SCHEDULE FollowUp({ReferralToSurgeon})  
+* END PROCEDURE
+
+**Hyperactive Bowel Sounds Sub-procedure:**
+
+* PROCEDURE AssessHyperactiveBowelSounds(Patient)  
+* IF Patient.Symptoms MATCH {Diarrhea, NauseaVomiting, IncreasedFlatulence, AbdominalBloating, RecurrentAbdominalPain, Angioedema, Urticaria}  
+  * SUSPECT FoodHypersensitivityOrLactoseIntolerance  
+  * ORDER DiagnosticTests({FoodDiary})  
+  * RECOMMEND Treatment({AvoidanceOfOffendingAgent, LactoseDigestingEnzyme, CalciumSupplements})  
+  * SCHEDULE FollowUp({NoneNeededUnlessFailsToRespond})  
+* ELSE IF Patient.Symptoms MATCH {SuddenNauseaVomiting, ExplosiveDiarrhea, AbdominalPainAndCramping, Fever}  
+  * SUSPECT Gastroenteritis  
+  * ORDER DiagnosticTests({History, PhysicalExam, CBC, Electrolytes, StoolCulture})  
+  * RECOMMEND Treatment({NPO, ClearLiquids, Rest, Antiemetics})  
+  * SCHEDULE FollowUp({NoneNeededUnlessFailsToRespond})  
+* ELSE IF Patient.Symptoms MATCH {Hematemesis, CoffeeGroundEmesis, AbdominalDistention, BloodyDiarrhea, Melena, SignsOfHypovolemicShock}  
+  * SUSPECT GI\_Hemorrhage  
+  * ORDER DiagnosticTests({CBC, StoolForOccultBlood, Tc99mScan, Endoscopy, Colonoscopy})  
+  * RECOMMEND Treatment({NPO, IVFluids, BloodTransfusion, Surgery})  
+  * SCHEDULE FollowUp({ReferralToGastroenterologist})  
+* ELSE IF Patient.Symptoms MATCH {InsidiousHyperactiveSounds, Diarrhea, CrampingPain, Anorexia, LowGradeFever, AbdominalDistention, PainInRLQ, WeightLoss, MuscleWasting, Dehydration}  
+  * SUSPECT CrohnDisease  
+  * GOTO IBD\_Protocol  
+* ELSE IF Patient.Symptoms MATCH {AbruptHyperactiveSounds, BloodyDiarrhea, Anorexia, AbdominalPain, NauseaVomiting, Fever, Tenesmus, WeightLoss}  
+  * SUSPECT UlcerativeColitis  
+  * GOTO IBD\_Protocol  
+* END IF  
+* LABEL IBD\_Protocol  
+* ORDER DiagnosticTests({CBC, Electrolytes, ESR, StoolForOvaAndParasites, StoolCulture, AirContrastBariumEnema, Sigmoidoscopy, Colonoscopy})  
+* RECOMMEND Treatment({IncreasedDietaryFiber, AntiInflammatories, Antispasmodics, Hydration})  
+* SCHEDULE FollowUp({MonthlyEvaluations, ReferralToGastroenterologist})  
+* END PROCEDURE
+
+**Hypoactive Bowel Sounds Sub-procedure:**
+
+* PROCEDURE AssessHypoactiveBowelSounds(Patient)  
+* IF Patient.Symptoms MATCH {HypoactiveSoundsAfterHyperactivePeriod, AcuteColickyPain, NauseaVomiting, Constipation, AbdominalDistention, FecalBreathOdor}  
+  * SUSPECT MechanicalIntestinalObstruction  
+* ELSE IF Patient.Symptoms MATCH {BrieflyHyperactiveThenHypoactiveThenAbsentSounds, Fever, SuddenSevereMidepigastricPain, AbdominalDistention, Bruit, Vomiting, Constipation, AbdominalRigidity, SignsOfShock}  
+  * SUSPECT MesentericArteryOcclusion  
+* ELSE IF Patient.Symptoms MATCH {HypoactiveSoundsMayBecomeAbsent, AbdominalDistention, GeneralizedDiscomfort, ConstipationOrPassageOfFlatusAndSmallLiquidStools}  
+  * SUSPECT ParalyticIleus  
+* END IF  
+* // All pathways lead to same protocol  
+* ORDER DiagnosticTests({CBC\_withDifferential, UA, HCG, Electrolytes, CTScan})  
+* RECOMMEND Treatment({NG\_Tube, IVFluids, ElectrolyteReplacement, Analgesics, Surgery})  
+* SCHEDULE FollowUp({ReferralToSurgeon, ReturnVisitOneWeekPostHospitalization})  
+* END PROCEDURE
+
+### **30\. Bradycardia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBradycardia(Patient)  
+* PERFORM FocusedPhysicalExam(VitalSigns, Thyroid, Cardiovascular, Neurologic, PulmonarySystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Cardiac Arrhythmia Pathway:**  
+   * IF Patient.Symptoms MATCH {TransientOrSustainedBradycardia, Hypotension, Palpitations, DizzinessOrSyncope, Nausea, WeaknessOrFatigue, Pallor}  
+     * SUSPECT CardiacArrhythmia  
+     * ORDER DiagnosticTests({ABG, CBC, CardiacEnzymes, Electrolytes, Glucose, ECG, 24HourHolter})  
+     * RECOMMEND Treatment({Antiarrhythmic, Vagolytic, Pacemaker})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF  
+2. **Cardiomyopathy Pathway:**  
+   * IF Patient.Symptoms MATCH {TransientOrSustainedBradycardia, DizzinessOrSyncope, Edema, JVD, Fatigue, Orthopnea, Dyspnea, PeripheralCyanosis, ChestPain}  
+     * SUSPECT Cardiomyopathy  
+     * ORDER DiagnosticTests({DrugScreen, Electrolytes, CXR, Echocardiogram, ECG, CardiacCatheterization})  
+     * RECOMMEND Treatment({Antiarrhythmics, Diuretics, ACE\_Inhibitors, OxygenTherapy, LimitedActivity, LowFatLowSaltDiet})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF  
+3. **Cervical Spine Injury Pathway:**  
+   * IF Patient.Symptoms MATCH {TransientOrSustainedBradycardia, Hypotension, Hypothermia, SlowedPeristalsis, LegParalysis, PartialArmParalysis}  
+     * SUSPECT CervicalSpineInjury  
+     * ORDER DiagnosticTests({HistoryOfTrauma, CTScan, SpineMRI})  
+     * RECOMMEND Treatment({SpineStabilization, Corticosteroids})  
+     * SCHEDULE FollowUp({TransferToSpinalInjuryCenter})  
+   * END IF  
+4. **Hypothyroidism Pathway:**  
+   * IF Patient.Symptoms MATCH {Fatigue, Constipation, WeightGain, ColdSensitivity, CoolDryThickSkin, SparseDryHair, Alopecia, FacialSwelling, PeriorbitalEdema, ThickBrittleNails, NeckSwelling, Goiter}  
+     * SUSPECT Hypothyroidism  
+     * ORDER DiagnosticTests({ThyroidStudies, ECG})  
+     * RECOMMEND Treatment({ThyroidHormoneReplacement})  
+     * SCHEDULE FollowUp({ReturnVisitsEvery4to6Weeks, ThenEvery6Months})  
+   * END IF  
+5. **Myocardial Infarction (MI) Pathway:**  
+   * IF Patient.Symptoms MATCH {ChestBackOrAbdominalPain, SOB, Cough, Dizziness, NauseaVomiting, Diaphoresis, Anxiety}  
+     * SUSPECT MI  
+     * ORDER DiagnosticTests({LDH, Isoenzymes, Troponin, Angiography, Echocardiogram, ECG, CardiacCatheterization})  
+     * RECOMMEND Treatment({Aspirin, Nitrates, Analgesics, Thrombolytics, Anticoagulants, BetaBlockers, Vasopressors, OxygenTherapy, Angioplasty, CABG})  
+     * SCHEDULE FollowUp({ReturnVisit3to6WeeksPostHospitalization, ThenEvery3Months})  
+   * END IF  
+6. **Hypothermia Pathway:**  
+   * IF Patient.Temperature \< 89.6F AND Patient.Symptoms MATCH {Shivering, PeripheralCyanosis, MuscleRigidity, Bradypnea, ConfusionAndStupor}  
+     * SUSPECT Hypothermia  
+     * ORDER DiagnosticTests({Temperature, ECG})  
+     * RECOMMEND Treatment({EstablishABCs, TemperatureMonitoring, WarmIVFluids, WarmingBlanket, TreatUnderlyingCause})  
+     * SCHEDULE FollowUp({ReturnVisit2WeeksAfterHospitalization})  
+   * END IF  
+7. **Intracranial Hypertension Pathway:**  
+   * IF Patient.Symptoms MATCH {BradypneaOrTachypnea, WidenedPulsePressure, PersistentHeadache, ProjectileVomiting, FixedUnequalOrDilatedPupils, DecreasedLOC}  
+     * SUSPECT IntracranialHypertension  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({TreatUnderlyingCause, OsmoticDiuretics, Barbiturates, VentilatorySupport})  
+     * SCHEDULE FollowUp({ReferralToNeurologistOrNeurosurgeon})  
+   * END IF  
+* END PROCEDURE
+
+### **31\. Bradypnea**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBradypnea(Patient)  
+* PERFORM FocusedPhysicalExam(VitalSigns, Skin, Pulmonary, Neurologic, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {DecreasedLOC, DeterioratingMotorFunction, FixedDilatedPupils, Papilledema}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Diabetic Ketoacidosis (DKA) Pathway:**  
+   * IF Patient.Symptoms MATCH {KussmaulRespirations, DecreasedLOC, OliguriaOrPolyuria, FruityBreathOdor, Polydipsia, WeightLoss}  
+     * SUSPECT DKA  
+     * ORDER DiagnosticTests({Glucose, Electrolytes, ABG})  
+     * RECOMMEND Treatment({IVFluids, Insulin, ElectrolyteReplacement, NutritionalEducation})  
+     * SCHEDULE FollowUp({ReturnVisitOneWeekPostHospitalization})  
+   * END IF  
+2. **End-Stage Hepatic Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {Coma, HyperreactiveReflexes, Asterixis, FatigueAndWeakness, PositiveBabinski, FetorHepaticus}  
+     * SUSPECT EndStageHepaticFailure  
+     * ORDER DiagnosticTests({CBC, LFT, SerumAmmonia, LiverUltrasound})  
+     * RECOMMEND Treatment({Lactulose, ThiazideDiuretic, BedRest, SodiumAndFluidRestriction, ProteinRestriction})  
+     * SCHEDULE FollowUp({ReferralToHepatologist, ReturnVisitOneWeekPostHospitalization})  
+   * END IF  
+3. **Severe Intracranial Hypertension Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {WidenedPulsePressure, Bradycardia, Hypertension}  
+     * SUSPECT SevereIntracranialHypertension (Late Medullary Strangulation)  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({OsmoticDiuretics, Barbiturates, VentilatorySupport, ICP\_Monitoring})  
+     * SCHEDULE FollowUp({ReferralToNeurologistOrNeurosurgeon})  
+   * END IF  
+4. **End-Stage Renal Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {Seizures, DecreasedLOC, GI\_Bleeding, HypotensionOrHypertension, UremicFrost, NauseaVomiting, Weakness, Fatigue, WeightLossOrGain, Coma}  
+     * SUSPECT EndStageRenalFailure  
+     * ORDER DiagnosticTests({BUN, Creatinine, Electrolytes, UA, ABG, Ultrasound, IVP})  
+     * RECOMMEND Treatment({Dialysis, Electrolytes, Antihypertensives})  
+     * SCHEDULE FollowUp({ReferralToNephrologist})  
+   * END IF  
+5. **End-Stage Respiratory Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {Cyanosis, DiminishedBreathSounds, Tachycardia, DecreasedLOC}  
+     * SUSPECT EndStageRespiratoryFailure  
+     * ORDER DiagnosticTests({ABG, CXR, PFT})  
+     * RECOMMEND Treatment({MaintainAirway, VentilationManagement, OxygenTherapy, BetaAgonist, Corticosteroids})  
+     * SCHEDULE FollowUp({ReferralToPulmonologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({NarcoticAnalgesics, Sedatives, Barbiturates, Phenothiazines, CNS\_Depressants, Alcohol})  
+* END PROCEDURE
+
+### **32\. Breast Nodule**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBreastNodule(Patient)  
+* PERFORM FocusedPhysicalExam(VitalSigns, Breast)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Adenofibroma Pathway:**  
+   * IF Nodule MATCH {ExtremelyMobile, SlipperyFeel, Firm, Elastic, Round, WellDefined, UsuallyPainless}  
+     * SUSPECT Adenofibroma  
+     * ORDER DiagnosticTests({Ultrasound, NeedleAspiration})  
+     * RECOMMEND Treatment({ExcisionOrMonitoring, MonthlyBSE})  
+     * SCHEDULE FollowUp({AnnualClinicalExam, AnnualUltrasoundOrMammogram, ReferralToSurgeon})  
+   * END IF  
+2. **Fibrocystic Breast Disease Pathway:**  
+   * IF Nodule MATCH {Smooth, Round, SlightlyElastic, Mobile, FineGranularClusters, WellDefinedLumps, PossibleThickeningOfSkin, PossibleNippleDischarge, PremenstrualSymptoms}  
+     * SUSPECT FibrocysticBreastDisease  
+     * ORDER DiagnosticTests({Mammogram, Ultrasound})  
+     * RECOMMEND Treatment({SupportBra, DecreasedSaltAndCaffeine, HormonalContraceptives, VitaminE, PremenstrualNSAIDs})  
+     * SCHEDULE FollowUp({NoneUnlessUnresponsive})  
+   * END IF  
+3. **Breast Cancer / Paget's Carcinoma Pathway:**  
+   * IF Nodule MATCH {Painless, Firm, Fixed, PoorlyDelineated, Singular}  
+     * IF Patient.Symptoms MATCH {NippleRetraction, BreastDimpling, FlatteningOfNipple, SerousOrBloodyDischarge, Edema, PeauDOrange, AxillaryLymphadenopathy}  
+       * SUSPECT BreastCancer  
+     * ELSE IF Patient.Symptoms MATCH {ScalyEczematoidUnilateralNippleLesion, DeepSeatedMass, ItchyBurningNipplePain}  
+       * SUSPECT PagetCarcinoma  
+     * END IF  
+     * ORDER DiagnosticTests({Mammogram, Biopsy})  
+     * RECOMMEND Treatment({Chemotherapy, Radiation, Surgery})  
+     * SCHEDULE FollowUp({ReferralsToOncologistAndSurgeon})  
+   * END IF  
+4. **Breast Abscess Pathway:**  
+   * IF Patient.Symptoms MATCH {HotTenderFluctuantMass, Erythema, PeauDOrange, FeverAndChills, Malaise, GeneralizedDiscomfort}  
+     * IF Abscess is CHRONIC AND Nodule MATCH {Nontender, Irregular, Firm} AND Patient.Symptoms MATCH {SkinDimpling, PeauDOrange, NippleRetraction, AxillaryLymphadenopathy}  
+       * SUSPECT ChronicBreastAbscess  
+     * ELSE IF Abscess is ACUTE  
+       * SUSPECT AcuteBreastAbscess  
+     * END IF  
+     * IF Patient.Symptoms MATCH {TenderPalpableAbscessOnPeripheryOfAreola}  
+       * SUSPECT AreolarGlandAbscess  
+     * END IF  
+     * ORDER DiagnosticTests({SpecimenCulture, Mammogram, Ultrasound, NeedleAspiration})  
+     * RECOMMEND Treatment({LocalHotPacks, SurgicalDrainage, Antibiotics, MonthlyBSE})  
+     * SCHEDULE FollowUp({ReferralToSurgeon})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Actinomycosis, HydatidCyst, IntraductalPapilloma, Mastitis, SebaceousCyst})  
+* END PROCEDURE
+
+### **33\. Breast Pain**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBreastPain(Patient)  
+* PERFORM FocusedPhysicalExam(VitalSigns, Breast)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Abscess Pathway:**  
+   * INPUT CommonSymptoms \= {LocalizedPain, Tenderness, Erythema, PeauDOrange, Warmth, HotTenderFluctuantMass, Malaise, FeverAndChills}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {TenderPalpableAbscessOnPeripheryOfAreola}  
+       * SUSPECT AreolarGlandAbscess  
+     * ELSE  
+       * SUSPECT AcuteBreastAbscess  
+     * END IF  
+     * GOTO AbscessProtocol  
+   * END IF  
+2. **Cyst / Infected Sebaceous Cyst Pathway:**  
+   * INPUT CommonSymptoms \= {Acute, Localized, UnilateralPain, PalpableNodule}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {SmallWellDelineatedNodule, LocalizedErythema, Induration}  
+       * SUSPECT InfectedSebaceousCyst  
+     * ELSE  
+       * SUSPECT BreastCyst  
+     * END IF  
+     * GOTO AbscessProtocol  
+   * END IF  
+3. **Mastitis Pathway:**  
+   * IF Patient.Symptoms MATCH {SevereUnilateralPain, BreastWarmthAndErythema, PeauDOrange, InduratedNodule, SkinDimpling, NippleDeviation, Fever, Chills, Malaise, Fatigue, AxillaryLymphadenopathy}  
+     * SUSPECT Mastitis  
+     * ORDER DiagnosticTests({CBC\_withDifferential, SpecimenCulture})  
+     * RECOMMEND Treatment({Antibiotics, ContinuedLactation, LocalHeat, SupportBra})  
+     * SCHEDULE FollowUp({ReturnVisitIn7to10Days})  
+   * END IF  
+4. **Fibrocystic Breast Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {PremenstrualPainAndTenderness, FirmMobileWellDefinedNodule, FrequentlyBilateral, ClearSerousNippleDischarge, PremenstrualSymptoms}  
+     * SUSPECT FibrocysticBreastDisease  
+     * ORDER DiagnosticTests({Mammogram, Ultrasound})  
+     * RECOMMEND Treatment({SupportBra, DecreasedDietarySaltAndCaffeine, HormonalContraceptives, VitaminE, PremenstrualNSAIDs, MonthlyBSE})  
+     * SCHEDULE FollowUp({NoneUnlessUnresponsive})  
+   * END IF
+
+**Shared Protocol for Abscess/Cyst:**
+
+* LABEL AbscessProtocol  
+* ORDER DiagnosticTests({CultureOfWound, Mammogram, Ultrasound, NeedleAspiration})  
+* RECOMMEND Treatment({SurgicalDrainage, Antibiotics})  
+* SCHEDULE FollowUp({ReferralToSurgeon})  
+* END PROCEDURE
+
+### **34\. Breast Ulcer**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBreastUlcer(Patient)  
+* PERFORM FocusedPhysicalExam(Skin, ReproductiveSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Breast Cancer Pathway:**  
+   * IF Patient.Symptoms MATCH {PainlessFirmFixedMass, SingularNodule, NippleRetraction, BreastDimpling, FlatteningOfNipple, SerousOrBloodyDischarge, Edema, PeauDOrange, AxillaryLymphadenopathy}  
+     * SUSPECT BreastCancer  
+     * ORDER DiagnosticTests({Mammogram, Biopsy, BreastUltrasound})  
+     * RECOMMEND Treatment({Chemotherapy, Radiation, Surgery})  
+     * SCHEDULE FollowUp({ReferralsToOncologistAndSurgeon})  
+   * END IF  
+2. **Candida Albicans Infection Pathway:**  
+   * IF Patient.Symptoms MATCH {WellDefinedBrightRedPapularPatches, OccursInBreastFolds, OccursInBreastfeedingOrObeseWomen, BurningPain}  
+     * SUSPECT CandidaAlbicansInfection  
+     * ORDER DiagnosticTests({Inspection, WoundCulture, BloodCultures, ELISA})  
+     * RECOMMEND Treatment({Antifungals, WoundCare})  
+     * SCHEDULE FollowUp({ReturnVisitOneWeekAfterTreatment})  
+   * END IF  
+3. **Paget's Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {BrightRedNippleExcoriation, SerousOrBloodyDischarge, UnilateralSymptoms, LocalHyperemia, LocalEdema, Pruritus}  
+     * SUSPECT PagetDisease  
+     * ORDER DiagnosticTests({Mammography, Biopsy})  
+     * RECOMMEND Treatment({Chemotherapy, Surgery})  
+     * SCHEDULE FollowUp({ReferralsToOncologistAndSurgeon})  
+   * END IF  
+4. **Breast Trauma Pathway:**  
+   * IF Patient.History MATCH {InjuryOrSurgery} AND Patient.Symptoms MATCH {PainAtAffectedSite, Ecchymosis, Laceration, Abrasions, Swelling, Hematoma}  
+     * SUSPECT BreastTrauma  
+     * ORDER DiagnosticTests({History, Inspection})  
+     * RECOMMEND Treatment({VariesBasedOnInjury, NSAIDs, Analgesics, AntibioticsIfInfection, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToSurgeonIfExtensive})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({RadiationTherapy})  
+* END PROCEDURE
+
+### **35\. Breath, Abnormal**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbnormalBreath(Patient)  
+* PERFORM FocusedPhysicalExam(VitalSigns, GI, Renal, Cardiovascular, NeurologicSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Distal Small-Bowel Obstruction Pathway:**  
+   * IF Patient.Symptoms MATCH {FecalBreathOdor, Emesis, Aching, Malaise, Drowsiness, Polydipsia, DiarrheaOrConstipation, AbdominalDistention, PersistentEpigastricPain, HyperactiveBowelSounds, Borborygmi, Fever, Hypotension, Tachycardia, ReboundTenderness}  
+     * SUSPECT DistalSmallBowelObstruction  
+     * GOTO BowelObstructionProtocol  
+   * END IF  
+2. **Gastrojejunocolic Fistula Pathway:**  
+   * IF Patient.Symptoms MATCH {FecalBreathOdor, FecalVomitus, Diarrhea, AbdominalPain, Anorexia, WeightLoss, AbdominalDistention}  
+     * SUSPECT GastrojejunocolicFistula  
+     * GOTO BowelObstructionProtocol  
+   * END IF  
+3. **End-Stage Renal Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {AmmoniaBreath, Anuria, SkinPigmentChanges, UremicFrost, TissueWasting, KussmaulRespirations, Neuropathy, Lethargy, Confusion, WeightLoss, Asterixis, MuscleTwitching, Hypertension, Tachycardia, NauseaVomiting}  
+     * SUSPECT EndStageRenalDisease  
+     * ORDER DiagnosticTests({BUN, Creatinine, Electrolytes, UA, ABG, LFT, CBC, Ultrasound, IVP})  
+     * RECOMMEND Treatment({Dialysis, Medication, Antihypertensives})  
+     * SCHEDULE FollowUp({ReferralToNephrologist})  
+   * END IF  
+4. **Anorexia Nervosa / Starvation Ketoacidosis Pathway:**  
+   * IF Patient.Symptoms MATCH {FruityBreath, SevereWeightLoss, Constipation, ColdIntolerance, Nausea, DentalEnamelErosion, ScarsOnDorsumOfHand}  
+     * SUSPECT AnorexiaNervosa  
+     * IF Patient.Symptoms MATCH {Cachexia, Dehydration, DecreasedLOC, Bradycardia}  
+       * SUSPECT StarvationKetoacidosis  
+     * END IF  
+     * ORDER DiagnosticTests({Electrolytes, Calcium, BUN, Creatinine, CBC, Albumin, LFT})  
+     * RECOMMEND Treatment({HospitalizationIfWeightLoss\>10%, FoodDiary, EnteralOrParenteralNutrition, Zinc, SSRI})  
+     * SCHEDULE FollowUp({WeeklyVisits, ReferralsToNutritionistAndPsychologist})  
+   * END IF  
+5. **Diabetic Ketoacidosis (DKA) Pathway:**  
+   * IF Patient.Symptoms MATCH {FruityBreath, Polydipsia, Polyuria, Nocturia, WeakAndRapidPulse, Polyphagia, WeightLoss, Weakness, Fatigue, NauseaVomiting, AbdominalPain} (EARLY)  
+     * IF Patient.Symptoms PROGRESS to {KussmaulRespirations, OrthostaticHypotension, Dehydration, Tachycardia, Confusion, Stupor} (LATE)  
+       * SUSPECT DKA  
+       * ORDER DiagnosticTests({Glucose, Electrolytes, ABG, BUN, Creatinine, CBC})  
+       * RECOMMEND Treatment({IVFluids, Insulin, ElectrolyteReplacement})  
+       * SCHEDULE FollowUp({ReturnVisitOneWeekPostHospitalization, ReferralToDietician})  
+     * END IF  
+   * END IF
+
+**Shared Protocol for Bowel Obstruction/Fistula:**
+
+* LABEL BowelObstructionProtocol  
+* ORDER DiagnosticTests({KUB, CTScan, BariumEnema})  
+* RECOMMEND Treatment({IVFluids, NG\_Tube, CorrectionOfElectrolyteImbalance, Surgery})  
+* SCHEDULE FollowUp({ReferralToSurgeon})  
+* END PROCEDURE
+
+### **36\. Brudzinski's Sign**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBrudzinskiSign(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem)  
+* GATHER HistoryOfPresentIllness  
+* TEST for BrudzinskiSign
+
+**Initial Symptom Triage:**
+
+* INPUT EarlySymptoms \= {SevereHeadache, NuchalRigidity, AlteredLOC, PositiveKernigSign, Photophobia, PupilChanges, Fever, NauseaVomiting}  
+* INPUT LateSymptoms \= {CheyneStokesOrKussmaulRespirations, Coma, Bradycardia, ArterialHypertension, WidenedPulsePressure, IncreasedICP}
+
+**Differential Diagnosis Pathways:**
+
+1. **Arthritis Pathway:**  
+   * IF Patient.Symptoms MATCH {SpinalPain, BackPain, LimitedMobilityOfNeck, NumbnessAndWeaknessOfLegMuscles}  
+     * SUSPECT Arthritis  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({NSAIDs, Corticosteroids, Antineoplastics, Antiarthritics, Exercise, PhysicalTherapy, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+2. **Meningitis Pathway:**  
+   * IF Patient.Symptoms MATCH EarlySymptoms AND Patient.Symptoms PROGRESS to LateSymptoms AND Patient.Symptoms ALSO MATCH {PositiveBrudzinskiSign24HoursAfterOnset, Irritability, Chills, Malaise, Hyperalgesia, MuscularHypotonia, Seizures}  
+     * SUSPECT Meningitis  
+     * ORDER DiagnosticTests({CSF\_Analysis, CBC, BloodCultures, SinusXrays, CTScan})  
+     * RECOMMEND Treatment({Antibiotics, Analgesics, Antipyretics, Antiemetics, SupportiveCare})  
+     * SCHEDULE FollowUp({ReturnVisitOneWeekPostHospitalization})  
+   * END IF  
+3. **Subarachnoid Hemorrhage Pathway:**  
+   * IF Patient.Symptoms MATCH EarlySymptoms AND Patient.Symptoms PROGRESS to LateSymptoms AND Patient.Symptoms ALSO MATCH {PositiveBrudzinskiSignInMinutes, CranialNervePalsies, HemiparesisOrHemiplegia}  
+     * SUSPECT SubarachnoidHemorrhage  
+     * ORDER DiagnosticTests({HistoryOfHeadInjuryOrAnticoagulantUse, CTScan, Angiography, MRI})  
+     * RECOMMEND Treatment({CerebralVasodilator, VasopressorsIfHypotensive, BedRest, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+* END PROCEDURE
+
+### **37\. Bruits**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessBruits(Patient)  
+* PERFORM FocusedPhysicalExam(CardiovascularSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {DiminishedPeripheralPulses, Claudication, NumbnessWeaknessAndPainInLowerExtremities}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Carotid Artery Stenosis Pathway:**  
+   * IF Patient.Symptoms MATCH {ContinuousBruitsOverCarotidArteries, DizzinessAndVertigo, Headache, Syncope, Aphasia, Dysarthria, SuddenVisionLoss, Hemiparesis}  
+     * SUSPECT CarotidArteryStenosis  
+     * ORDER DiagnosticTests({LipidProfile, DopplerUltrasound, MRI, Angiography})  
+     * RECOMMEND Treatment({ModifyRiskFactors, AntiplateletTherapy, Antilipemics, Antihypertensives, Surgery})  
+     * SCHEDULE FollowUp({OneWeekPostSurgery, ThenBiannually})  
+   * END IF  
+2. **Abdominal Aortic Aneurysm (AAA) Pathway:**  
+   * IF Patient.Symptoms MATCH {SystolicBruitOverAorta, PulsatingPeriumbilicalMass, ConstantUpperAbdominalOrLowerBackPain}  
+     * IF Patient.Symptoms MATCH {SevereAbdominalAndBackPain, MottledSkinBelowWaist, AbsentFemoralAndPedalPulses, LowerBP\_inLegs, AbdominalRigidity, SignsOfShock}  
+       * FLAG LifeThreateningRupture  
+     * END IF  
+     * SUSPECT AAA  
+     * ORDER DiagnosticTests({Ultrasonography, CTScan, MRI, Angiography})  
+     * RECOMMEND Treatment({BP\_Control, ReduceAtheroscleroticRiskFactors, Surgery})  
+     * SCHEDULE FollowUp({BPMonitoring, SerialUltrasounds, OneWeekPostDischarge})  
+   * END IF  
+3. **Peripheral Vascular Disease (PVD) Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {BruitsOverFemoralArteries, CoolShinySkin, HairLoss, SlowHealingUlcers} (EARLY)  
+     * IF Patient.Symptoms PROGRESS to {Mottling, AbsentPulse, Pulselessness, Paralysis, Paresthesia, Pain, Pallor} (LATE)  
+       * SUSPECT PVD  
+       * ORDER DiagnosticTests({LipidProfile, CoagulationStudies, DopplerUltrasound, MRI, Arteriography, AnkleBrachialIndex, TranscutaneousOximetry})  
+       * RECOMMEND Treatment({ReduceRiskFactors, LowFatDiet, PulseMonitoring, Medication, Surgery})  
+       * SCHEDULE FollowUp({AsNeeded})  
+     * END IF  
+   * END IF  
+4. **Renal Artery Stenosis Pathway:**  
+   * IF Patient.Symptoms MATCH {SystolicBruitsOverAbdominalMidline, Hypertension, Headache, Palpitations, Tachycardia, Anxiety, Dizziness, Retinopathy, Hematuria, MentalSluggishness}  
+     * SUSPECT RenalArteryStenosis  
+     * ORDER DiagnosticTests({BP, BUN, Creatinine, Electrolytes, RadionuclideCystogram, Ultrasound, KidneyXray, CTScan, Arteriography})  
+     * RECOMMEND Treatment({Antihypertensives, BalloonAngioplasty, SmokingCessation})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNephrologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AbdominalAorticAtherosclerosis, Anemia, CarotidCavernousFistula, PeripheralArteriovenousFistula, SubclavianStealSyndrome, Thyrotoxicosis})  
+* END PROCEDURE
+
+### **38\. Butterfly Rash**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessButterflyRash(Patient)  
+* PERFORM FocusedPhysicalExam(IntegumentarySystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {ErythematousRaisedSharplyDemarcatedPlaques, KeratolicScaling, InvolvementOfSunExposedAreas, OralLesions, PatchyAlopecia}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Lupus Pathway (Discoid/Systemic):**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {UnilateralOrBilateralConjunctivalRedness, DilatedNailFoldCapillaries, BilateralParotidGlandEnlargement, MottledReddishBlueSkinOnLegs}  
+       * SUSPECT DiscoidLupusErythematosus  
+     * ELSE IF Patient.Symptoms MATCH {MottledErythemaOfPalmsAndFingers, Telangiectasis, Purpura, Petechiae, Ecchymosis, JointPain, PeriorbitalEdema, Dyspnea, LowGradeFever, Malaise, Weakness, Fatigue, WeightLoss, Anorexia, Lymphadenopathy, Hepatosplenomegaly}  
+       * SUSPECT SystemicLupusErythematosus (SLE)  
+     * END IF  
+     * ORDER DiagnosticTests({ANA\_Panel, RheumatoidFactor, UA, Anti\_nDNA\_And\_Anti\_Sm\_AntibodyStudies, PhospholipidAntibodyStudy, SkinOrKidneyBiopsy})  
+     * RECOMMEND Treatment({TopicalCorticosteroidsAndAntimalarialsForDiscoid, NSAIDsAndAntimalarialsAndCorticosteroidsAndImmunosuppressivesForSLE, Rest, SunProtection})  
+     * SCHEDULE FollowUp({RoutineLabStudies, ReferralToRheumatologist})  
+   * END IF  
+2. **Rosacea Pathway:**  
+   * IF Patient.Symptoms MATCH {ProminentNonscalingIntermittentErythema, OilySkin, Pustules, Nodules, Telangiectasis, Rhinophyma}  
+     * SUSPECT Rosacea  
+     * ORDER DiagnosticTests({InspectionOfSkin, HistoryOfRashWithSpecificTriggers})  
+     * RECOMMEND Treatment({TopicalOrSystemicAntibiotics, Antifungals, Steroids})  
+     * SCHEDULE FollowUp({ReferralToDermatologistIfRashPersists})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({PolymorphousLightEruption, SeborrheicDermatitis})  
+* CONSIDER OtherCauses({Hydralazine, Procainamide})  
+* END PROCEDURE
+
+### **39\. Chest Expansion, Asymmetrical**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAsymmetricalChestExpansion(Patient)  
+* PERFORM FocusedPhysicalExam(Pulmonary, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Flail Chest Pathway:**  
+   * IF Patient.Symptoms MATCH {ParadoxicalMovementOfChest, Ecchymoses, SevereLocalizedPain, RapidShallowRespirations, Tachycardia, Cyanosis}  
+     * SUSPECT FlailChest  
+     * ORDER DiagnosticTests({HistoryOfChestInjury, PhysicalExam, ABG, CXR})  
+     * RECOMMEND Treatment({OxygenTherapy, MechanicalVentilation, Analgesia})  
+     * SCHEDULE FollowUp({ReferralToPulmonologist})  
+   * END IF  
+2. **Pneumothorax/Hemothorax Pathway:**  
+   * INPUT CommonSymptoms \= {SuddenStabbingPain, Tachypnea, Tachycardia, Anxiety, Restlessness}  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {PainRadiates, DecreasedTactileFremitus, AbsentBreathSoundsOnAffectedSide}  
+     * IF Patient.Symptoms MATCH {Cyanosis, Hypotension, SevereRestlessness, SubcutaneousCrepitation, TrachealDeviation, DistendedNeckVeins}  
+       * SUSPECT TensionPneumothorax  
+     * ELSE IF Patient.Symptoms MATCH {PainAtInjurySite, DullnessOnPercussion, SignsOfTraumaticChestInjury}  
+       * SUSPECT Hemothorax  
+     * ELSE  
+       * SUSPECT Pneumothorax  
+     * END IF  
+     * GOTO ThoraxProtocol  
+   * END IF
+
+**Shared Protocol for Thorax Conditions:**
+
+* LABEL ThoraxProtocol  
+* ORDER DiagnosticTests({HistoryOfChestInjury, ABG, CXR})  
+* RECOMMEND Treatment({AspirationOfAirOrBlood, NeedleThoracentesis, ChestTube, SurgeryIfRecurrent})  
+* SCHEDULE FollowUp({ReturnVisitOneWeekPostHospitalization, ReferralToPulmonologist})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({BronchialObstruction, Kyphoscoliosis, MyastheniaGravis, PhrenicNerveDysfunction, PleuralEffusion, Pneumonia, Poliomyelitis, PulmonaryEmbolism})  
+* CONSIDER OtherCauses({IntubationOfMainstemBronchus, Pneumonectomy, Surgery})  
+* END PROCEDURE
+
+### **40\. Chest Pain**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessChestPain(Patient)  
+* PERFORM FocusedPhysicalExam(Cardiovascular, PulmonarySystems, MentalHealth, Musculoskeletal, GI\_Systems)  
+* GATHER HistoryOfPresentIllness  
+* // Determine primary system involved from HPI and initial exam  
+* IF SuspectCardiacOrigin  
+  * CALL AssessCardiacChestPain(Patient)  
+* ELSE IF SuspectPulmonaryOrigin  
+  * CALL AssessPulmonaryChestPain(Patient)  
+* ELSE  
+  * CALL AssessOtherChestPain(Patient)  
+* END IF  
+* END PROCEDURE
+
+**Cardiac Chest Pain Sub-procedure:**
+
+* PROCEDURE AssessCardiacChestPain(Patient)  
+* INPUT CommonSymptoms \= {ChestTightnessOrPressure, PainRadiatingToNeckShoulderJawArms, Dyspnea, NauseaVomiting, Tachycardia, Palpitations, Diaphoresis, Dizziness, Syncope, GallopsAndMurmurs}  
+* IF Patient.Symptoms MATCH CommonSymptoms  
+  * IF Patient.Symptoms MATCH {PainLasts2to10Minutes, ProvokedByExertionOrStress}  
+    * SUSPECT Angina  
+  * ELSE IF Patient.Symptoms MATCH {FeelingOfImpendingDoom, CrushingPain, HypotensionOrHypertension, Pallor, ClammySkin}  
+    * SUSPECT MyocardialInfarction  
+  * ELSE IF Patient.Symptoms MATCH {SharpStabbingPain, AggravatedByMovementOrInspiration, PericardialFrictionRub, LowGradeFever, Cough, Dysphagia}  
+    * SUSPECT Pericarditis  
+  * ELSE IF Patient.Symptoms MATCH {Cough, BradycardiaWithTachycardia, S4Gallop}  
+    * SUSPECT HypertrophicCardiomyopathy  
+  * END IF  
+* // Consolidated protocol for suspected cardiac pain  
+* ORDER DiagnosticTests({SerialCardiacEnzymes, Troponin, Myoglobin, Electrolytes, CoagulationStudies, Echocardiogram, CXR, Tc99mSestamibiScan, ECG, CardiacCatheterization})  
+* RECOMMEND Treatment({MaintainABCs, MedicationBasedOnSeverity, LowFatLowSodiumDiet, PCI, Surgery})  
+* SCHEDULE FollowUp({ReferralToCardiologist})  
+* END PROCEDURE
+
+**Pulmonary Chest Pain Sub-procedure:**
+
+* PROCEDURE AssessPulmonaryChestPain(Patient)  
+* IF Patient.Symptoms MATCH {Dyspnea, Fatigue, Fever, Cyanosis, DecreasedBreathSounds, Crackles, ChestPainIncreasesWithMovement}  
+  * SUSPECT BacterialPneumonia  
+  * GOTO PulmonaryProtocol  
+* ELSE IF Patient.Symptoms MATCH {AbruptSharpPain, UnilateralPainInLowerLateralChest, PleuralFrictionRub}  
+  * SUSPECT Pleurisy  
+  * GOTO PulmonaryProtocol  
+* ELSE IF Patient.Symptoms MATCH {AsymmetricalChestWallExpansion, RapidShallowRespirations, Pallor, NeckVeinDistention, AbsenceOfBreathSounds}  
+  * SUSPECT Pneumothorax  
+  * GOTO PulmonaryProtocol  
+* ELSE IF Patient.Symptoms MATCH {AcuteCentralCyanosis, SharpPainExacerbatedWithMovement, SOB, Anxiety, Tachycardia, Syncope, PulsusParadoxus, LowGradeFever, CoughWithBloodySputum}  
+  * SUSPECT PulmonaryEmbolism  
+  * GOTO PulmonaryProtocol  
+* END IF  
+* LABEL PulmonaryProtocol  
+* ORDER DiagnosticTests({PhysicalExam, SputumGramStain, CBC, ABG, CXR, VQ\_Scan, Arteriogram, SpiralChestCT})  
+* RECOMMEND Treatment({Antibiotics, Hydration, OxygenTherapy, Suctioning, ChestTube, Thrombolytics, Anticoagulants})  
+* SCHEDULE FollowUp({DailyAssessment, ReturnVisitOneWeekPostHospitalization, ReferralToSpecialist})  
+* END PROCEDURE
+
+**Other Chest Pain Sub-procedure:**
+
+* PROCEDURE AssessOtherChestPain(Patient)  
+* IF Patient.Symptoms MATCH {IntermittentSharpStabbingPain, PrecordialTenderness, Palpitations, Fatigue, Headache, Insomnia, NauseaVomiting, Breathlessness, Diarrhea, Tremors, Paresthesias}  
+  * SUSPECT Anxiety  
+  * ORDER DiagnosticTests({CBC, UA, ThyroidStudies, PsychologicalTesting})  
+  * RECOMMEND Treatment({Medication, PsychologicalCounseling, Exercise})  
+  * SCHEDULE FollowUp({RegularOfficeVisits, ReferralToPsychologist})  
+* ELSE IF Patient.Symptoms MATCH {EpigastricTenderness, PainOccursHoursAfterEating, PainRelievedByAntacids, NauseaVomitingWithBlood, Melena}  
+  * SUSPECT PepticUlcer  
+  * ORDER DiagnosticTests({CBC, H\_Pylori, BariumSwallow, Endoscopy})  
+  * RECOMMEND Treatment({Medication, ModificationOfAggravatingFactors})  
+  * SCHEDULE FollowUp({ReevaluationIn2to6Weeks})  
+* ELSE IF Patient.Symptoms MATCH {SuperficialAcheOrPullingSensation, PainAggravatedByLifting, PainIncreasesWithPalpation, Fatigue, Swelling, Weakness}  
+  * SUSPECT MuscleStrain  
+  * ORDER DiagnosticTests({History, PhysicalExam, ECG})  
+  * RECOMMEND Treatment({NSAIDs, Rest, AvoidanceOfIncreasedMuscleUse})  
+  * SCHEDULE FollowUp({ReevaluationIn2Weeks})  
+* ELSE IF Patient.Symptoms MATCH {ChestPainOrPressureAfterMeals, Dysphagia, Belching, Pyrosis, Hiccups}  
+  * SUSPECT HiatalHernia  
+  * ORDER DiagnosticTests({CBC, CardiacEnzymes, LFT, Amylase, Lipase, CXR, BariumSwallow, ECG, Endoscopy})  
+  * RECOMMEND Treatment({Antacids, DietAndActivityModification, Surgery})  
+  * SCHEDULE FollowUp({AsNeeded})  
+* END IF  
+* END PROCEDURE
+
+### **41\. Cheyne-Stokes Respirations**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessCheyneStokesRespirations(Patient)  
+* PERFORM FocusedPhysicalExam(Cardiovascular, PulmonarySystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Adams-Stokes Syndrome Pathway:**  
+   * IF Patient.Symptoms MATCH {CheyneStokesAfterHeartBlock, Faintness, Dizziness, Syncope, Seizures, Hypotension, LowHeartRate}  
+     * SUSPECT AdamsStokesSyndrome  
+     * ORDER DiagnosticTests({CardiacMonitoring})  
+     * RECOMMEND Treatment({Pacemaker})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF  
+2. **Heart Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {CheyneStokesWithExertionalDyspnea, ParoxysmalNocturnalDyspnea, Fatigue, Weakness, Nocturia, Nausea, Tachycardia, Tachypnea, Crackles, NonproductiveCough, Hepatomegaly, Edema, JVD, S3orS4Gallop, WeightGain}  
+     * SUSPECT HeartFailure  
+     * ORDER DiagnosticTests({CBC, Electrolytes, UA, CXR, Echocardiogram, CTScan, Angiography, ECG})  
+     * RECOMMEND Treatment({Medication, FluidAndSodiumRestriction})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToCardiologist})  
+   * END IF  
+3. **End-Stage Renal Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {BleedingGums, OralLesions, AmmoniaBreath, MarkedChangesInBodySystems}  
+     * SUSPECT EndStageRenalFailure  
+     * ORDER DiagnosticTests({HistoryOfRenalFailure})  
+     * RECOMMEND Treatment({Dialysis, KidneyTransplant})  
+     * SCHEDULE FollowUp({ReferralToNephrologist})  
+   * END IF  
+4. **Hypertensive Encephalopathy / Increased ICP Pathway:**  
+   * INPUT CommonSymptoms \= {DecreasedLOC, Vomiting, Headache, Seizure, VisionDisturbances, Confusion}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {SevereHypertension, TransientParalysis, CorticalBlindness}  
+       * SUSPECT HypertensiveEncephalopathy  
+       * ORDER DiagnosticTests({VitalSigns, CTScan, MRI})  
+       * RECOMMEND Treatment({Antihypertensives, Anticonvulsants})  
+       * SCHEDULE FollowUp({AsNeeded, ReferralToNeurologist})  
+     * ELSE IF Patient.Symptoms MATCH {ImpairedOrUnequalMotorMovements, Hypertension, Bradycardia, WidenedPulsePressure}  
+       * SUSPECT IncreasedICP  
+       * ORDER DiagnosticTests({CTScan, MRI, ICP\_Reading})  
+       * RECOMMEND Treatment({VariesBasedOnCause, PositionChange, HOB\_Elevation, MechanicalVentilation, Medication, Ventriculostomy})  
+       * SCHEDULE FollowUp({AsNeeded, ReferralToNeurosurgeon})  
+     * END IF  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({LargeDosesOfHypnotics, Opioids, Barbiturates})  
+* END PROCEDURE
+
+### **42\. Chills**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessChills(Patient)  
+* PERFORM FocusedPhysicalExam(AllSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {AbruptOnsetOfChills, Fever, Malaise, Fatigue, Cough, Headache}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Sepsis Pathway:**  
+   * IF Patient.Symptoms MATCH {Fever, Myalgia, ChangeInMentalStatus, Tachycardia, Tachypnea, Hypotension, SymptomsRelatedToPrimaryInfectionSite}  
+     * SUSPECT Sepsis  
+     * ORDER DiagnosticTests({BloodCultures, CultureFromSuspectedSite, CBC, CXR, CTScan, MRI})  
+     * RECOMMEND Treatment({MaintainABCs, IVFluids, Antibiotics, RemovalOrDrainageOfSource})  
+     * SCHEDULE FollowUp({AsNeeded})  
+   * END IF  
+2. **Otitis Media Pathway:**  
+   * IF Patient.Symptoms MATCH {Fever, SevereDeepThrobbingEarPain, MildConductiveHearingLoss, BulgingHyperemicTympanicMembrane, Dizziness, NauseaVomiting}  
+     * SUSPECT OtitisMedia  
+     * ORDER DiagnosticTests({PhysicalExam, Tympanometry, HearingTesting})  
+     * RECOMMEND Treatment({Antibiotics, Tympanocentesis, SurgeryIfRecurrent})  
+     * SCHEDULE FollowUp({ReevaluationIn48Hours, ReevaluationIn4Weeks, ReferralToENT})  
+   * END IF  
+3. **AIDS Pathway:**  
+   * IF Patient.Symptoms MATCH {Lymphadenopathy, AnorexiaWeightLoss, Diarrhea, Diaphoresis, SkinDisorders}  
+     * SUSPECT AIDS  
+     * ORDER DiagnosticTests({HistoryOfExposure, RiskBehavior, ELISA, WesternBlot, CD4Count})  
+     * RECOMMEND Treatment({AntiviralTherapy, TreatOpportunisticInfections})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToInfectiousDiseaseSpecialist})  
+   * END IF  
+4. **Influenza Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {Rhinitis, Rhinorrhea, Myalgia, Laryngitis, Pharyngitis, Conjunctivitis}  
+     * SUSPECT Influenza  
+     * ORDER DiagnosticTests({HistoryOfRecentExposure, RapidAntigenTest, NasopharyngealCulture, CBC, CXR})  
+     * RECOMMEND Treatment({SymptomaticTreatment, Hydration, Analgesics, Antipyretics, AntiviralsForInfluenzaA})  
+     * SCHEDULE FollowUp({NoneUnlessComplicationsDevelop})  
+   * END IF  
+5. **Pneumonia (Bacterial) Pathway:**  
+   * IF Patient.Symptoms MATCH {PleuriticChestPain, Myalgia, Tachypnea, Tachycardia, Diaphoresis, Crackles, Rhonchi, SputumProduction}  
+     * SUSPECT BacterialPneumonia  
+     * ORDER DiagnosticTests({PhysicalExam, SputumGramStain, CBC, ABG, CXR})  
+     * RECOMMEND Treatment({Hydration, Antibiotics, OxygenTherapy, Suctioning})  
+     * SCHEDULE FollowUp({DailyAssessment, ReevaluationOneWeekPostHospitalization, CXR\_6WeeksAfterRecovery})  
+   * END IF  
+* END PROCEDURE
+
+### **43\. Clubbing**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessClubbing(Patient)  
+* PERFORM FocusedPhysicalExam(Cardiovascular, PulmonarySystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Interstitial Lung Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {NonproductiveCough, ProgressiveDyspnea, Cyanosis, FineCrackles, Fatigue, VariableChestPain, WeightLoss}  
+     * SUSPECT InterstitialLungDisease  
+     * ORDER DiagnosticTests({CBC, CXR, PFT, LungBiopsy})  
+     * RECOMMEND Treatment({RemovalOfSource, SupportiveTherapy, Corticosteroids, CytotoxicDrugs, LungTransplant, OxygenTherapy})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToPulmonologist})  
+   * END IF  
+2. **Heart Failure Pathway:**  
+   * IF Patient.Symptoms MATCH {ExertionalDyspnea, Orthopnea, ParoxysmalNocturnalDyspnea, Fatigue, Nocturia, Nausea, Weakness, Tachycardia, Tachypnea, Crackles, Wheezing, NonproductiveCough, Hepatomegaly, Edema, JVD, WeightGain, S3orS4Gallop}  
+     * SUSPECT HeartFailure  
+     * ORDER DiagnosticTests({CBC, Electrolytes, UA, CXR, Echocardiogram, CTScan, Angiography, ECG})  
+     * RECOMMEND Treatment({VariesBasedOnCause, Medication, FluidAndSodiumRestriction})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToCardiologist})  
+   * END IF  
+3. **Chronic Bronchitis Pathway:**  
+   * IF Patient.Symptoms MATCH {BarrelChest, SOB, ProductiveCough, DyspneaOnExertion, Tachypnea, Cyanosis, PursedLipBreathing, Anorexia, Malaise, CoarseBreathSounds, AccessoryMuscleUse}  
+     * SUSPECT ChronicBronchitis  
+     * ORDER DiagnosticTests({CBC, ABG, CXR, PFT})  
+     * RECOMMEND Treatment({SmokingCessation, Bronchodilators, Sympathomimetics, Anticholinergics, Corticosteroids})  
+     * SCHEDULE FollowUp({MonthlyOrBiannualReevaluation})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Bronchiectasis, Emphysema, Endocarditis, LungAbscess, LungAndPleuralCancer})  
+* END PROCEDURE
+
+### **44\. Confusion**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessConfusion(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {IntermittentConfusion, Headache, PupillaryChanges, SensoryAndMotorDeficits, PersonalityDisturbance, Seizure}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Fluid and Electrolyte Imbalance Pathway:**  
+   * IF Patient.Symptoms MATCH {Dehydration, Lassitude, PoorSkinTurgor, DrySkinAndMucousMembranes, Oliguria, Hypotension, LowGradeFever}  
+     * SUSPECT FluidAndElectrolyteImbalance  
+     * ORDER DiagnosticTests({Electrolytes, IdentifyUnderlyingDisorder})  
+     * RECOMMEND Treatment({ElectrolyteAndFluidReplacement, TreatUnderlyingDisorder})  
+     * SCHEDULE FollowUp({WeeklyElectrolyteEvaluation})  
+   * END IF  
+2. **Head Trauma / Cerebrovascular Disorder / Brain Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {SwellingOrLacerationAtSite, DepressionOfSkull, Hematotympanum, Vomiting, VisionChanges}  
+       * SUSPECT HeadTrauma  
+     * ELSE IF Patient.Symptoms MATCH {NeurologicDeficits}  
+       * SUSPECT CerebrovascularDisorder  
+     * ELSE IF Patient.Symptoms MATCH {ProgressiveConfusion, BizarreBehavior}  
+       * SUSPECT BrainTumor  
+     * END IF  
+     * ORDER DiagnosticTests({History, CoagulationStudies, PhysicalExam, SkullXray, CTScan, MRI, MRA, Ultrasonography, Angiography})  
+     * RECOMMEND Treatment({Analgesics, OsmoticDiuretics, Anticonvulsants, Thrombolytics, Chemotherapy, Steroids, Radiation, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToSpecialist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({DecreasedCerebralPerfusion, Heatstroke, HeavyMetalPoisoning, Hypothermia, Hypoxemia, MetabolicEncephalopathy, NutritionalDeficiencies, SeizureDisorders, ThyroidHormoneDisorders})  
+* CONSIDER OtherCauses({AlcoholIntoxication, AlcoholWithdrawal, CarbonMonoxidePoisoning, Drugs, HerbalMedicines})  
+* END PROCEDURE
+
+### **45\. Conjunctival Injection**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessConjunctivalInjection(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Photophobia, Burning, IncreasedTearing, ForeignBodySensation}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Conjunctivitis Pathway (Viral, Bacterial, Allergic):**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {BrilliantRedDiffusePeripheralInjection, ConjunctivalAndLidEdema, LocalViralRash, UpperRespiratoryInfection}  
+       * SUSPECT ViralConjunctivitis  
+     * ELSE IF Patient.Symptoms MATCH {DiffusePeripheralInjection, ThickPurulentDischarge}  
+       * SUSPECT BacterialConjunctivitis  
+     * ELSE IF Patient.Symptoms MATCH {MilkyDiffusePeripheralInjection, WateryStringyDischarge, FullnessAroundEyes, ConjunctivalEdema, LargeDilatedScleralVessels, Itching}  
+       * SUSPECT AllergicConjunctivitis  
+     * END IF  
+     * GOTO ConjunctivitisProtocol  
+   * END IF  
+2. **Corneal Ulcer / Abrasion Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {DiffuseInjectionIncreasesInCircumcornealArea, SeverePain, MarkedlyDecreasedVisualAcuity, CopiousPurulentDischarge}  
+       * SUSPECT CornealUlcer  
+     * ELSE IF Patient.Symptoms MATCH {PainfulDiffuseInjection, PainIncreasesWithEyelidMovement}  
+       * SUSPECT CornealAbrasion  
+     * END IF  
+     * GOTO CornealProtocol  
+   * END IF
+
+**Shared Protocols:**
+
+* LABEL ConjunctivitisProtocol  
+* ORDER DiagnosticTests({History, EyeDrainageCulture, EyeExam, VisualAcuity, SlitLampExam, AllergyTesting})  
+* RECOMMEND Treatment({TopicalAntibiotics, TopicalCycloplegics, TopicalAndOralAnalgesics, SystemicAntihistamines, WarmCompresses})  
+* SCHEDULE FollowUp({ReferralToOphthalmologist})  
+* LABEL CornealProtocol  
+* ORDER DiagnosticTests({History, EyeDrainageCulture, EyeExam, VisualAcuity, SlitLampExam, AllergyTesting})  
+* RECOMMEND Treatment({TopicalAntibiotics, TopicalCycloplegics, TopicalAndOralAnalgesics, SystemicAntihistamines, WarmCompresses})  
+* SCHEDULE FollowUp({ReferralToOphthalmologist})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Blepharitis, ChemicalBurn, CornealErosion, Dacryoadenitis, Episcleritis, ForeignBody, Glaucoma, Hyphema, Iritis, KeratoconjunctivitisSicca, OcularLaceration, OcularTumor, StevensJohnsonSyndrome, Uveitis})  
+* END PROCEDURE
+
+### **46\. Constipation**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessConstipation(Patient)  
+* PERFORM FocusedPhysicalExam(GI\_System)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Irritable Bowel Syndrome (IBS) / Diverticulitis Pathway:**  
+   * IF Patient.Symptoms MATCH {Pain, DiarrheaAlternatingWithConstipation, Bloating, Dyspepsia, IntermittentLowerAbdominalPain, PainRelievedByDefecation, Urgency, IncompleteEvacuation, SmallMucusStools}  
+     * SUSPECT IBS  
+     * ORDER DiagnosticTests({History, StoolForOccultBloodOvaParasites, SigmoidoscopyOrColonoscopy})  
+     * RECOMMEND Treatment({SymptomaticTreatment, Medication})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToGastroenterologist})  
+   * ELSE IF Patient.Symptoms MATCH {LLQ\_Pain, AbdominalRigidity, Fever, PalpableTenderMass, Nausea}  
+     * SUSPECT Diverticulitis  
+     * ORDER DiagnosticTests({CBC, UA, AbdominalXray, CTScan, Ultrasonography})  
+     * RECOMMEND Treatment({DietaryFiber, Antibiotics, SurgeryIfAcute})  
+     * SCHEDULE FollowUp({BariumEnemaWhenAcuteEpisodeSubsides, ReevaluationPostOp})  
+   * END IF  
+2. **Intestinal Obstruction / Crohn's / Ulcerative Colitis Pathway:**  
+   * IF Patient.Symptoms MATCH {VariableConstipation, LiquidStoolLeakage, Obstipation, ColickyAbdominalPain, AbdominalDistention, NauseaVomiting, HyperactiveBowelSounds, VisiblePeristalticWaves, PalpableAbdominalMass, AbdominalTenderness}  
+     * SUSPECT IntestinalObstruction  
+     * ORDER DiagnosticTests({SerumChemistry, BUN, Creatinine, CBC, UA, AbdominalXray, CTScan, BariumEnema, UpperGI\_Series})  
+     * RECOMMEND Treatment({Decompression, ProphylacticAntibiotics})  
+     * SCHEDULE FollowUp({WeeklyReevaluationPostDischarge})  
+   * ELSE IF Patient.Symptoms MATCH {RLQ\_Pain, LowerAbdominalCramping, Tenderness, Diarrhea, Steatorrhea, WeightLoss, Anorexia, Fistulas}  
+     * SUSPECT CrohnDisease  
+     * GOTO IBD\_Protocol  
+   * ELSE IF Patient.Symptoms MATCH {VagueAbdominalDiscomfort, Cramping, SevereBloodyDiarrhea, NauseaVomiting, AnorexiaWeightLoss, MildFever}  
+     * SUSPECT UlcerativeColitis  
+     * GOTO IBD\_Protocol  
+   * END IF
+
+**Shared Protocol for Inflammatory Bowel Disease:**
+
+* LABEL IBD\_Protocol  
+* ORDER DiagnosticTests({CBC, ESR, Electrolytes, StoolAnalysis, AbdominalXray, CTScan, BariumEnema, Endoscopy})  
+* RECOMMEND Treatment({LifestyleAndDietaryModifications, StressManagement, AntiInflammatoryMeds, Antibiotics, Surgery})  
+* SCHEDULE FollowUp({ReevaluationEvery3to6Months})
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AnalFissure, AnorectalAbscess, Cirrhosis, DiabeticNeuropathy, Diverticulosis, Hemorrhoids, HepaticPorphyria, Hypercalcemia, Hypothyroidism, Ischemia, MultipleSclerosis, Paraplegia, ParkinsonDisease, SpinalCordLesion, TabesDorsalis, UlcerativeProctitis})  
+* CONSIDER OtherCauses({BariumRetention, Drugs, Radiation, Surgery})  
+* END PROCEDURE
+
+### **47\. Corneal Reflex, Absent**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbsentCornealReflex(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem, HEENT)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Bell's Palsy Pathway:**  
+   * IF Patient.Symptoms MATCH {HemifacialWeaknessOrParalysis, Drooling, SaggingOfAffectedSide, TroubleShuttingEye, ConstantTearing}  
+     * SUSPECT BellPalsy  
+     * ORDER DiagnosticTests({PhysicalExam, CTScan})  
+     * RECOMMEND Treatment({Corticosteroids, LubricatingEyeDrops, AntiviralAgents, EyePatch})  
+     * SCHEDULE FollowUp({ReferralToNeurologist})  
+   * END IF  
+2. **Acoustic Neuroma Pathway:**  
+   * IF Patient.Symptoms MATCH {Tinnitus, UnilateralHearingImpairment, FacialPalsy, Anesthesia, PalateWeakness, CerebellarDysfunction, FacialPain, Drooling}  
+     * SUSPECT AcousticNeuroma  
+     * ORDER DiagnosticTests({CTScan, MRI, Audiology, CaloricStimulation, Electronystagmography, BrainStemEvokedResponseAudiometry})  
+     * RECOMMEND Treatment({StereotacticRadiosurgery, Surgery})  
+     * SCHEDULE FollowUp({ReevaluationOneWeekPostHospitalization, ReferralToOtolaryngologist})  
+   * END IF  
+3. **Brain Stem Infarction or Injury Pathway:**  
+   * IF Patient.Symptoms MATCH {AbsentOrDiminishedCornealReflexOnOppositeSide, DecreasedLOC, Dysphagia, Dysarthria, ContralateralLimbWeakness, SignsOfIncreasedICP, RespiratoryChanges, PupillaryChanges, Nystagmus, RisingSystolicBP, WidenedPulsePressure, Coma}  
+     * SUSPECT BrainStemInfarctionOrInjury  
+     * ORDER DiagnosticTests({SkullXray, CTScan, MRI, Angiography, EEG, ICP\_Monitoring})  
+     * RECOMMEND Treatment({AnticoagulantsIfEmbolic, Antihypertensives, Corticosteroids, OsmoticDiureticsIfIncreasedICP})  
+     * SCHEDULE FollowUp({ReferralToNeurologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({GuillainBarreSyndrome, HerpeticKeratoconjunctivitis, TrigeminalNeuralgia})  
+* END PROCEDURE
+
+### **48\. Cough**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessCough(Patient)  
+* PERFORM FocusedPhysicalExam(Pulmonary, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness  
+* EVALUATE CoughType  
+  * IF CoughType \= Barking  
+    * CALL AssessBarkingCough(Patient)  
+  * ELSE IF CoughType \= Nonproductive  
+    * CALL AssessNonproductiveCough(Patient)  
+  * ELSE IF CoughType \= Productive  
+    * CALL AssessProductiveCough(Patient)  
+  * END IF  
+* END PROCEDURE
+
+**Barking Cough Sub-procedure:**
+
+* PROCEDURE AssessBarkingCough(Patient)  
+* INPUT CommonSymptoms \= {Hoarseness, Dyspnea, Restlessness, Tachycardia}  
+* IF Patient.Symptoms MATCH CommonSymptoms  
+  * IF Patient.Symptoms MATCH {SubsternalAndIntercostalRetractions, LowGradeFever, RunnyNose, PoorAppetite, ShallowRapidRespirations, DecreasedBreathSounds, Wheezing, ProlongedInspirationOrExpiration, RedEpiglottis}  
+    * SUSPECT AcuteLaryngotracheobronchitis  
+    * ORDER DiagnosticTests({PhysicalExam, NeckXray})  
+    * RECOMMEND Treatment({HumidifiedAir, OxygenTherapy, Antibiotics})  
+    * SCHEDULE FollowUp({ReevaluationInOneWeek})  
+  * ELSE IF Patient.Symptoms MATCH {Stridor, HighFever, Dysphagia, SevereRespiratoryDistress, NasalFlaring, Cyanosis, CopiousOralSecretions}  
+    * SUSPECT Epiglottiditis  
+    * ORDER DiagnosticTests({ThroatCulture, BloodCulture, CBC, LateralNeckXray, IndirectLaryngoscopy})  
+    * RECOMMEND Treatment({AirwayProtection, EmergencyTracheostomy, HumidifiedOxygen, Corticosteroids, Antibiotics, IVFluids})  
+    * SCHEDULE FollowUp({ReevaluationOneWeekPostHospitalization})  
+  * ELSE IF Patient.Symptoms MATCH {BarkingCoughWhileSleeping, NasalFlaring, Cyanosis, AnxiousAppearance, AbsenceOfFever, DecreasedBreathSounds, Wheezing, ProlongedInspirationOrExpiration}  
+    * SUSPECT SpasmodicCroup  
+    * ORDER DiagnosticTests({History, PhysicalExam})  
+    * RECOMMEND Treatment({OxygenTherapy, HumidifiedAir})  
+    * SCHEDULE FollowUp({ReferralToAllergist})  
+  * END IF  
+* END IF  
+* END PROCEDURE
+
+**Nonproductive Cough Sub-procedure:**
+
+* PROCEDURE AssessNonproductiveCough(Patient)  
+* IF Patient.Symptoms MATCH {ProgressiveDyspnea, Cyanosis, Clubbing, FineCrackles, Fatigue, VariableChestPain, WeightLoss}  
+  * SUSPECT InterstitialLungDisease  
+  * ORDER DiagnosticTests({CBC, CXR, PFT, LungBiopsy})  
+  * RECOMMEND Treatment({RemovalOfSource, SupportiveTherapy, Corticosteroids, CytotoxicDrugs, LungTransplant})  
+  * SCHEDULE FollowUp({AsNeeded, ReferralToPulmonologist})  
+* ELSE IF Patient.Symptoms MATCH {HackingCough, Sneezing, Headaches, Malaise, Arthralgia, NasalCongestion, SoreThroat}  
+  * SUSPECT ViralInfection  
+  * ORDER DiagnosticTests({BasedOnClinicalSymptoms})  
+  * RECOMMEND Treatment({Analgesics, Antitussives, Antivirals, Rest, IncreasedFluidIntake})  
+  * SCHEDULE FollowUp({ReevaluationIfSymptomsPersist})  
+* ELSE IF Patient.Symptoms MATCH {IrritativeCough, Heartburn, Dysphagia}  
+  * SUSPECT GERD  
+  * ORDER DiagnosticTests({BariumEsophagography, EsophagealPH\_Monitoring, UpperEndoscopy})  
+  * RECOMMEND Treatment({LifestyleModification, Medication})  
+  * SCHEDULE FollowUp({ReferralToGastroenterologist})  
+* ELSE IF Patient.Symptoms MATCH {DryCoughWithPinkFrothySputum, ExertionalDyspnea, ParoxysmalNocturnalDyspnea, Orthopnea, Tachycardia, Tachypnea, DependentCrackles, S3Gallop, Wheezes}  
+  * SUSPECT PulmonaryEdema  
+  * ORDER DiagnosticTests({ABG, CXR, Echocardiography, ECG, PulmonaryArteryCatheterization})  
+  * RECOMMEND Treatment({AirwayMaintenance, Ventilation, Oxygenation, Medication, LowSodiumDiet})  
+  * SCHEDULE FollowUp({ReferralToCardiologist})  
+* ELSE IF Patient.Symptoms MATCH {SOB, Fatigue, ParoxysmalNocturnalDyspnea, Nocturia, Nausea, Edema, DecreasedUrineOutput, Anorexia, Crackles, PositiveHepatojugularReflex, JVD, S3Gallop}  
+  * SUSPECT HeartFailure  
+  * // Protocol covered under Pulmonary Edema  
+* END IF  
+* END PROCEDURE
+
+**Productive Cough Sub-procedure:**
+
+* PROCEDURE AssessProductiveCough(Patient)  
+* IF Patient.Symptoms MATCH {MildToSevereProductiveCough, Hemoptysis, Malaise, Dyspnea, PleuriticChestPain, NightSweats, WeightLoss, ChestDullnessOnPercussion}  
+  * SUSPECT PulmonaryTuberculosis  
+  * ORDER DiagnosticTests({TuberculinSkinTest, SputumForAFB, CXR, Bronchoscopy, OpenLungBiopsy})  
+  * RECOMMEND Treatment({AntitubercularDrugs})  
+  * SCHEDULE FollowUp({ReferralToPulmonologist})  
+* ELSE IF Patient.Symptoms MATCH {ShakingChills, Fever, Myalgia, Headache, PleuriticChestPain, Tachypnea, Dyspnea, Cyanosis, Diaphoresis, DecreasedBreathSounds, FineCrackles, Rhonchi}  
+  * SUSPECT BacterialPneumonia  
+  * ORDER DiagnosticTests({PhysicalExam, SputumGramStain, CBC, ABG, CXR})  
+  * RECOMMEND Treatment({Antibiotics, Hydration, OxygenTherapy, Suctioning})  
+  * SCHEDULE FollowUp({DailyAssessment, ReevaluationOneWeekPostHospitalization})  
+* ELSE IF Patient.Symptoms MATCH {Wheezing, ProlongedExpiration, FrequentInfections}  
+  * SUSPECT AcuteBronchitis  
+  * ORDER DiagnosticTests({CBC, ABG, CXR, PFTs})  
+  * RECOMMEND Treatment({SmokingCessation, Medication})  
+  * SCHEDULE FollowUp({MonthlyOrBiannualReevaluation})  
+* ELSE IF Patient.Symptoms MATCH {ChronicCoughWithPurulentBloodStreakedSputum, Dyspnea, Anorexia, Fatigue, WeightLoss, ChestPain, Fever, Wheezing}  
+  * SUSPECT LungCancer  
+  * ORDER DiagnosticTests({CXR, CTScan, MRI, Bronchoscopy, NeedleBiopsy, OpenLungBiopsy})  
+  * RECOMMEND Treatment({VariesBasedOnType, Chemotherapy, Analgesia, Radiation, Surgery})  
+  * SCHEDULE FollowUp({ReferralsToOncologistAndSurgeon})  
+* END IF  
+* END PROCEDURE
+
+### **49\. Crackles**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessCrackles(Patient)  
+* PERFORM FocusedPhysicalExam(Pulmonary, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {FineToCoarseCrackles, Tachycardia, Tachypnea, S3Gallop, Cough, CirculatoryCollapse}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Pulmonary Edema / Heart Failure Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {PinkFrothySputum, ExertionalDyspnea, ParoxysmalNocturnalDyspnea, Orthopnea}  
+       * SUSPECT PulmonaryEdema  
+     * ELSE IF Patient.Symptoms MATCH {SOB, Fatigue, Edema, DecreasedUrineOutput, Anorexia, PositiveHepatojugularReflex, JVD}  
+       * SUSPECT HeartFailure  
+     * END IF  
+     * ORDER DiagnosticTests({ABG, Electrolytes, CXR, Echocardiography, ECG, PulmonaryArteryCatheterization})  
+     * RECOMMEND Treatment({AirwayManagement, Ventilation, Oxygenation, Medication, LowSodiumDiet})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF  
+2. **Bacterial Pneumonia Pathway:**  
+   * IF Patient.Symptoms MATCH {DiffuseFineToCoarseMoistCrackles, ProductiveCough, Dyspnea, DecreasedBreathSounds, Chills, Fever, Malaise}  
+     * SUSPECT BacterialPneumonia  
+     * ORDER DiagnosticTests({PhysicalExam, SputumGramStain, CBC, ABG, CXR})  
+     * RECOMMEND Treatment({Antibiotics, Hydration, OxygenTherapy, Suctioning})  
+     * SCHEDULE FollowUp({DailyAssessment, ReevaluationOneWeekPostHospitalization})  
+   * END IF  
+3. **Pulmonary Embolism Pathway:**  
+   * IF Patient.Symptoms MATCH {BloodTingedSputum, AcuteOnsetDyspnea, AnginalOrPleuriticChestPain, Anxiety, LowGradeFever, Diaphoresis}  
+     * SUSPECT PulmonaryEmbolism  
+     * ORDER DiagnosticTests({ABG, CXR, VQ\_Scan, SpiralChestCT, PulmonaryAngiogram, PFTs})  
+     * RECOMMEND Treatment({OxygenTherapy, Thrombolytics, Anticoagulants})  
+     * SCHEDULE FollowUp({ReferralToPulmonologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({ARDS, Asthma, Bronchiectasis, ChronicBronchitis, InterstitialFibrosis, LegionnairesDisease, LungAbscess, Pneumonia, Psittacosis, PulmonaryTuberculosis, Sarcoidosis, Silicosis, Tracheobronchitis})  
+* END PROCEDURE
+
+### **50\. Crepitation, Subcutaneous**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessSubcutaneousCrepitation(Patient)  
+* PERFORM FocusedPhysicalExam(Skin, Cardiovascular, Musculoskeletal, RespiratorySystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Gas Gangrene Pathway:**  
+   * IF Patient.Symptoms MATCH {LocalPain, Swelling, Discoloration, Bullae, Necrosis, FoulSmellingDischarge}  
+     * SUSPECT GasGangrene  
+     * ORDER DiagnosticTests({WoundGramStain, AnaerobicTissueCulture, Xray, CTScan, MRI})  
+     * RECOMMEND Treatment({Surgery, Antibiotics, Analgesics, HyperbaricOxygenTherapy})  
+     * SCHEDULE FollowUp({ReferralsToSurgeonAndInfectiousDiseaseSpecialist})  
+   * END IF  
+2. **Pneumothorax Pathway:**  
+   * IF Patient.Symptoms MATCH {SubcutaneousCrepitationInUpperChestAndNeck, UnilateralChestPain, Dyspnea, Anxiety, Restlessness, Tachypnea, Tachycardia, Cyanosis, AccessoryMuscleUse, AsymmetricalChestExpansion, NonproductiveCough, AbsentBreathSounds, Hyperresonance, DecreasedVocalFremitus}  
+     * SUSPECT Pneumothorax  
+     * ORDER DiagnosticTests({ABG, CXR})  
+     * RECOMMEND Treatment({ChestTube, Oxygen})  
+     * SCHEDULE FollowUp({ReferralToThoracicSurgeon})  
+   * END IF  
+3. **Orbital Fracture Pathway:**  
+   * IF Patient.Symptoms MATCH {SubcutaneousCrepitationOfEyelidAndOrbit, PeriorbitalEcchymosis, FacialEdema, Diplopia, Hyphema, DilatedOrNonreactivePupil}  
+     * SUSPECT OrbitalFracture  
+     * ORDER DiagnosticTests({HistoryOfInjury, EOM\_Exam, FacialXray, CTScan})  
+     * RECOMMEND Treatment({Analgesics, Ice, Surgery})  
+     * SCHEDULE FollowUp({ReevaluationWhenSwellingResolves, ReferralToOphthalmologist})  
+   * END IF  
+4. **Esophageal/Tracheal/Bronchial Rupture Pathway:**  
+   * INPUT CommonSymptoms \= {SubcutaneousCrepitationInNeckSupraclavicularOrChestWall, Dyspnea, Tachycardia, NasalFlaring, Cyanosis, Hypotension, PositiveHammanSign, Hematemesis}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {NeckResistanceToPassiveMotion, LocalTenderness, OrthostaticVertigo, Fever}  
+       * SUSPECT RupturedEsophagus  
+       * ORDER DiagnosticTests({CBC, CXR, Esophagram, Endoscopy})  
+       * RECOMMEND Treatment({OxygenTherapy, Surgery})  
+       * SCHEDULE FollowUp({ReferralsToGastroenterologistAndSurgeon})  
+     * ELSE IF Patient.Symptoms MATCH {SevereDyspnea, AccessoryMuscleUse, ExtremeAnxiety, Hemoptysis}  
+       * SUSPECT RupturedTracheaOrMajorBronchus  
+       * ORDER DiagnosticTests({CXR})  
+       * RECOMMEND Treatment({ChestTube, Tracheotomy, OxygenTherapy})  
+       * SCHEDULE FollowUp({ReferralsToPulmonologistAndSurgeon})  
+     * END IF  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({Bronchoscopy, IntermittentPositivePressureBreathing, MechanicalVentilation, RespiratoryTreatments, ThoracicSurgery, UpperGI\_Endoscopy})  
+* END PROCEDURE
+
+### **51\. Cyanosis**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessCyanosis(Patient)  
+* PERFORM FocusedPhysicalExam(Pulmonary, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Pneumothorax Pathway:**  
+   * EVALUATE FOR Pneumothorax (See Chest Expansion, Asymmetrical protocol)  
+2. **Buerger's Disease / Raynaud's Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {CyanosisOfFingersHandsOrFeetAfterColdExposure, NumbnessTingling}  
+     * IF Patient.Symptoms MATCH {EnlargedRedCordlikeVeins, DecreasedOrAbsentPulse, TrophicChanges}  
+       * SUSPECT BuergerDisease  
+     * ELSE  
+       * SUSPECT RaynaudDisease  
+     * END IF  
+     * ORDER DiagnosticTests({PhysicalExam, HistoryOfSmoking, DopplerUltrasound, Angiography, ColdStimulationTest})  
+     * RECOMMEND Treatment({SmokingCessation, AvoidanceOfCold, Medication, SurgeryIfOcclusion})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToRheumatologist})  
+   * END IF  
+3. **Arteriosclerotic Occlusive Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {PeripheralCyanosisInLegs, IntermittentClaudication, BurningPainAtRest, Paresthesia, Pallor, MuscleAtrophy, WeakLegPulses, Impotence, LegUlcers}  
+     * SUSPECT ArterioscleroticOcclusiveDisease  
+     * ORDER DiagnosticTests({Angiography, DopplerUltrasound, MRI})  
+     * RECOMMEND Treatment({ControlPredisposingDisorder, ReduceRiskFactors, Analgesics, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToVascularSurgeon})  
+   * END IF  
+4. **Pulmonary Embolism Pathway:**  
+   * INPUT CommonSymptoms \= {AcuteCentralCyanosis, AcuteOnsetSharpChestPain, SOB, Anxiety, Tachycardia}  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {Syncope, NeckVeinDistention, PulsusParadoxus, LowGradeFever, CoughWithBloodySputum}  
+     * SUSPECT PulmonaryEmbolism  
+     * ORDER DiagnosticTests({ABG, CXR, VQ\_Scan, SpiralChestCT, Arteriogram})  
+     * RECOMMEND Treatment({OxygenTherapy, Thrombolytics, Anticoagulants})  
+     * SCHEDULE FollowUp({ReevaluationOneWeekPostHospitalization, ReferralToPulmonologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Bronchiectasis, COPD, HeartFailure, LungCancer, LupusErythematosus, PeripheralArterialOcclusion, Pneumonia, PolycythemiaVera, PulmonaryEdema, Shock})  
+* END PROCEDURE
+
+### **52\. Decerebrate Posture**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDecerebratePosture(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {AbsenceOfDollEyeSign, PositiveBabinskiReflex, PupillaryChanges, Coma}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Brain Stem Infarction Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {CranialNervePalsies, BilateralCerebellarAtaxia, SensoryLoss, Flaccidity}  
+     * SUSPECT BrainStemInfarction  
+     * ORDER DiagnosticTests({CTScan, MRI, Angiography, EEG, ICP\_Monitoring})  
+     * RECOMMEND Treatment({AnticoagulantsIfEmbolic, Antihypertensives, OsmoticDiuretics, Corticosteroids})  
+     * SCHEDULE FollowUp({ReferralToNeurologist})  
+   * END IF  
+2. **Hypoxic Encephalopathy Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {HypoactiveDTRs, PossibleRespiratoryArrest}  
+     * SUSPECT HypoxicEncephalopathy  
+     * ORDER DiagnosticTests({HistoryOfHypoxicEpisode, CTScan, MRI, EEG})  
+     * RECOMMEND Treatment({SupportiveMeasures, OxygenTherapy})  
+     * SCHEDULE FollowUp({ReferralToNeurologist})  
+   * END IF  
+3. **Pontine Hemorrhage Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {SuddenHeadacheThenComa, TotalParalysis, SmallReactivePupils, Hyperpnea, SevereHypertension, Hyperhidrosis}  
+     * SUSPECT PontineHemorrhage  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({SupportiveMeasures})  
+     * SCHEDULE FollowUp({ReferralToNeurologist})  
+   * END IF  
+4. **Hepatic Encephalopathy Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {FetorHepaticus, PositiveBabinskiReflex, HyperactiveDTRs}  
+     * SUSPECT HepaticEncephalopathy  
+     * ORDER DiagnosticTests({Electrolytes, SerumAmmoniaLevel, CoagulationStudies, CTScan, EEG})  
+     * RECOMMEND Treatment({Lactulose, LowOrNoProteinDiet})  
+     * SCHEDULE FollowUp({ReferralToGastroenterologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({BrainStemTumor, CerebralLesion, HypoglycemicEncephalopathy, PosteriorFossaHemorrhage})  
+* CONSIDER OtherCauses({LumbarPuncture})  
+* END PROCEDURE
+
+### **53\. Decorticate Posture**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDecorticatePosture(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonSymptoms \= {Headache, BehaviorChanges, Diplopia, BlurredVision, Dizziness, Vomiting, SensoryAndMotorDeficits, MemoryLoss, DecreasedLOC, Seizures}  
+* EVALUATE Patient.Symptoms against CommonSymptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Stroke Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {UnilateralDecorticatePosture, Hemiplegia, Dysarthria, Dysphagia, Apraxia, Agnosia, UrineRetentionAndIncontinence, Constipation, HomonymousHemianopia}  
+     * SUSPECT Stroke  
+     * ORDER DiagnosticTests({PhysicalExam, CoagulationStudies, CTScan, MRI, Ultrasonography, Angiography})  
+     * RECOMMEND Treatment({Anticoagulants, Antithrombotic, Antihypertensives})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralsToNeurologistAndRehabilitation})  
+   * END IF  
+2. **Brain Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {BilateralDecorticatePosture, MemoryLoss, Ataxia, Aphasia, Paresthesia, Papilledema, SignsOfHormonalImbalance}  
+     * SUSPECT BrainTumor  
+     * ORDER DiagnosticTests({CTScan, MRI, CT\_GuidedBiopsy, Angiography})  
+     * RECOMMEND Treatment({Chemotherapy, Analgesics, Corticosteroids, OsmoticDiuretics, Anticonvulsants, Radiation, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralsToOncologistAndNeurosurgeon})  
+   * END IF  
+3. **Brain Abscess Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {Hemiparesis, Fever, Aphasia, AlteredVitalSigns, NuchalRigidity, Papilledema}  
+     * SUSPECT BrainAbscess  
+     * ORDER DiagnosticTests({CBC, CultureOfAspiratedFluid, CTScan, MRI, EEG})  
+     * RECOMMEND Treatment({Antibiotics, Anticonvulsants, Analgesics, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNeurosurgeon})  
+   * END IF  
+4. **Head Injury Pathway:**  
+   * IF Patient.Symptoms MATCH CommonSymptoms AND Patient.Symptoms ALSO MATCH {Irritability, Aphasia, Hemiparesis, UnilateralNumbness, PupillaryDilation}  
+     * SUSPECT HeadInjury  
+     * ORDER DiagnosticTests({HistoryOfHeadInjury, CTScan, MRI, EEG})  
+     * RECOMMEND Treatment({Analgesia, OsmoticDiuretics, Corticosteroids, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralsToNeurosurgeonAndRehabilitation})  
+   * END IF  
+* END PROCEDURE
+
+### **54\. Deep Tendon Reflexes, Abnormal**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbnormal\_DTRs(Patient)  
+* PERFORM FocusedPhysicalExam(NeurologicSystem)  
+* GATHER HistoryOfPresentIllness  
+* EVALUATE DTR\_Type  
+  * IF DTRs \= Hyperactive  
+    * CALL AssessHyperactiveDTRs(Patient)  
+  * ELSE IF DTRs \= Hypoactive  
+    * CALL AssessHypoactiveDTRs(Patient)  
+  * END IF  
+* END PROCEDURE
+
+**Hyperactive DTRs Sub-procedure:**
+
+* PROCEDURE AssessHyperactiveDTRs(Patient)  
+* IF Patient.Symptoms MATCH {Tremors, Weakness, MuscleCramps, Hypotension, Tachycardia, Paresthesia, Ataxia, Tetany, Confusion, Seizures}  
+  * SUSPECT Hypomagnesemia  
+  * ORDER DiagnosticTests({SerumAndUrineMagnesium})  
+  * RECOMMEND Treatment({MagnesiumReplacement})  
+  * SCHEDULE FollowUp({RepeatMagnesiumLevels})  
+* ELSE IF Patient.Symptoms MATCH {Dysphasia, Irritability, LowGradeFever, PainfulInvoluntaryMuscleContractions, Trismus, RisusSardonicus}  
+  * SUSPECT Tetanus  
+  * ORDER DiagnosticTests({PhysicalExam, WoundCulture, TetanusAntibodyTest})  
+  * RECOMMEND Treatment({BedRest, MaintainABCs, Oxygen, TetanusImmuneGlobulin, Antibiotics, MuscleRelaxants, Sedatives, Anticonvulsants, WoundExcision})  
+  * SCHEDULE FollowUp({ContinuousMonitoringInICU})  
+* ELSE IF Patient.Symptoms MATCH {WeaknessOfHandsAndForearms, SpasticityOfLegs, AtrophyOfNeckAndTongueMuscles, Fasciculations, WeaknessOfLegs, Dysphagia, Dysphonia, FacialWeakness, Dyspnea}  
+  * SUSPECT AmyotrophicLateralSclerosis (ALS)  
+  * ORDER DiagnosticTests({PhysicalExam, AcetylcholineReceptorAntibodyTest, EMG, MuscleBiopsy})  
+  * RECOMMEND Treatment({ControlSymptoms, Antispasmodics, Antidepressants, PhysicalAndOccupationalTherapy})  
+  * SCHEDULE FollowUp({AsNeeded, ReferralToNeurologist})  
+* END IF  
+* END PROCEDURE
+
+**Hypoactive DTRs Sub-procedure:**
+
+* PROCEDURE AssessHypoactiveDTRs(Patient)  
+* IF Patient.Symptoms MATCH {BilateralHypoactiveDTRsProgressingToAreflexia, MuscleWeaknessProgressingUpward, TotalParalysis, CranialNervePalsies, Pain, Paresthesia, AutonomicDysfunction}  
+  * SUSPECT GuillainBarreSyndrome  
+  * ORDER DiagnosticTests({HistoryOfViralInfection, CSF\_Analysis, MRI, NerveConductionStudies})  
+  * RECOMMEND Treatment({VariesBasedOnSymptoms, MaintainABCs, ImmuneGlobulin, Plasmapheresis, PhysicalTherapy})  
+  * SCHEDULE FollowUp({AsNeeded, ReferralsToNeurologistAndPhysicalTherapist})  
+* ELSE IF Patient.Symptoms MATCH {ProgressiveHypoactiveDTRs, MotorWeakness, Pain, SensoryLoss, Paresthesia, Tremors, AutonomicDysfunction}  
+  * SUSPECT PeripheralNeuropathy  
+  * ORDER DiagnosticTests({EMG, NerveConductionStudies, NerveOrMuscleBiopsy})  
+  * RECOMMEND Treatment({TreatUnderlyingDisorder, Analgesics})  
+  * SCHEDULE FollowUp({RegularMonitoring, ReferralToPhysicalAndOccupationalTherapy})  
+* ELSE IF Patient.Symptoms MATCH {HypoactiveDTRsBelowLesion, Quadriplegia, Paraplegia, Flaccidity, LossOfSensationBelowLesion, DryPaleSkin, UrineRetentionOrIncontinence, HypoactiveBowelSounds, Constipation, LossOfGenitalReflexes}  
+  * SUSPECT SpinalCordLesion  
+  * ORDER DiagnosticTests({SpinalXray, CTScan, MRI, Myelogram})  
+  * RECOMMEND Treatment({BedRest, SpinalTraction, Corticosteroids, Surgery})  
+  * SCHEDULE FollowUp({ReferralsToNeurologistAndNeurosurgeon})  
+* END IF  
+* END PROCEDURE
+
+### **55\. Depression**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDepression(Patient)  
+* PERFORM FocusedPhysicalExam(MentalHealth, HEENT, Thyroid, Abdomen, NeurologicSystem)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Psychiatric Pathway:**  
+   * IF Patient.Symptoms MATCH {Hopelessness, SleepDisturbances, SuicidalTendencies, AbruptMoodSwings, Agitation, Preoccupation, MemoryLoss, PoorConcentration}  
+     * SUSPECT AffectiveDisorder  
+     * GOTO PsychiatricProtocol  
+   * ELSE IF Patient.Symptoms MATCH {PanicAttacks, ObsessiveCompulsiveBehavior, FreeFloatingAnxiety}  
+     * SUSPECT ChronicAnxietyDisorder  
+     * GOTO PsychiatricProtocol  
+   * END IF  
+2. **Metabolic/Endocrine Pathway:**  
+   * IF Patient.Symptoms MATCH {Weakness, MuscleCramps, Confusion, Disorientation, Delusions, EmotionalLability, Tremors, Tetany}  
+     * SUSPECT Hypomagnesemia  
+     * GOTO MetabolicProtocol  
+   * ELSE IF Patient.Symptoms MATCH {MuscleSpasms, Paresthesia, PositiveChvostekAndTrousseauSigns}  
+     * SUSPECT Hypoparathyroidism  
+     * GOTO MetabolicProtocol  
+   * ELSE IF Patient.Symptoms MATCH {Irritability, Apprehension, Anorexia, GeneralizedMuscleWeakness, Dysphagia, Confusion, Dysarthria, Seizures}  
+     * SUSPECT Hypophosphatemia  
+     * GOTO MetabolicProtocol  
+   * ELSE IF Patient.Symptoms MATCH {Fatigue, Lethargy, Weakness, Arthralgia, DrySkin, WeightGain, ColdIntolerance}  
+     * SUSPECT Hypothyroidism  
+     * GOTO MetabolicProtocol  
+   * ELSE IF Patient.Symptoms MATCH {Lethargy, Weakness, Confusion, Delirium, Headache, ShortAttentionSpan, MuscleTwitching, Tremors}  
+     * SUSPECT Hyponatremia  
+     * GOTO MetabolicProtocol  
+   * END IF
+
+**Shared Protocols:**
+
+* LABEL PsychiatricProtocol  
+* ORDER DiagnosticTests({History, RuleOutMetabolicImbalances, PsychiatricEvaluation})  
+* RECOMMEND Treatment({Antidepressants, Psychotherapy})  
+* SCHEDULE FollowUp({ReferralToPsychiatristOrPsychologist})  
+* LABEL MetabolicProtocol  
+* ORDER DiagnosticTests({Electrolytes, ThyroidStudies})  
+* RECOMMEND Treatment({FluidReplacement, ElectrolyteReplacement, ThyroidHormoneReplacement})  
+* SCHEDULE FollowUp({MonitorLevelsUntilStable, ThenReevaluateEvery3to6Months})
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({AlcoholAbuse, Antiarrhythmics, Anticonvulsants, AntiparkinsonianDrugs, Barbiturates, BetaBlockers, CentrallyActingAntihypertensives, Chemotherapeutics, Corticosteroids, Cycloserine, Digoxin, HormonalContraceptives, Indomethacin, Levodopa, NSAIDs})  
+* END PROCEDURE
+
+### **56\. Diaphoresis**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDiaphoresis(Patient)  
+* PERFORM FocusedPhysicalExam(AllSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonHeatSymptoms \= {CoolClammySkin, AshenAppearance, PoorSkinTurgor, DryMucousMembranes, Thirst, Headache, NauseaVomiting}  
+* EVALUATE Patient.Symptoms
+
+**Differential Diagnosis Pathways:**
+
+1. **Myocardial Infarction (MI) Pathway:**  
+   * IF Patient.Symptoms MATCH {ChestTightness, RadiatingPain, Dyspnea, NauseaVomiting, Tachycardia, Palpitations, Dizziness, Syncope, ImpendingDoom, CrushingPain, HypotensionOrHypertension, Pallor, ClammySkin}  
+     * SUSPECT MI  
+     * GOTO CardiacProtocol (See Bradycardia)  
+   * END IF  
+2. **Hypoglycemia Pathway:**  
+   * IF Patient.Symptoms MATCH {SlowMentation, Irritability, Tremors, Hypotension, Dizziness, BlurredVision, Hunger, DecreasedLOC}  
+     * SUSPECT Hypoglycemia  
+     * ORDER DiagnosticTests({PhysicalExam, HistoryOfInsulinUse, SerumGlucose})  
+     * RECOMMEND Treatment({15gSugar, IV\_50%Dextrose})  
+     * SCHEDULE FollowUp({ReferralToEndocrinologist})  
+   * END IF  
+3. **Pneumonia Pathway:**  
+   * IF Patient.Symptoms MATCH {IntermittentDiaphoresis, Fever, ProductiveCough, PleuriticPain, Headache, Fatigue, Myalgia, BronchialBreathSounds}  
+     * SUSPECT Pneumonia  
+     * ORDER DiagnosticTests({SputumCulture, CBC, CXR})  
+     * RECOMMEND Treatment({IncreasedFluidIntake, Antibiotics, Antipyretics, Analgesics})  
+     * SCHEDULE FollowUp({ReevaluationIn48to72Hours})  
+   * END IF  
+4. **Autonomic Hyperreflexia Pathway:**  
+   * IF Patient.Symptoms MATCH {LossOfMotorTone, BlurredVision, PoundingHeadache, DramaticallyElevatedBP, GoosePimples, Bradycardia}  
+     * SUSPECT AutonomicHyperreflexia  
+     * ORDER DiagnosticTests({PhysicalExam, IdentificationOfStimulus})  
+     * RECOMMEND Treatment({ManageCause, MaintainABCs})  
+     * SCHEDULE FollowUp({AsNeeded, PatientTeaching})  
+   * END IF  
+5. **Heat Exhaustion / Heat Stroke Pathway:**  
+   * IF Patient.Symptoms MATCH CommonHeatSymptoms  
+     * IF Patient.CoreTemp \< 103F  
+       * SUSPECT HeatExhaustion  
+       * ORDER DiagnosticTests({PhysicalExam, Temperature, Electrolytes, BUN, Calcium, Phosphorus, CBC, UA})  
+       * RECOMMEND Treatment({OralOrIV\_Hydration, ElectrolyteReplacement, CoolEnvironment})  
+       * SCHEDULE FollowUp({ReevaluationOneWeekPostHospitalization})  
+     * ELSE IF Patient.CoreTemp \> 105F AND Patient.Symptoms MATCH {Exhaustion, Confusion, HotFlushedSkin, Coma, CirculatoryCollapse, IrrationalBehavior, Seizure}  
+       * SUSPECT HeatStroke  
+       * ORDER DiagnosticTests({PhysicalExam, Temperature, Electrolytes, BUN, Creatinine})  
+       * RECOMMEND Treatment({IV\_Hydration, ElectrolyteMonitoring, MaintainABCs, HemodynamicMonitoring, RapidCooling})  
+       * SCHEDULE FollowUp({ReevaluationOneWeekPostHospitalization})  
+     * END IF  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Acromegaly, AIDS, AnxietyDisorders, DrugAndAlcoholWithdrawal, Empyema, Envenomation, HeartFailure, HodgkinDisease, ImmunoblasticLymphadenopathy, InfectiveEndocarditis, LiverOrLungAbscess, Malaria, MeniereDisease, Pheochromocytoma, RelapsingFever, Tetanus, Thyrotoxicosis, Tuberculosis})  
+* CONSIDER OtherCauses({AcetaminophenAndAspirinPoisoning, Antipsychotics, Antipyretics, DumpingSyndrome, PesticidePoisoning, Sympathomimetics, ThyroidHormone})  
+* END PROCEDURE
+
+### **57\. Diarrhea**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDiarrhea(Patient)  
+* PERFORM FocusedPhysicalExam(Skin, GI, GU, Pulmonary, CardiovascularSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Triage by Symptom Cluster:**
+
+1. **Infectious/Intolerance Cluster:**  
+   * INPUT CommonSymptoms \= {WateryDiarrhea, AbdominalCramping, NauseaVomiting}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {SuddenOnset, Fever}  
+       * SUSPECT Gastroenteritis  
+     * ELSE IF Patient.Symptoms MATCH {FoulSmellingOrBloodyDiarrhea, Leukocytosis}  
+       * SUSPECT C\_difficile\_Infection  
+     * ELSE IF Patient.Symptoms MATCH {RecentMilkIngestion, Bloating, Borborygmi, Flatus}  
+       * SUSPECT LactoseIntolerance  
+     * END IF  
+     * ORDER DiagnosticTests({History, StoolGuaiac, StoolCulture, CBC, Electrolytes})  
+     * RECOMMEND Treatment({Rehydration, ElectrolyteReplacement, Antipyretics, AntibioticsIfIndicated})  
+     * SCHEDULE FollowUp({ReevaluateIn48-72Hours, ReferralToGastroenterologist})  
+   * END IF  
+2. **Inflammatory/Malignancy Cluster:**  
+   * INPUT CommonSymptoms \= {IncreasedIntestinalMotility, AbdominalPain, Tenderness, Guarding, PossibleDistention}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {BloodyDiarrhea, Weakness, Fatigue, Anorexia, NauseaVomiting}  
+       * SUSPECT LargeBowelCancer  
+       * ORDER DiagnosticTests({CBC, CEA, FecalOccultBlood, BariumEnema, CTScan, TransrectalUltrasound, ColonoscopyWithBiopsy})  
+       * RECOMMEND Treatment({Analgesics, Chemotherapy, Surgery})  
+       * SCHEDULE FollowUp({ReferralsToOncologistAndSurgeon, FrequentMonitoringPostOp})  
+     * ELSE IF Patient.Symptoms MATCH {NauseaVomiting, FeverChills, Weakness, AnorexiaWeightLoss}  
+       * SUSPECT CrohnDisease  
+       * ORDER DiagnosticTests({CTScan, BariumEnema, Colonoscopy})  
+       * RECOMMEND Treatment({Analgesics, ElectrolyteReplacement, Mesalamine, Corticosteroids, Surgery})  
+       * SCHEDULE FollowUp({ReferralToGastroenterologist})  
+     * END IF  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AcuteAppendicitis, CarcinoidSyndrome, IrritableBowelSyndrome, IschemicBowelDisease, LeadPoisoning, MalabsorptionSyndrome, PseudomembranousEnterocolitis, RotavirusGastroenteritis, Thyrotoxicosis})  
+* CONSIDER OtherCauses({Antibiotics, Colchicine, Dantrolene, Dehydration, Digoxin, Quinidine, EthacrynicAcid, Gastrectomy, Gastroenterostomy, Guanethidine, HerbalMedicines, HighDoseRadiation, Lactulose, LaxativeAbuse, MagnesiumAntacids, MefenamicAcid, Methotrexate, Metyrosine, Pyloroplasty})  
+* END PROCEDURE
+
+### **58\. Diplopia**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDiplopia(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT, Neurologic, Cardiovascular, PulmonarySystems, MentalHealth)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Cranial Nerve Disturbance Pathway:**  
+   * IF Patient.Symptoms MATCH {MisalignmentOfVisualAxes, Phoria, Nystagmus}  
+     * SUSPECT DisturbanceOfCN\_III\_IV\_or\_VI  
+     * ORDER DiagnosticTests({PhysicalExam, DirectOphthalmoscopy, CoverTest})  
+     * RECOMMEND Treatment({CorrectiveLenses, MuscleStrengtheningExercises, EyePatch})  
+     * SCHEDULE FollowUp({ReferralToOphthalmologist})  
+   * END IF  
+2. **Ophthalmoplegic Migraine Pathway:**  
+   * IF Patient.Symptoms MATCH {DiplopiaPersistsAfterHeadache, UnilateralPain, Ptosis, ExtraocularMusclePalsies, Irritability, SlightConfusion}  
+     * SUSPECT OphthalmoplegicMigraine  
+     * ORDER DiagnosticTests({History, PhysicalExam, CTScan, OphthalmologicExam})  
+     * RECOMMEND Treatment({Medication, HeadacheDiary, DietModification})  
+     * SCHEDULE FollowUp({ReferralsToOphthalmologistAndHeadacheCenter})  
+   * END IF  
+3. **Hypertension Pathway:**  
+   * IF Patient.BP \> 160/95 AND Patient.Symptoms MATCH {Headache, NauseaVomiting}  
+     * SUSPECT Hypertension  
+     * ORDER DiagnosticTests({SerialBP\_Measurements, IdentifyUnderlyingCause})  
+     * RECOMMEND Treatment({ReduceRiskFactors, Medication, TreatUnderlyingCause})  
+     * SCHEDULE FollowUp({ReevaluateEvery3to6MonthsWhenStable})  
+   * END IF  
+4. **Intracranial Aneurysm Pathway:**  
+   * IF Patient.Symptoms MATCH {EyeDeviation, Ptosis, DilatedPupil, RecurrentSevereUnilateralFrontalHeadache, NeckAndSpinalPain, DecreasedLOC, Tinnitus, Dizziness, NauseaVomiting}  
+     * SUSPECT IntracranialAneurysm  
+     * ORDER DiagnosticTests({CTScan, MRI, Angiography})  
+     * RECOMMEND Treatment({VariesBasedOnSize, ReduceRiskFactors, Analgesics, Surgery})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNeurosurgeon})  
+   * END IF  
+5. **Brain Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH {EyeDeviation, EmotionalLability, DecreasedLOC, Headache, VisualFieldDeficits}  
+     * SUSPECT BrainTumor  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({Analgesics, Chemotherapy, Radiation, Surgery})  
+     * SCHEDULE FollowUp({ReferralsToNeurosurgeonAndOncologist})  
+   * END IF  
+6. **Stroke Pathway:**  
+   * IF Patient.Symptoms MATCH {UnilateralMotorWeakness, Ataxia, DecreasedLOC, Dizziness, Aphasia, Dysphagia, VisualFieldDeficits}  
+     * SUSPECT Stroke  
+     * ORDER DiagnosticTests({CoagulationStudies, LipidProfile, DuplexCarotidUltrasound, CTScan, CerebralAngiography, MRI, MRA, Echocardiogram})  
+     * RECOMMEND Treatment({MaintainABCs, Medication, SymptomManagement})  
+     * SCHEDULE FollowUp({AsNeeded, ReferralToNeurologistAndRehabilitation})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({AlcoholIntoxication, Botulism, CavernousSinusThrombosis, DiabetesMellitus, Encephalitis, HeadInjury, MultipleSclerosis, MyastheniaGravis, OrbitalBlowoutFracture, OrbitalCellulitis, OrbitalTumors, Thyrotoxicosis})  
+* CONSIDER OtherCauses({EyeSurgery})  
+* END PROCEDURE
+
+### **59\. Dizziness**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDizziness(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT, Neurologic, Cardiovascular, PulmonarySystems, MentalHealth)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Hypertension Pathway:**  
+   * EVALUATE FOR Hypertension (See Diplopia protocol)  
+2. **Transient Ischemic Attack (TIA) Pathway:**  
+   * IF Patient.Symptoms MATCH {UnilateralOrBilateralDiplopia, VisualFieldDeficits, Ptosis, Tinnitus, Dysarthria, Dysphagia, DecreasedLOC, UnilateralNumbnessTinglingWeakness, UnsteadyGait}  
+     * SUSPECT TIA  
+     * ORDER DiagnosticTests({PhysicalExam, CTScan, CarotidUltrasound, Angiography, TEE, MRI, MRA, Echocardiogram})  
+     * RECOMMEND Treatment({Aspirin, PlateletAggregationInhibitors, ReduceRiskFactors})  
+     * SCHEDULE FollowUp({ReevaluateEvery3MonthsFor1Year, ThenAnnually})  
+   * END IF  
+3. **Anxiety/Panic Disorder Pathway:**  
+   * INPUT CommonSymptoms \= {Insomnia, DifficultyConcentrating, Irritability, Anxiety}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * IF Patient.Symptoms MATCH {Dyspnea, ChestPain, ChokingSensation, Diaphoresis}  
+       * SUSPECT PanicDisorder  
+     * ELSE  
+       * SUSPECT GeneralizedAnxietyDisorder  
+     * END IF  
+     * ORDER DiagnosticTests({PsychologicalEvaluation})  
+     * RECOMMEND Treatment({Anxiolytics, Antidepressants})  
+     * SCHEDULE FollowUp({ReferralToPsychotherapist})  
+   * END IF  
+4. **Inner Ear Infection Pathway:**  
+   * IF Patient.Symptoms MATCH {DizzinessWithPositionChange, Earache, PossibleFever}  
+     * SUSPECT InnerEarInfection  
+     * ORDER DiagnosticTests({OtoscopicExam})  
+     * RECOMMEND Treatment({Antibiotics, Decongestants})  
+     * SCHEDULE FollowUp({ReevaluationIn1Week})  
+   * END IF  
+5. **Cardiac Arrhythmias Pathway:**  
+   * IF Patient.Symptoms MATCH {Palpitations, Tachycardia, IrregularPulse, PossibleHypotension}  
+     * SUSPECT CardiacArrhythmias  
+     * ORDER DiagnosticTests({Electrolytes, ECG, CardiacMonitoring, ElectrophysiologicStudy})  
+     * RECOMMEND Treatment({Antiarrhythmics, ElectrolyteCorrection, Cardioversion})  
+     * SCHEDULE FollowUp({ReferralToCardiologist})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({CarotidSinusHypersensitivity, Emphysema, HyperventilationSyndrome, OrthostaticHypotension, PostconcussionSyndrome})  
+* CONSIDER OtherCauses({AntianxietyDrugs, Antihistamines, Antihypertensives, CNS\_Depressants, Decongestants, Narcotics, StJohnsWort, Vasodilators})  
+* END PROCEDURE
+
+### **60\. Doll's Eye Sign, Absent**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessAbsentDollEyeSign(Patient)  
+* PERFORM FocusedPhysicalExam(Neurologic, Neurovascular, Cardiovascular, PulmonarySystems)  
+* GATHER HistoryOfPresentIllness
+
+**Differential Diagnosis Pathways:**
+
+1. **Brain Stem Glioma Pathway:**  
+   * INPUT CommonSymptoms \= {GradualLossOfGagReflex, Diplopia, FacialWeakness}  
+   * IF Patient.Symptoms MATCH CommonSymptoms  
+     * SUSPECT BrainStemGlioma  
+     * ORDER DiagnosticTests({CTScan, MRI})  
+     * RECOMMEND Treatment({Chemotherapy, RadiationTherapy})  
+     * SCHEDULE FollowUp({ReferralToOncologist})  
+   * END IF  
+2. **Brain Stem Infarction Pathway:**  
+   * IF Patient.Symptoms MATCH {LimbParalysis, Weakness, Hiccups, CranialNervePalsies, BilateralCerebellarAtaxia, PositiveBabinski, DecerebratePosture}  
+     * SUSPECT BrainStemInfarction  
+     * GOTO BrainStemProtocol  
+   * END IF  
+3. **Cerebellar Lesion Pathway:**  
+   * IF Patient.Symptoms MATCH {CornealLesion, ComaPrecededByHeadaches, Nystagmus, OcularDeviationToLesionSide, SymptomsOfElevatedICP}  
+     * SUSPECT CerebellarLesion  
+     * GOTO BrainStemProtocol  
+   * END IF  
+4. **Central Midbrain Infarction Pathway:**  
+   * IF Patient.Symptoms MATCH {OculomotorPalsyWithContralateralHemiplegia, CentralLateralAtaxicTremor, Nystagmus, PupillaryAbnormalities}  
+     * SUSPECT CentralMidbrainInfarction  
+     * GOTO BrainStemProtocol  
+   * END IF
+
+**Shared Protocol for Brain Stem Lesions:**
+
+* LABEL BrainStemProtocol  
+* ORDER DiagnosticTests({PhysicalExam, ColdCaloricTest, CTScan, MRI, MRA, Echocardiogram})  
+* RECOMMEND Treatment({ManageIncreasedICP, SupportiveCare})  
+* SCHEDULE FollowUp({ReferralToNeurologist})
+
+**Additional Considerations:**
+
+* CONSIDER OtherCauses({Barbiturates})  
+* END PROCEDURE
+
+### **61\. Drooling**
+
+**Initiating Assessment:**
+
+* PROCEDURE AssessDrooling(Patient)  
+* PERFORM FocusedPhysicalExam(HEENT, Skin, Neurovascular, NeurologicSystems)  
+* GATHER HistoryOfPresentIllness
+
+**Initial Symptom Triage:**
+
+* INPUT CommonThroatSymptoms \= {ModerateToCopiousDrooling, SevereSoreThroat, CervicalLymphadenopathy, Fever, PharyngealEdemaAndRedness}
+
+**Differential Diagnosis Pathways:**
+
+1. **Bell's Palsy Pathway:**  
+   * EVALUATE FOR BellPalsy (See Corneal Reflex, Absent protocol)  
+2. **Parkinson's Disease Pathway:**  
+   * IF Patient.Symptoms MATCH {RestingTremor, Rigidity, Dysphagia, Dysphonia, Bradykinesia, ShufflingGait, ImpairedPosturalReflexes}  
+     * SUSPECT ParkinsonDisease  
+     * ORDER DiagnosticTests({ClinicalExam})  
+     * RECOMMEND Treatment({Medication, PhysicalTherapy})  
+     * SCHEDULE FollowUp({ReferralToNeurologist})  
+   * END IF  
+3. **Stroke Pathway:**  
+   * EVALUATE FOR Stroke (See Diplopia protocol)  
+4. **Esophageal Tumor Pathway:**  
+   * IF Patient.Symptoms MATCH {Hematemesis, Hoarseness, WeightLoss, ProgressivelySevereDysphagia, SubsternalBackOrNeckPain}  
+     * SUSPECT EsophagealTumor  
+     * ORDER DiagnosticTests({PhysicalExam, Endoscopy})  
+     * RECOMMEND Treatment({Analgesics, MechanicalDietModification, Surgery})  
+     * SCHEDULE FollowUp({ReferralsToOncologistAndSurgeon})  
+   * END IF  
+5. **Throat Abscess Pathway:**  
+   * IF Patient.Symptoms MATCH CommonThroatSymptoms  
+     * IF Patient.Symptoms MATCH {FeelingOfLumpInThroat, DyspneaWhenSitting, CoughingAndChoking, Snoring, NoisyBreathing, Stridor}  
+       * SUSPECT RetropharyngealAbscess  
+     * ELSE IF Patient.Symptoms MATCH {SoftGrayExudateOnTonsils, RancidBreath, UvulaDeviation}  
+       * SUSPECT PeritonsillarAbscess  
+     * END IF  
+     * ORDER DiagnosticTests({CBC, ThroatCulture, LateralNeckXray})  
+     * RECOMMEND Treatment({Antipyretics, Analgesics, Antibiotics, SurgicalDrainage})  
+     * SCHEDULE FollowUp({ReevaluationInOneWeek, ENT\_Referral})  
+   * END IF
+
+**Additional Considerations:**
+
+* CONSIDER OtherDifferentialDiagnoses({Achalasia, AcousticNeuroma, ALS, Diphtheria, Envenomation, GlossopharyngealNeuralgia, GuillainBarreSyndrome, Hypocalcemia, LudwigAngina, ParalyticPoliomyelitis, PesticidePoisoning, Rabies})  
+* CONSIDER OtherCauses({Clonazepam, Ethionamide, Haloperidol})  
+* END PROCEDURE
