@@ -17,3 +17,6 @@ dependencies = [
 
 [tool.uv.sources]
 eai-sparsify = { git = "https://github.com/EleutherAI/sparsify" }
+
+[tool.uv.workspace]
+members = ["sae-chat"]

@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
-from rag import rag
+from ragdb import RAGDB
 
 model_id = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -26,12 +26,19 @@ def embed_layer(model, sae, layer, inputs):
 class Chat:
     def __init__(
             self,
-            model_id,
-            sae_id,
-            tokenizer,
+            featurized,
+            ragdb,
+            collection,
             sys_prompt = sys_prompt,
             hyperparams = hyperparams
             ):
+        self.featurized = featurized
+        self.model = featurized.model
+        self.saes = featurized.saes
+
+        self.db = ragdb
+        self.collection = collection
+
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = AutoModelForCausalLM.from_pretrained(model_id).to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -45,7 +52,7 @@ class Chat:
         return self.tokenizer(prompt, return_tensors="pt").to(self.device)
 
     def update_chat(self, user_input):
-        user_input = rag(user_input)
+        user_input = self.db.rag(self.collection, user_input)
         self.history.append(f"User: {user_input}")
         prompt = "\n".join(history) + "\nAssistant:"
 
