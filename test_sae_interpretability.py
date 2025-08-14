@@ -3,8 +3,6 @@
 
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'automated-interpretability/neuron-explainer'))
 
 import torch as t
 from featurized import Featurized
