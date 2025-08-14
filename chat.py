@@ -2,11 +2,13 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from ragdb import RAGDB
 
+'''
 model_id = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model = AutoModelForCausalLM.from_pretrained(model_id).to(device)
 tokenizer = AutoTokenizer.from_pretrained(model_id)
+'''
 
 sys_prompt = "You are an automated diagnostician. When presented with symptoms, pull up the appropriate diagnostic workflows and then ask the user follow up questions about their symptoms until you have enough information to make a recommendation or diagnosis."
 hyperparams = {

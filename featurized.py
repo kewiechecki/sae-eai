@@ -2,6 +2,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch as t
 import os
 from sparsify import Sae
+from qwen2hook import patch_layer_hidden_state
 
 import math
 
@@ -87,24 +88,12 @@ class Featurized:
         with t.no_grad():
             E = sae.decode(features.top_acts, features.top_indices)
             E = E.unsqueeze(0)
-            seq_len = E.shape[1]
-
-            attention_mask, position_embeddings, position_ids = layer_args(model, inputs)
-            layers = range(layer, self.n_layers)
-            for i in layers:
-                # Get the relevant block and call with all required arguments:
-                block = model.model.layers[i]
-                out = block(
-                    E,
-                    attention_mask=attention_mask,
-                    position_embeddings=position_embeddings,
-                    position_ids=position_ids,
-                    past_key_value=None,
-                    output_attentions=False,
-                    use_cache=False,
-                )
-                E = out[0] if isinstance(out, (tuple, list)) else out
-            return E 
+            
+            # Use patch_layer_hidden_state to inject the decoded features at the specified layer
+            with patch_layer_hidden_state(model, layer, E, mode="output"):
+                # Run forward pass from the patched layer onwards
+                outputs = model(**inputs, output_hidden_states=False)
+                return outputs.logits 
 
     def embed(model, tokenizer, sae, inputs):
         with t.no_grad():
